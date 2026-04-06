@@ -222,7 +222,7 @@ section{padding:60px 20px}
 /* ═══ BANK FREE PACKAGE ═══ */
 .bank-pkg{max-width:480px;margin:24px auto 0;background:linear-gradient(145deg,rgba(46,125,50,.2),rgba(46,125,50,.05));border:2px solid #4CAF50;border-radius:20px;padding:28px 24px;text-align:center}
 .bank-pkg .package-badge{background:#4CAF50}
-.bank-pkg .package-price{color:#4CAF50;font-size:2.4rem}
+.bank-pkg .package-price{color:var(--red);font-size:2.4rem}
 .bank-pkg .package-name{font-size:1.1rem}
 .bank-pkg .item-icon{background:rgba(76,175,80,.15)}
 .btn-pkg-green{background:#4CAF50;color:#fff;border-color:#4CAF50;font-weight:800}
@@ -414,8 +414,8 @@ footer a{color:#fff;font-weight:600}
   </div>
   <!-- FREE BANK/INSTITUTION PACKAGE -->
   <div class="bank-pkg">
-    <div class="package-badge" data-i18n="pkgb_badge">Free Trial</div>
-    <div class="package-price" data-i18n="pkgb_price">FREE</div>
+    <div class="package-badge" data-i18n="pkgb_badge">For Institutions</div>
+    <div class="package-price"><span>$</span>199</div>
     <div class="package-name" data-i18n="pkgb_name">Banks &amp; Institutions Package</div>
     <ul class="package-items">
       <li>
@@ -435,7 +435,7 @@ footer a{color:#fff;font-weight:600}
         <div><span class="item-text" data-i18n="pkgb4_title">Impact Reporting</span><span class="item-detail" data-i18n="pkgb4_detail">Track funded businesses and outcomes</span></div>
       </li>
     </ul>
-    <a href="#contact" class="btn btn-pkg-green" style="width:100%;justify-content:center" data-i18n="pkgb_cta">Try Free</a>
+    <a href="#contact" class="btn btn-pkg-green" style="width:100%;justify-content:center" data-i18n="pkgb_cta">Get Started</a>
   </div>
 </section>
 
@@ -579,35 +579,62 @@ footer a{color:#fff;font-weight:600}
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- APPLICATION FORM -->
 <section id="contact">
   <div class="section-inner">
-    <div class="section-tag" data-i18n="contact_tag">Contact</div>
-    <h2 class="section-title" data-i18n="contact_title">Get in Touch</h2>
-    <p class="section-sub" data-i18n="contact_sub">Have questions? Reach out and we'll help you get started.</p>
+    <div class="section-tag" data-i18n="contact_tag">Apply Now</div>
+    <h2 class="section-title" data-i18n="contact_title">Business Application</h2>
+    <p class="section-sub" data-i18n="contact_sub">Fill out this form to apply for the 48HoursReady program. We'll review your application and get back to you within 48 hours.</p>
     <div class="contact-grid">
       <div class="contact-card">
         <div class="contact-card-icon icon-red">&#128640;</div>
         <div><div class="contact-card-title">48HoursReady</div><div class="contact-card-email">business@haitibiznis.com</div></div>
       </div>
       <div class="contact-card">
-        <div class="contact-card-icon icon-blue">&#127760;</div>
-        <div><div class="contact-card-title">HaitiBiznis Hub</div><div class="contact-card-email">hello@haitibiznis.com</div></div>
+        <div class="contact-card-icon" style="background:rgba(37,211,102,.1)">&#128222;</div>
+        <div><div class="contact-card-title">WhatsApp</div><div class="contact-card-email">+509 4190 2005</div></div>
       </div>
     </div>
     <form class="contact-form" action="https://formsubmit.co/business@haitibiznis.com" method="POST">
-      <input type="hidden" name="_subject" value="48HoursReady - New Inquiry">
+      <input type="hidden" name="_subject" value="48HoursReady - New Business Application">
       <input type="hidden" name="_captcha" value="false">
-      <input type="text" name="name" placeholder="Your Name" data-i18n-placeholder="form_name" required>
-      <input type="email" name="email" placeholder="Your Email" data-i18n-placeholder="form_email" required>
-      <select name="interest">
-        <option value="Start a Business" data-i18n="form_start">Start a Business</option>
-        <option value="Mentorship" data-i18n="form_mentor">Mentorship</option>
-        <option value="Partnership" data-i18n="form_partner">Partnership</option>
-        <option value="Other" data-i18n="form_other">Other</option>
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="Full Name" placeholder="Full Name" data-i18n-placeholder="form_name" required>
+      <input type="email" name="Email" placeholder="Email Address" data-i18n-placeholder="form_email" required>
+      <input type="tel" name="Phone / WhatsApp" placeholder="Phone / WhatsApp" data-i18n-placeholder="form_phone" required>
+      <input type="text" name="Business Name" placeholder="Business Name" data-i18n-placeholder="form_biz_name" required>
+      <select name="Business Sector" required>
+        <option value="" disabled selected data-i18n="form_sector">-- Business Sector --</option>
+        <option value="Food & Restaurant" data-i18n="form_sec_food">Food & Restaurant</option>
+        <option value="Retail & Commerce" data-i18n="form_sec_retail">Retail & Commerce</option>
+        <option value="Services" data-i18n="form_sec_services">Services</option>
+        <option value="Technology" data-i18n="form_sec_tech">Technology</option>
+        <option value="Agriculture" data-i18n="form_sec_agri">Agriculture</option>
+        <option value="Education" data-i18n="form_sec_edu">Education</option>
+        <option value="Health" data-i18n="form_sec_health">Health</option>
+        <option value="Transport" data-i18n="form_sec_transport">Transport</option>
+        <option value="Construction" data-i18n="form_sec_construction">Construction</option>
+        <option value="Other" data-i18n="form_sec_other">Other</option>
       </select>
-      <textarea name="message" placeholder="Tell us about your business idea..." data-i18n-placeholder="form_message"></textarea>
-      <button type="submit" class="btn btn-red" style="width:100%;justify-content:center" data-i18n="form_send">Send Message</button>
+      <select name="Do you have a logo?" required>
+        <option value="" disabled selected data-i18n="form_logo_q">-- Do you have a logo? --</option>
+        <option value="Yes" data-i18n="form_logo_yes">Yes, I have a logo</option>
+        <option value="No" data-i18n="form_logo_no">No, I need one</option>
+      </select>
+      <select name="Do you have a website?" required>
+        <option value="" disabled selected data-i18n="form_web_q">-- Do you have a website? --</option>
+        <option value="Yes" data-i18n="form_web_yes">Yes, I have a website</option>
+        <option value="No" data-i18n="form_web_no">No, I need one</option>
+      </select>
+      <select name="Package Interest" required>
+        <option value="" disabled selected data-i18n="form_pkg_q">-- Which package? --</option>
+        <option value="$199 Business Ready" data-i18n="form_pkg_199">$199 - Business Ready Package</option>
+        <option value="$249 Two Languages" data-i18n="form_pkg_249">$249 - 2 Languages Package</option>
+        <option value="Bank/Institution" data-i18n="form_pkg_bank">$199 - Banks & Institutions</option>
+      </select>
+      <input type="text" name="City / Location" placeholder="City / Location" data-i18n-placeholder="form_city">
+      <textarea name="Business Description" placeholder="Briefly describe your business or idea..." data-i18n-placeholder="form_desc" required></textarea>
+      <button type="submit" class="btn btn-red" style="width:100%;justify-content:center" data-i18n="form_send">Submit Application</button>
     </form>
   </div>
 </section>
@@ -679,12 +706,12 @@ const T = {
     fund2_title:"Subventions", fund2_desc:"Financement non remboursable pour les entreprises qualifiees dans des secteurs cles de l'economie haitienne.",
     fund3_title:"Reseau d'Investisseurs", fund3_desc:"Connectez-vous avec des investisseurs de la diaspora et internationaux qui soutiennent les entreprises haitiennes.",
     fund_cta:"Postuler au Financement",
-    pkgb_badge:"Essai Gratuit", pkgb_price:"GRATUIT", pkgb_name:"Forfait Banques et Institutions",
+    pkgb_badge:"Pour Institutions", pkgb_name:"Forfait Banques et Institutions",
     pkgb1_title:"Acces a la Plateforme", pkgb1_detail:"Acces complet aux outils 48HoursReady",
     pkgb2_title:"Repertoire d'Entreprises", pkgb2_detail:"Parcourir les entreprises structurees pretes au financement",
     pkgb3_title:"Connexion Directe", pkgb3_detail:"Connectez-vous avec des entrepreneurs verifies",
     pkgb4_title:"Rapports d'Impact", pkgb4_detail:"Suivez les entreprises financees et les resultats",
-    pkgb_cta:"Essayer Gratuitement",
+    pkgb_cta:"Commencer",
     spap_title:"&#127795; SPAP - Notre Partenaire Strategique",
     spap_desc:"Le Secteur Prive des Affaires Populaire (SPAP) donne du pouvoir a l'economie populaire d'Haiti a travers un soutien structure aux entreprises, la formation et le plaidoyer. Ensemble avec 48HoursReady, nous construisons l'avenir entrepreneurial d'Haiti.",
     spap_t1:"Structuration d'Entreprise", spap_t2:"Programmes de Formation", spap_t3:"Plaidoyer", spap_t4:"Reseautage", spap_t5:"Acces au Financement",
@@ -711,10 +738,14 @@ const T = {
     s3_title:"Lancez et Grandissez", s3_desc:"Demarrez avec votre marque et services dans l'ecosysteme HaitiBiznis.",
     cta_title:"Pret a Construire Votre Business?", cta_sub:"Rejoignez des centaines d'entrepreneurs haitiens qui ont lance leur entreprise.",
     cta_btn:"Commencer Maintenant",
-    contact_tag:"Contact", contact_title:"Contactez-Nous", contact_sub:"Des questions? Ecrivez-nous et nous vous aiderons.",
-    form_name:"Votre Nom", form_email:"Votre Email", form_message:"Parlez-nous de votre idee de business...",
-    form_start:"Lancer un Business", form_mentor:"Mentorat", form_partner:"Partenariat", form_other:"Autre",
-    form_send:"Envoyer le Message",
+    contact_tag:"Postuler", contact_title:"Candidature Business", contact_sub:"Remplissez ce formulaire pour postuler au programme 48HoursReady. Nous examinerons votre candidature sous 48 heures.",
+    form_name:"Nom Complet", form_email:"Adresse Email", form_phone:"Telephone / WhatsApp", form_biz_name:"Nom de l'Entreprise",
+    form_sector:"-- Secteur d'Activite --", form_sec_food:"Alimentation et Restaurant", form_sec_retail:"Commerce et Detail", form_sec_services:"Services", form_sec_tech:"Technologie", form_sec_agri:"Agriculture", form_sec_edu:"Education", form_sec_health:"Sante", form_sec_transport:"Transport", form_sec_construction:"Construction", form_sec_other:"Autre",
+    form_logo_q:"-- Avez-vous un logo? --", form_logo_yes:"Oui, j'ai un logo", form_logo_no:"Non, j'en ai besoin",
+    form_web_q:"-- Avez-vous un site web? --", form_web_yes:"Oui, j'ai un site web", form_web_no:"Non, j'en ai besoin",
+    form_pkg_q:"-- Quel forfait? --", form_pkg_199:"$199 - Forfait Business Ready", form_pkg_249:"$249 - Forfait 2 Langues", form_pkg_bank:"$199 - Banques et Institutions",
+    form_city:"Ville / Localisation", form_desc:"Decrivez brievement votre entreprise ou idee...",
+    form_send:"Soumettre la Candidature",
     footer_desc:"Aider les entrepreneurs haitiens a construire et lancer leurs entreprises plus vite.",
     footer_ecosystem:"Ecosysteme", footer_links:"Liens Rapides", eco_label:"Fait partie de"
   },
@@ -743,12 +774,12 @@ const T = {
     fund2_title:"Grants", fund2_desc:"Non-repayable funding for qualifying businesses in key sectors of Haiti's economy.",
     fund3_title:"Investor Network", fund3_desc:"Connect with diaspora and international investors looking to support Haitian businesses.",
     fund_cta:"Apply for Funding",
-    pkgb_badge:"Free Trial", pkgb_price:"FREE", pkgb_name:"Banks & Institutions Package",
+    pkgb_badge:"For Institutions", pkgb_name:"Banks & Institutions Package",
     pkgb1_title:"Platform Access", pkgb1_detail:"Full access to 48HoursReady tools",
     pkgb2_title:"Business Directory", pkgb2_detail:"Browse structured businesses ready for funding",
     pkgb3_title:"Direct Connection", pkgb3_detail:"Connect with verified entrepreneurs",
     pkgb4_title:"Impact Reporting", pkgb4_detail:"Track funded businesses and outcomes",
-    pkgb_cta:"Try Free",
+    pkgb_cta:"Get Started",
     spap_title:"&#127795; SPAP - Our Strategic Partner",
     spap_desc:"The Secteur Prive des Affaires Populaire (SPAP) empowers Haiti's popular economy through structured business support, training, and advocacy. Together with 48HoursReady, we're building the backbone of Haiti's entrepreneurial future.",
     spap_t1:"Business Structuring", spap_t2:"Training Programs", spap_t3:"Advocacy", spap_t4:"Networking", spap_t5:"Funding Access",
@@ -775,10 +806,14 @@ const T = {
     s3_title:"Launch & Grow", s3_desc:"Go live with your brand, products, and services across the HaitiBiznis ecosystem.",
     cta_title:"Ready to Build Your Business?", cta_sub:"Join hundreds of Haitian entrepreneurs who launched their businesses with 48HoursReady.",
     cta_btn:"Get Started Now",
-    contact_tag:"Contact", contact_title:"Get in Touch", contact_sub:"Have questions? Reach out and we'll help you get started.",
-    form_name:"Your Name", form_email:"Your Email", form_message:"Tell us about your business idea...",
-    form_start:"Start a Business", form_mentor:"Mentorship", form_partner:"Partnership", form_other:"Other",
-    form_send:"Send Message",
+    contact_tag:"Apply Now", contact_title:"Business Application", contact_sub:"Fill out this form to apply for the 48HoursReady program. We'll review your application within 48 hours.",
+    form_name:"Full Name", form_email:"Email Address", form_phone:"Phone / WhatsApp", form_biz_name:"Business Name",
+    form_sector:"-- Business Sector --", form_sec_food:"Food & Restaurant", form_sec_retail:"Retail & Commerce", form_sec_services:"Services", form_sec_tech:"Technology", form_sec_agri:"Agriculture", form_sec_edu:"Education", form_sec_health:"Health", form_sec_transport:"Transport", form_sec_construction:"Construction", form_sec_other:"Other",
+    form_logo_q:"-- Do you have a logo? --", form_logo_yes:"Yes, I have a logo", form_logo_no:"No, I need one",
+    form_web_q:"-- Do you have a website? --", form_web_yes:"Yes, I have a website", form_web_no:"No, I need one",
+    form_pkg_q:"-- Which package? --", form_pkg_199:"$199 - Business Ready Package", form_pkg_249:"$249 - 2 Languages Package", form_pkg_bank:"$199 - Banks & Institutions",
+    form_city:"City / Location", form_desc:"Briefly describe your business or idea...",
+    form_send:"Submit Application",
     footer_desc:"Helping Haitian entrepreneurs build and launch businesses faster.",
     footer_ecosystem:"Ecosystem", footer_links:"Quick Links", eco_label:"Part of"
   },
@@ -807,12 +842,12 @@ const T = {
     fund2_title:"Sibvansyon", fund2_desc:"Finansman ou pa bezwen ranbouse pou biznis ki kalifye nan sekte kle ekonomi Ayiti a.",
     fund3_title:"Rezo Envestise", fund3_desc:"Konekte ak envestise nan dyaspora ak entenasyonal ki vle sipote biznis ayisyen yo.",
     fund_cta:"Aplike pou Finansman",
-    pkgb_badge:"Esè Gratis", pkgb_price:"GRATIS", pkgb_name:"Pake Labank ak Enstitisyon",
+    pkgb_badge:"Pou Enstitisyon", pkgb_name:"Pake Labank ak Enstitisyon",
     pkgb1_title:"Akse Platfom", pkgb1_detail:"Akse konplè nan zouti 48HoursReady",
     pkgb2_title:"Repètwa Biznis", pkgb2_detail:"Gade biznis ki strikti pare pou finansman",
     pkgb3_title:"Koneksyon Dirèk", pkgb3_detail:"Konekte ak antreprenè verifye",
     pkgb4_title:"Rapò Enpak", pkgb4_detail:"Swiv biznis ki finanse ak rezilta yo",
-    pkgb_cta:"Eseye Gratis",
+    pkgb_cta:"Komanse",
     spap_title:"&#127795; SPAP - Patnè Estratejik Nou",
     spap_desc:"Sektè Prive Zafè Popilè (SPAP) bay ekonomi popilè Ayiti a fòs atravè sipò biznis estrikti, fòmasyon, ak pledwaye. Ansanm ak 48HoursReady, nap bati fondasyon avni antreprenè Ayiti a.",
     spap_t1:"Striktirasyon Biznis", spap_t2:"Pwogram Fòmasyon", spap_t3:"Pledwaye", spap_t4:"Rezo", spap_t5:"Akse Finansman",
@@ -839,10 +874,14 @@ const T = {
     s3_title:"Lanse epi Grandi", s3_desc:"Komanse ak mak ou, pwodui, ak sevis nan ekosistem HaitiBiznis la.",
     cta_title:"Pare Pou Bati Biznis Ou?", cta_sub:"Rejwenn santenn antreprene ayisyen ki te lanse biznis yo ak 48HoursReady.",
     cta_btn:"Komanse Kounye a",
-    contact_tag:"Kontak", contact_title:"Kontakte Nou", contact_sub:"Gen kesyon? Ekri nou epi nap ede ou komanse.",
-    form_name:"Non Ou", form_email:"Imel Ou", form_message:"Di nou sou lide biznis ou...",
-    form_start:"Lanse yon Biznis", form_mentor:"Mentora", form_partner:"Patenarya", form_other:"Lot",
-    form_send:"Voye Mesaj",
+    contact_tag:"Aplike Kounye a", contact_title:"Aplikasyon Biznis", contact_sub:"Ranpli fom sa a pou aplike nan pwogram 48HoursReady. Nap revize aplikasyon ou nan 48 edtan.",
+    form_name:"Non Konplè", form_email:"Adrès Imel", form_phone:"Telefon / WhatsApp", form_biz_name:"Non Biznis",
+    form_sector:"-- Sektè Biznis --", form_sec_food:"Manje ak Restoran", form_sec_retail:"Komès ak Detay", form_sec_services:"Sèvis", form_sec_tech:"Teknoloji", form_sec_agri:"Agrikilti", form_sec_edu:"Edikasyon", form_sec_health:"Sante", form_sec_transport:"Transpò", form_sec_construction:"Konstriksyon", form_sec_other:"Lòt",
+    form_logo_q:"-- Ou gen yon logo? --", form_logo_yes:"Wi, mwen gen yon logo", form_logo_no:"Non, mwen bezwen youn",
+    form_web_q:"-- Ou gen yon sit web? --", form_web_yes:"Wi, mwen gen yon sit web", form_web_no:"Non, mwen bezwen youn",
+    form_pkg_q:"-- Ki pake? --", form_pkg_199:"$199 - Pake Business Ready", form_pkg_249:"$249 - Pake 2 Lang", form_pkg_bank:"$199 - Labank ak Enstitisyon",
+    form_city:"Vil / Anplasman", form_desc:"Dekri biznis ou oswa lide ou an bref...",
+    form_send:"Soumèt Aplikasyon",
     footer_desc:"Ede antreprene ayisyen bati epi lanse biznis yo pi vit.",
     footer_ecosystem:"Ekosistem", footer_links:"Lyen Rapid", eco_label:"Fe pati de"
   },
@@ -871,12 +910,12 @@ const T = {
     fund2_title:"Subvenciones", fund2_desc:"Financiamiento no reembolsable para empresas calificadas en sectores clave de la economia haitiana.",
     fund3_title:"Red de Inversores", fund3_desc:"Conecta con inversores de la diaspora e internacionales que buscan apoyar negocios haitianos.",
     fund_cta:"Aplicar al Financiamiento",
-    pkgb_badge:"Prueba Gratis", pkgb_price:"GRATIS", pkgb_name:"Paquete Bancos e Instituciones",
+    pkgb_badge:"Para Instituciones", pkgb_name:"Paquete Bancos e Instituciones",
     pkgb1_title:"Acceso a la Plataforma", pkgb1_detail:"Acceso completo a herramientas 48HoursReady",
     pkgb2_title:"Directorio de Negocios", pkgb2_detail:"Buscar negocios estructurados listos para financiamiento",
     pkgb3_title:"Conexion Directa", pkgb3_detail:"Conecta con emprendedores verificados",
     pkgb4_title:"Reportes de Impacto", pkgb4_detail:"Seguimiento de negocios financiados y resultados",
-    pkgb_cta:"Probar Gratis",
+    pkgb_cta:"Comenzar",
     spap_title:"&#127795; SPAP - Nuestro Socio Estrategico",
     spap_desc:"El Sector Privado de Negocios Populares (SPAP) potencia la economia popular de Haiti a traves de apoyo empresarial estructurado, capacitacion y defensa. Junto con 48HoursReady, estamos construyendo el futuro emprendedor de Haiti.",
     spap_t1:"Estructuracion Empresarial", spap_t2:"Programas de Capacitacion", spap_t3:"Defensa", spap_t4:"Networking", spap_t5:"Acceso a Financiamiento",
@@ -903,10 +942,14 @@ const T = {
     s3_title:"Lanza y Crece", s3_desc:"Arranca con tu marca y servicios en el ecosistema HaitiBiznis.",
     cta_title:"Listo Para Construir Tu Negocio?", cta_sub:"Unete a cientos de emprendedores haitianos que lanzaron sus negocios.",
     cta_btn:"Comenzar Ahora",
-    contact_tag:"Contacto", contact_title:"Contactanos", contact_sub:"Tienes preguntas? Escribenos y te ayudaremos.",
-    form_name:"Tu Nombre", form_email:"Tu Email", form_message:"Cuentanos sobre tu idea de negocio...",
-    form_start:"Iniciar un Negocio", form_mentor:"Mentoria", form_partner:"Asociacion", form_other:"Otro",
-    form_send:"Enviar Mensaje",
+    contact_tag:"Aplicar Ahora", contact_title:"Solicitud de Negocio", contact_sub:"Completa este formulario para aplicar al programa 48HoursReady. Revisaremos tu solicitud en 48 horas.",
+    form_name:"Nombre Completo", form_email:"Correo Electronico", form_phone:"Telefono / WhatsApp", form_biz_name:"Nombre del Negocio",
+    form_sector:"-- Sector de Negocio --", form_sec_food:"Comida y Restaurante", form_sec_retail:"Comercio y Retail", form_sec_services:"Servicios", form_sec_tech:"Tecnologia", form_sec_agri:"Agricultura", form_sec_edu:"Educacion", form_sec_health:"Salud", form_sec_transport:"Transporte", form_sec_construction:"Construccion", form_sec_other:"Otro",
+    form_logo_q:"-- Tienes un logo? --", form_logo_yes:"Si, tengo un logo", form_logo_no:"No, necesito uno",
+    form_web_q:"-- Tienes un sitio web? --", form_web_yes:"Si, tengo un sitio web", form_web_no:"No, necesito uno",
+    form_pkg_q:"-- Cual paquete? --", form_pkg_199:"$199 - Paquete Business Ready", form_pkg_249:"$249 - Paquete 2 Idiomas", form_pkg_bank:"$199 - Bancos e Instituciones",
+    form_city:"Ciudad / Ubicacion", form_desc:"Describe brevemente tu negocio o idea...",
+    form_send:"Enviar Solicitud",
     footer_desc:"Ayudando a emprendedores haitianos a construir y lanzar negocios mas rapido.",
     footer_ecosystem:"Ecosistema", footer_links:"Enlaces Rapidos", eco_label:"Parte de"
   }
