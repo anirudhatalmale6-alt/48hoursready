@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPAP - Secteur Prive des Affaires Populaire | 48HoursReady</title>
+<meta name="description" content="SPAP is the strategic business network inside 48HoursReady helping Haitian entrepreneurs move from informal to structured business.">
+<meta property="og:title" content="SPAP - Secteur Prive des Affaires Populaire">
+<meta property="og:description" content="Helping Entrepreneurs Move from Informal to Structured Business. Join the network for training, visibility, and growth.">
+<meta property="og:url" content="https://48hoursready.com/spap.html">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D21034;--red-dark:#B00D2C;--red-light:#E8243F;
+  --blue:#00209F;--blue-dark:#001566;
+  --gold:#D4A017;--gold-light:#E8B82E;
+  --white:#FFFFFF;--off-white:#FFFAF8;--light-gray:#F0E8E8;
+  --dark:#1A0C0C;--text:#2A1A1A;--text-light:#6A5A5A;
+  --body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --display:'DM Serif Display',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--off-white);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+
+/* ═══ TOP LANG BAR ═══ */
+.top-lang-bar{
+  background:var(--red);color:#fff;font-size:.7rem;
+  padding:5px 20px;display:flex;align-items:center;justify-content:center;gap:4px;
+  position:fixed;top:0;left:0;right:0;z-index:1001;height:32px;
+}
+.top-lang-bar a{
+  color:#fff;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:100px;
+  font-size:.68rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.top-lang-bar a:hover{background:rgba(255,255,255,.3)}
+.top-lang-bar a.active{background:#fff;color:var(--red)}
+
+/* ═══ NAV ═══ */
+nav{position:sticky;top:32px;z-index:100;padding:12px 20px;background:var(--white);border-bottom:1px solid var(--light-gray);box-shadow:0 1px 8px rgba(0,0,0,.04)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:1.1rem;color:var(--dark)}
+.nav-logo img{width:36px;height:36px;border-radius:8px;object-fit:cover}
+.nav-logo span{color:var(--red);font-weight:700;font-size:.9rem}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{color:var(--text-light);font-size:.78rem;font-weight:600;padding:8px 10px;border-radius:8px;transition:all .3s}
+.nav-links a:hover{color:var(--red);background:rgba(210,16,52,.05)}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:10px 18px!important;border-radius:100px!important}
+.nav-cta:hover{background:var(--red-dark)!important}
+.mobile-menu{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;padding:8px}
+.nav-mobile{position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .3s}
+.nav-mobile.open{opacity:1;pointer-events:auto}
+.nav-mobile a{color:var(--dark);font-size:1.1rem;font-weight:600;padding:12px 24px}
+.nav-mobile .close-menu{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--dark);font-size:2rem;cursor:pointer}
+
+/* ═══ HERO ═══ */
+.hero{
+  padding:80px 20px 60px;text-align:center;
+  background:linear-gradient(135deg, var(--red-dark) 0%, var(--red) 50%, #C41830 100%);
+  color:#fff;position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect x="10" y="10" width="3" height="3" rx="1" fill="rgba(255,255,255,0.03)"/><rect x="70" y="50" width="4" height="4" rx="1" fill="rgba(255,255,255,0.02)"/><rect x="140" y="20" width="3" height="3" rx="1" fill="rgba(255,255,255,0.03)"/><rect x="30" y="130" width="3" height="3" rx="1" fill="rgba(255,255,255,0.02)"/><rect x="160" y="150" width="4" height="4" rx="1" fill="rgba(255,255,255,0.03)"/></svg>');pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;background:var(--off-white);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(212,160,23,.2);border:1px solid rgba(212,160,23,.3);padding:6px 16px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:16px}
+.hero h1{font-family:var(--display);font-size:clamp(1.7rem,5vw,2.8rem);line-height:1.15;margin-bottom:16px}
+.hero h1 .gold{color:var(--gold-light)}
+.hero-sub{font-size:clamp(.86rem,1.5vw,1.02rem);max-width:600px;margin:0 auto 30px;line-height:1.65;opacity:.9}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-size:.88rem;font-weight:700;transition:all .3s;border:2px solid transparent;cursor:pointer;font-family:var(--body)}
+.btn-gold{background:var(--gold);color:#fff;border-color:var(--gold)}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,160,23,.3)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-red{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-red:hover{background:var(--red-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(210,16,52,.3)}
+.btn-white{background:#fff;color:var(--red);border-color:#fff}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+
+/* ═══ SECTIONS ═══ */
+section{padding:60px 20px}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-tag{display:inline-block;background:rgba(210,16,52,.07);color:var(--red);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:12px}
+.section-tag-gold{background:rgba(212,160,23,.1);color:var(--gold)}
+.section-title{font-family:var(--display);font-size:clamp(1.5rem,3vw,2.2rem);color:var(--dark);margin-bottom:12px}
+.section-sub{color:var(--text-light);max-width:550px;line-height:1.65;font-size:.92rem}
+
+/* ═══ ABOUT ═══ */
+.about-content{background:var(--white);border-radius:16px;padding:32px 28px;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 16px rgba(0,0,0,.04);line-height:1.75;font-size:.92rem;color:var(--text);max-width:700px}
+.about-content strong{color:var(--dark)}
+
+/* ═══ CARD GRID ═══ */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:24px}
+.card{background:var(--white);border-radius:14px;padding:24px 20px;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,.08)}
+.card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:12px}
+.icon-red{background:rgba(210,16,52,.07)}
+.icon-gold{background:rgba(212,160,23,.1)}
+.icon-blue{background:rgba(0,32,159,.06)}
+.card h3{font-size:.95rem;font-weight:700;margin-bottom:6px;color:var(--dark)}
+.card p{font-size:.82rem;color:var(--text-light);line-height:1.6}
+
+/* ═══ POWERS ═══ */
+.powers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px}
+.power-card{background:var(--white);border-radius:14px;padding:20px;text-align:center;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 10px rgba(0,0,0,.03);transition:transform .3s}
+.power-card:hover{transform:translateY(-3px)}
+.power-card .power-icon{font-size:2rem;margin-bottom:10px}
+.power-card h4{font-size:.88rem;font-weight:700;color:var(--dark);margin-bottom:4px}
+.power-card p{font-size:.75rem;color:var(--text-light);line-height:1.5}
+
+/* ═══ FORM ═══ */
+.form-card{background:var(--white);border-radius:16px;padding:32px 28px;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 16px rgba(0,0,0,.04);max-width:600px;margin:24px auto 0}
+.form-card input,.form-card textarea,.form-card select{width:100%;padding:12px 16px;border:1px solid var(--light-gray);border-radius:10px;font-family:var(--body);font-size:.88rem;margin-bottom:12px;transition:border-color .3s}
+.form-card input:focus,.form-card textarea:focus,.form-card select:focus{outline:none;border-color:var(--red)}
+.form-card textarea{resize:vertical;min-height:80px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* ═══ PARTNER ═══ */
+.partner-box{background:linear-gradient(135deg, rgba(212,160,23,.08) 0%, rgba(210,16,52,.05) 100%);border:1px solid rgba(212,160,23,.15);border-radius:16px;padding:32px 28px;text-align:center;max-width:600px;margin:24px auto 0}
+
+/* ═══ CTA ═══ */
+.cta-section{background:linear-gradient(135deg, var(--red-dark) 0%, var(--red) 100%);color:#fff;text-align:center;border-radius:20px;margin:0 20px;padding:50px 24px}
+.cta-section h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,2rem);margin-bottom:12px}
+.cta-section p{opacity:.9;max-width:520px;margin:0 auto 24px;font-size:.92rem;line-height:1.6}
+
+/* ═══ FOOTER ═══ */
+footer{background:var(--dark);color:#ccc;padding:40px 20px 20px;font-size:.8rem}
+footer a{color:#fff;font-weight:600}
+.footer-inner{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;gap:30px;justify-content:space-between;margin-bottom:30px}
+.footer-col h4{color:#fff;font-size:.85rem;margin-bottom:10px}
+.footer-col a{display:block;color:#aaa;font-weight:400;padding:3px 0;transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:16px;text-align:center;opacity:.6}
+
+.eco-bar{background:var(--dark);padding:14px 20px;text-align:center}
+.eco-bar a{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:600;margin:0 8px;transition:color .2s}
+.eco-bar a:hover{color:#fff}
+.eco-bar span{color:rgba(255,255,255,.3);font-size:.65rem}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .mobile-menu{display:block}
+  .hero{padding:70px 20px 50px}
+  .form-row{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP LANGUAGE BAR -->
+<div class="top-lang-bar">
+  <a onclick="setLang('fr')" class="active" id="lang-fr">&#127467;&#127479; Francais</a>
+  <a onclick="setLang('en')" id="lang-en">&#127468;&#127463; English</a>
+  <a onclick="setLang('ht')" id="lang-ht">&#127469;&#127481; Kreyol</a>
+  <a onclick="setLang('es')" id="lang-es">&#127466;&#127480; Espanol</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="assets/48hoursready-logo.jpg" alt="48HoursReady">
+      48HoursReady / <span>SPAP</span>
+    </div>
+    <div class="nav-links">
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#who" data-i18n="nav_who">Who It's For</a>
+      <a href="#benefits" data-i18n="nav_benefits">Benefits</a>
+      <a href="#powers" data-i18n="nav_powers">What SPAP Powers</a>
+      <a href="#apply" class="nav-cta" data-i18n="nav_apply">Join SPAP</a>
+    </div>
+    <button class="mobile-menu" onclick="document.querySelector('.nav-mobile').classList.add('open')" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+<div class="nav-mobile" id="mobileNav">
+  <button class="close-menu" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="#about" onclick="closeMobile()" data-i18n="nav_about">About</a>
+  <a href="#who" onclick="closeMobile()" data-i18n="nav_who">Who It's For</a>
+  <a href="#benefits" onclick="closeMobile()" data-i18n="nav_benefits">Benefits</a>
+  <a href="#powers" onclick="closeMobile()" data-i18n="nav_powers">What SPAP Powers</a>
+  <a href="#partner" onclick="closeMobile()" data-i18n="nav_partner">Partnership</a>
+  <a href="#apply" onclick="closeMobile()" style="background:var(--red);color:#fff;border-radius:100px;padding:12px 28px" data-i18n="nav_apply">Join SPAP</a>
+</div>
+
+<!-- SECTION 1: HERO -->
+<section class="hero">
+  <div class="hero-badge">&#128640; 48HoursReady Network</div>
+  <h1 data-i18n="hero_title">Helping Entrepreneurs Move from<br><span class="gold">Informal to Structured</span> Business</h1>
+  <p class="hero-sub" data-i18n="hero_sub">A strategic business network connecting Haitian entrepreneurs and small businesses to structure, training, visibility, and growth opportunities through 48HoursReady and the HaitiBiznis ecosystem.</p>
+  <div class="hero-actions">
+    <a href="#apply" class="btn btn-gold" data-i18n="hero_join">Join SPAP</a>
+    <a href="#partner" class="btn btn-ghost" data-i18n="hero_partner">Partner With SPAP</a>
+  </div>
+</section>
+
+<!-- SECTION 2: ABOUT SPAP -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-tag-gold section-tag" data-i18n="about_tag">About SPAP</div>
+    <h2 class="section-title" data-i18n="about_title">Secteur Prive des Affaires Populaire</h2>
+    <div class="about-content">
+      <p data-i18n="about_p1"><strong>SPAP (Secteur Prive des Affaires Populaire)</strong> is a strategic business network operating inside the <strong>48HoursReady</strong> ecosystem, dedicated to helping Haiti's entrepreneurs, small business owners, and informal workers transition into structured, sustainable businesses. SPAP provides the bridge between informal economic activity and formal business participation.</p>
+      <br>
+      <p data-i18n="about_p2">Through training, mentorship, formalization support, and direct connection to the <strong>HaitiBiznis</strong> ecosystem, SPAP empowers entrepreneurs at every stage. Whether you run a market stall, a local service, a growing startup, or a community business - SPAP gives you the tools, network, and visibility to grow with confidence. Together, we're building a more structured and inclusive economy for Haiti.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: WHO IT'S FOR -->
+<section id="who" style="background:var(--white)">
+  <div class="section-inner">
+    <div class="section-tag" data-i18n="who_tag">Who It's For</div>
+    <h2 class="section-title" data-i18n="who_title">Built for Haiti's Business Builders</h2>
+    <p class="section-sub" data-i18n="who_sub">SPAP serves every entrepreneur working to build, grow, and formalize their business.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon icon-red">&#127978;</div>
+        <h3 data-i18n="w1_title">Small Business Owners</h3>
+        <p data-i18n="w1_desc">Owners of shops, restaurants, salons, and established local businesses looking to scale and formalize.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-gold">&#128170;</div>
+        <h3 data-i18n="w2_title">Informal Entrepreneurs</h3>
+        <p data-i18n="w2_desc">Market vendors, street sellers, and independent workers ready to structure their business operations.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-red">&#128640;</div>
+        <h3 data-i18n="w3_title">Startups</h3>
+        <p data-i18n="w3_desc">New ventures and innovative ideas that need guidance, structure, and connections to launch successfully.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-gold">&#128722;</div>
+        <h3 data-i18n="w4_title">Merchants and Vendors</h3>
+        <p data-i18n="w4_desc">Sellers of goods and products who want to expand their reach through digital platforms like MyPlopPlop.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-blue">&#128736;</div>
+        <h3 data-i18n="w5_title">Local Service Providers</h3>
+        <p data-i18n="w5_desc">Plumbers, electricians, mechanics, tailors, and skilled workers building service-based businesses.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-red">&#127942;</div>
+        <h3 data-i18n="w6_title">Community Business Leaders</h3>
+        <p data-i18n="w6_desc">Leaders organizing economic activity in their communities and helping others build businesses.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: MEMBER BENEFITS -->
+<section id="benefits">
+  <div class="section-inner">
+    <div class="section-tag-gold section-tag" data-i18n="ben_tag">Member Benefits</div>
+    <h2 class="section-title" data-i18n="ben_title">Why Join SPAP?</h2>
+    <p class="section-sub" data-i18n="ben_sub">Real support for real businesses at every stage of growth.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon icon-red">&#128203;</div>
+        <h3 data-i18n="b1_title">Business Structuring Support</h3>
+        <p data-i18n="b1_desc">Step-by-step guidance to organize your business: plans, finances, operations, and legal structure.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-gold">&#127891;</div>
+        <h3 data-i18n="b2_title">Training and Workshops</h3>
+        <p data-i18n="b2_desc">Practical workshops on business management, marketing, finance, digital tools, and customer service.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-blue">&#128220;</div>
+        <h3 data-i18n="b3_title">Formalization Guidance</h3>
+        <p data-i18n="b3_desc">Help navigating registration, permits, tax compliance, and transitioning from informal to formal business.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-red">&#128065;</div>
+        <h3 data-i18n="b4_title">Visibility and Promotion</h3>
+        <p data-i18n="b4_desc">Get your business featured across the HaitiBiznis ecosystem, reaching customers in Haiti and the diaspora.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-gold">&#127760;</div>
+        <h3 data-i18n="b5_title">Access to Opportunities</h3>
+        <p data-i18n="b5_desc">Connect with funding, partnerships, contracts, and growth programs available through the ecosystem.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-red">&#129309;</div>
+        <h3 data-i18n="b6_title">Community and Referrals</h3>
+        <p data-i18n="b6_desc">Join a network of entrepreneurs who support each other, share referrals, and grow together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: WHAT SPAP POWERS -->
+<section id="powers" style="background:var(--white)">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag" data-i18n="pow_tag">What SPAP Powers</div>
+    <h2 class="section-title" data-i18n="pow_title">Strengthening the Ecosystem</h2>
+    <p class="section-sub" style="margin:0 auto 10px" data-i18n="pow_sub">SPAP entrepreneurs fuel every platform in the HaitiBiznis ecosystem.</p>
+    <div class="powers-grid">
+      <div class="power-card">
+        <div class="power-icon">&#128640;</div>
+        <h4>48HoursReady</h4>
+        <p data-i18n="pow_48">SPAP members are the core entrepreneurs using 48HoursReady tools to build and launch their businesses.</p>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#128722;</div>
+        <h4>MyPlopPlop</h4>
+        <p data-i18n="pow_plop">SPAP businesses list their products and services on MyPlopPlop, reaching more customers digitally.</p>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#128663;</div>
+        <h4>MsouWout</h4>
+        <p data-i18n="pow_sou">Service providers and delivery businesses in SPAP use MsouWout for logistics and transportation.</p>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#11088;</div>
+        <h4>Talent4Peace</h4>
+        <p data-i18n="pow_t4p">Skilled professionals from SPAP get listed on Talent4Peace to find clients and grow their service business.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: JOIN SPAP FORM -->
+<section id="apply">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag-gold section-tag" data-i18n="form_tag">Apply Now</div>
+    <h2 class="section-title" data-i18n="form_title">Join SPAP</h2>
+    <p class="section-sub" style="margin:0 auto" data-i18n="form_sub">Fill out the form below to apply for membership in SPAP.</p>
+    <form class="form-card" action="https://formsubmit.co/business@haitibiznis.com" method="POST">
+      <input type="hidden" name="_subject" value="SPAP - New Member Application">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="form-row">
+        <input type="text" name="fullname" placeholder="Full Name" data-i18n-placeholder="f_name" required>
+        <input type="text" name="business" placeholder="Business Name" data-i18n-placeholder="f_business">
+      </div>
+      <div class="form-row">
+        <input type="tel" name="phone" placeholder="Phone Number" data-i18n-placeholder="f_phone" required>
+        <input type="email" name="email" placeholder="Email Address" data-i18n-placeholder="f_email">
+      </div>
+      <div class="form-row">
+        <input type="text" name="city" placeholder="City / Location" data-i18n-placeholder="f_city">
+        <select name="business_type">
+          <option value="" disabled selected data-i18n="f_type">Type of Business</option>
+          <option value="Small Business">Small Business</option>
+          <option value="Informal Entrepreneur">Informal Entrepreneur</option>
+          <option value="Startup">Startup</option>
+          <option value="Merchant/Vendor">Merchant / Vendor</option>
+          <option value="Service Provider">Service Provider</option>
+          <option value="Community Leader">Community Business Leader</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <textarea name="message" placeholder="Short message - tell us about your business..." data-i18n-placeholder="f_message"></textarea>
+      <button type="submit" class="btn btn-red" style="width:100%;justify-content:center" data-i18n="f_submit">Apply to Join SPAP</button>
+    </form>
+  </div>
+</section>
+
+<!-- SECTION 7: TRAINING & PARTNERSHIP -->
+<section id="partner" style="background:var(--white)">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag" data-i18n="part_tag">Training &amp; Partnerships</div>
+    <h2 class="section-title" data-i18n="part_title">Collaborate with SPAP</h2>
+    <p class="section-sub" style="margin:0 auto" data-i18n="part_sub">Chambers of commerce, municipalities, institutions, NGOs, churches, and sponsors - partner with us to support Haiti's entrepreneurs.</p>
+    <div class="partner-box">
+      <p style="font-size:.92rem;line-height:1.7;color:var(--text);margin-bottom:20px" data-i18n="part_desc">SPAP works with organizations committed to economic development in Haiti. Whether you want to sponsor training programs, provide mentorship, fund business grants, or co-organize workshops - we welcome your collaboration. Together, we can build a stronger, more structured Haitian economy.</p>
+      <a href="mailto:business@haitibiznis.com?subject=SPAP Partnership Inquiry" class="btn btn-gold" data-i18n="part_cta">Contact for Partnership</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: FOOTER CTA -->
+<section style="padding:0 20px 40px">
+  <div class="cta-section">
+    <h2 data-i18n="cta_title">Build a Stronger Economy Together</h2>
+    <p data-i18n="cta_desc">Support entrepreneurs. Strengthen small businesses. Build a more structured economy.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="#apply" class="btn btn-white" data-i18n="cta_join">Join SPAP</a>
+      <a href="#partner" class="btn btn-ghost" data-i18n="cta_contact">Contact SPAP</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>SPAP</h4>
+      <p style="color:#888;line-height:1.6;font-size:.78rem" data-i18n="footer_desc">Secteur Prive des Affaires Populaire - Helping Haiti's entrepreneurs build structured, sustainable businesses.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_ecosystem">Ecosystem</h4>
+      <a href="https://haitibiznis.com" target="_blank">HaitiBiznis</a>
+      <a href="https://48hoursready.com">48HoursReady</a>
+      <a href="https://myplopplop.com" target="_blank">MyPlopPlop</a>
+      <a href="https://myplopplop.com/rides.html" target="_blank">MsouWout</a>
+      <a href="https://talent4peace.com" target="_blank">Talent4Peace</a>
+      <a href="https://boxetoboxe.com" target="_blank">BoxeToBoxe</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_links">Quick Links</h4>
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#benefits" data-i18n="nav_benefits">Benefits</a>
+      <a href="#apply" data-i18n="nav_apply">Join SPAP</a>
+      <a href="#partner" data-i18n="nav_partner">Partnership</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 SPAP - Secteur Prive des Affaires Populaire. A <a href="https://48hoursready.com">48HoursReady</a> / <a href="https://haitibiznis.com">HaitiBiznis</a> Network.</div>
+</footer>
+
+<div class="eco-bar">
+  <span data-i18n="eco_part">Part of</span>
+  <a href="https://haitibiznis.com">HaitiBiznis</a>
+  <a href="https://48hoursready.com">48HoursReady</a>
+  <a href="https://myplopplop.com">MyPlopPlop</a>
+  <a href="https://talent4peace.com">Talent4Peace</a>
+  <a href="https://boxetoboxe.com">BoxeToBoxe</a>
+</div>
+
+<script>
+const T = {
+  fr: {
+    nav_about:'A propos',nav_who:'Pour qui',nav_benefits:'Avantages',nav_powers:'SPAP en action',nav_apply:'Rejoindre SPAP',nav_partner:'Partenariat',
+    hero_title:'Aider les Entrepreneurs a Passer de<br>l\'<span class="gold">Informel au Structure</span>',
+    hero_sub:'Un reseau strategique d\'affaires connectant les entrepreneurs haitiens et petites entreprises a la structure, la formation, la visibilite et les opportunites de croissance a travers 48HoursReady et l\'ecosysteme HaitiBiznis.',
+    hero_join:'Rejoindre SPAP',hero_partner:'Devenir Partenaire',
+    about_tag:'A Propos du SPAP',about_title:'Secteur Prive des Affaires Populaire',
+    about_p1:'<strong>SPAP (Secteur Prive des Affaires Populaire)</strong> est un reseau strategique d\'affaires operant au sein de l\'ecosysteme <strong>48HoursReady</strong>, dedie a aider les entrepreneurs haitiens, proprietaires de petites entreprises et travailleurs informels a faire la transition vers des entreprises structurees et durables. SPAP offre le pont entre l\'activite economique informelle et la participation formelle aux affaires.',
+    about_p2:'A travers la formation, le mentorat, le soutien a la formalisation et la connexion directe a l\'ecosysteme <strong>HaitiBiznis</strong>, SPAP autonomise les entrepreneurs a chaque etape. Que vous geriez un stand de marche, un service local, une startup en croissance ou une entreprise communautaire - SPAP vous donne les outils, le reseau et la visibilite pour croitre avec confiance.',
+    who_tag:'Pour Qui',who_title:'Construit Pour les Batisseurs d\'Entreprises d\'Haiti',who_sub:'SPAP sert chaque entrepreneur travaillant a construire, developper et formaliser son entreprise.',
+    w1_title:'Proprietaires de Petites Entreprises',w1_desc:'Proprietaires de boutiques, restaurants, salons et entreprises locales etablies cherchant a grandir et se formaliser.',
+    w2_title:'Entrepreneurs Informels',w2_desc:'Vendeurs de marche, vendeurs ambulants et travailleurs independants prets a structurer leurs operations.',
+    w3_title:'Startups',w3_desc:'Nouvelles ventures et idees innovantes necessitant orientation, structure et connexions pour reussir.',
+    w4_title:'Marchands et Vendeurs',w4_desc:'Vendeurs de biens et produits souhaitant etendre leur portee via des plateformes numeriques comme MyPlopPlop.',
+    w5_title:'Prestataires de Services Locaux',w5_desc:'Plombiers, electriciens, mecaniciens, couturiers et travailleurs qualifies construisant des entreprises de services.',
+    w6_title:'Leaders d\'Affaires Communautaires',w6_desc:'Leaders organisant l\'activite economique dans leurs communautes et aidant les autres a construire des entreprises.',
+    ben_tag:'Avantages Membres',ben_title:'Pourquoi Rejoindre SPAP ?',ben_sub:'Un soutien reel pour de vraies entreprises a chaque etape de croissance.',
+    b1_title:'Soutien a la Structuration',b1_desc:'Guidance etape par etape pour organiser votre entreprise : plans, finances, operations et structure juridique.',
+    b2_title:'Formation et Ateliers',b2_desc:'Ateliers pratiques sur la gestion d\'entreprise, le marketing, la finance, les outils numeriques et le service client.',
+    b3_title:'Guidance de Formalisation',b3_desc:'Aide a naviguer l\'enregistrement, les permis, la conformite fiscale et la transition de l\'informel au formel.',
+    b4_title:'Visibilite et Promotion',b4_desc:'Votre entreprise mise en avant dans tout l\'ecosysteme HaitiBiznis, touchant des clients en Haiti et dans la diaspora.',
+    b5_title:'Acces aux Opportunites',b5_desc:'Connectez-vous au financement, partenariats, contrats et programmes de croissance disponibles dans l\'ecosysteme.',
+    b6_title:'Communaute et Referrals',b6_desc:'Rejoignez un reseau d\'entrepreneurs qui se soutiennent, partagent des references et grandissent ensemble.',
+    pow_tag:'SPAP en Action',pow_title:'Renforcer l\'Ecosysteme',pow_sub:'Les entrepreneurs SPAP alimentent chaque plateforme de l\'ecosysteme HaitiBiznis.',
+    pow_48:'Les membres SPAP sont les entrepreneurs principaux utilisant les outils 48HoursReady pour construire et lancer leurs entreprises.',
+    pow_plop:'Les entreprises SPAP listent leurs produits et services sur MyPlopPlop, atteignant plus de clients numeriquement.',
+    pow_sou:'Les prestataires de services et entreprises de livraison SPAP utilisent MsouWout pour la logistique et le transport.',
+    pow_t4p:'Les professionnels qualifies de SPAP sont listes sur Talent4Peace pour trouver des clients et developper leur activite.',
+    form_tag:'Postuler Maintenant',form_title:'Rejoindre SPAP',form_sub:'Remplissez le formulaire ci-dessous pour postuler au SPAP.',
+    f_name:'Nom Complet',f_business:'Nom de l\'Entreprise',f_phone:'Numero de Telephone',f_email:'Adresse Email',f_city:'Ville / Localisation',f_type:'Type d\'Entreprise',f_message:'Court message - parlez-nous de votre entreprise...',f_submit:'Postuler au SPAP',
+    part_tag:'Formation & Partenariats',part_title:'Collaborer avec SPAP',part_sub:'Chambres de commerce, municipalites, institutions, ONG, eglises et sponsors - associez-vous a nous pour soutenir les entrepreneurs d\'Haiti.',
+    part_desc:'SPAP travaille avec des organisations engagees dans le developpement economique en Haiti. Que vous souhaitiez sponsoriser des programmes de formation, fournir du mentorat, financer des subventions ou co-organiser des ateliers - nous accueillons votre collaboration.',
+    part_cta:'Contacter pour Partenariat',
+    cta_title:'Construire une Economie Plus Forte Ensemble',cta_desc:'Soutenir les entrepreneurs. Renforcer les petites entreprises. Construire une economie plus structuree.',
+    cta_join:'Rejoindre SPAP',cta_contact:'Contacter SPAP',
+    footer_desc:'Secteur Prive des Affaires Populaire - Aider les entrepreneurs d\'Haiti a construire des entreprises structurees et durables.',
+    footer_ecosystem:'Ecosysteme',footer_links:'Liens Rapides',eco_part:'Fait partie de'
+  },
+  en: {
+    nav_about:'About',nav_who:'Who It\'s For',nav_benefits:'Benefits',nav_powers:'What SPAP Powers',nav_apply:'Join SPAP',nav_partner:'Partnership',
+    hero_title:'Helping Entrepreneurs Move from<br><span class="gold">Informal to Structured</span> Business',
+    hero_sub:'A strategic business network connecting Haitian entrepreneurs and small businesses to structure, training, visibility, and growth opportunities through 48HoursReady and the HaitiBiznis ecosystem.',
+    hero_join:'Join SPAP',hero_partner:'Partner With SPAP',
+    about_tag:'About SPAP',about_title:'Secteur Prive des Affaires Populaire',
+    about_p1:'<strong>SPAP (Secteur Prive des Affaires Populaire)</strong> is a strategic business network operating inside the <strong>48HoursReady</strong> ecosystem, dedicated to helping Haiti\'s entrepreneurs, small business owners, and informal workers transition into structured, sustainable businesses. SPAP provides the bridge between informal economic activity and formal business participation.',
+    about_p2:'Through training, mentorship, formalization support, and direct connection to the <strong>HaitiBiznis</strong> ecosystem, SPAP empowers entrepreneurs at every stage. Whether you run a market stall, a local service, a growing startup, or a community business - SPAP gives you the tools, network, and visibility to grow with confidence.',
+    who_tag:'Who It\'s For',who_title:'Built for Haiti\'s Business Builders',who_sub:'SPAP serves every entrepreneur working to build, grow, and formalize their business.',
+    w1_title:'Small Business Owners',w1_desc:'Owners of shops, restaurants, salons, and established local businesses looking to scale and formalize.',
+    w2_title:'Informal Entrepreneurs',w2_desc:'Market vendors, street sellers, and independent workers ready to structure their business operations.',
+    w3_title:'Startups',w3_desc:'New ventures and innovative ideas that need guidance, structure, and connections to launch successfully.',
+    w4_title:'Merchants and Vendors',w4_desc:'Sellers of goods and products who want to expand their reach through digital platforms like MyPlopPlop.',
+    w5_title:'Local Service Providers',w5_desc:'Plumbers, electricians, mechanics, tailors, and skilled workers building service-based businesses.',
+    w6_title:'Community Business Leaders',w6_desc:'Leaders organizing economic activity in their communities and helping others build businesses.',
+    ben_tag:'Member Benefits',ben_title:'Why Join SPAP?',ben_sub:'Real support for real businesses at every stage of growth.',
+    b1_title:'Business Structuring Support',b1_desc:'Step-by-step guidance to organize your business: plans, finances, operations, and legal structure.',
+    b2_title:'Training and Workshops',b2_desc:'Practical workshops on business management, marketing, finance, digital tools, and customer service.',
+    b3_title:'Formalization Guidance',b3_desc:'Help navigating registration, permits, tax compliance, and transitioning from informal to formal business.',
+    b4_title:'Visibility and Promotion',b4_desc:'Get your business featured across the HaitiBiznis ecosystem, reaching customers in Haiti and the diaspora.',
+    b5_title:'Access to Opportunities',b5_desc:'Connect with funding, partnerships, contracts, and growth programs available through the ecosystem.',
+    b6_title:'Community and Referrals',b6_desc:'Join a network of entrepreneurs who support each other, share referrals, and grow together.',
+    pow_tag:'What SPAP Powers',pow_title:'Strengthening the Ecosystem',pow_sub:'SPAP entrepreneurs fuel every platform in the HaitiBiznis ecosystem.',
+    pow_48:'SPAP members are the core entrepreneurs using 48HoursReady tools to build and launch their businesses.',
+    pow_plop:'SPAP businesses list their products and services on MyPlopPlop, reaching more customers digitally.',
+    pow_sou:'Service providers and delivery businesses in SPAP use MsouWout for logistics and transportation.',
+    pow_t4p:'Skilled professionals from SPAP get listed on Talent4Peace to find clients and grow their service business.',
+    form_tag:'Apply Now',form_title:'Join SPAP',form_sub:'Fill out the form below to apply for membership in SPAP.',
+    f_name:'Full Name',f_business:'Business Name',f_phone:'Phone Number',f_email:'Email Address',f_city:'City / Location',f_type:'Type of Business',f_message:'Short message - tell us about your business...',f_submit:'Apply to Join SPAP',
+    part_tag:'Training & Partnerships',part_title:'Collaborate with SPAP',part_sub:'Chambers of commerce, municipalities, institutions, NGOs, churches, and sponsors - partner with us to support Haiti\'s entrepreneurs.',
+    part_desc:'SPAP works with organizations committed to economic development in Haiti. Whether you want to sponsor training programs, provide mentorship, fund business grants, or co-organize workshops - we welcome your collaboration. Together, we can build a stronger, more structured Haitian economy.',
+    part_cta:'Contact for Partnership',
+    cta_title:'Build a Stronger Economy Together',cta_desc:'Support entrepreneurs. Strengthen small businesses. Build a more structured economy.',
+    cta_join:'Join SPAP',cta_contact:'Contact SPAP',
+    footer_desc:'Secteur Prive des Affaires Populaire - Helping Haiti\'s entrepreneurs build structured, sustainable businesses.',
+    footer_ecosystem:'Ecosystem',footer_links:'Quick Links',eco_part:'Part of'
+  },
+  ht: {
+    nav_about:'Sou Nou',nav_who:'Pou ki moun',nav_benefits:'Avantaj',nav_powers:'Sa SPAP Alimante',nav_apply:'Rejwenn SPAP',nav_partner:'Patenarya',
+    hero_title:'Ede Antreprene Pase de<br><span class="gold">Enfomel a Estrikti</span> Biznis',
+    hero_sub:'Yon rezo estratejik biznis ki konekte antreprene ayisyen ak ti biznis a estrikti, fomasyon, vizibilite, ak opetinite kwasans atrave 48HoursReady ak ekosistem HaitiBiznis la.',
+    hero_join:'Rejwenn SPAP',hero_partner:'Vin Patne SPAP',
+    about_tag:'Sou SPAP',about_title:'Secteur Prive des Affaires Populaire',
+    about_p1:'<strong>SPAP (Secteur Prive des Affaires Populaire)</strong> se yon rezo estratejik biznis ki opere anndan ekosistem <strong>48HoursReady</strong> la, dedye pou ede antreprene ayisyen, propriyete ti biznis, ak travaye enfomel tranzisyon nan biznis estrikti ak dirab. SPAP bay pon ant aktivite ekonomik enfomel ak patisipasyon biznis fomel.',
+    about_p2:'Atrave fomasyon, mentora, sipo fomalizasyon, ak koneksyon direk ak ekosistem <strong>HaitiBiznis</strong> la, SPAP ranfose antreprene nan chak etap. Kit ou genyen yon stand mache, yon sevis lokal, yon startup k ap grandi, oswa yon biznis kominote - SPAP ba ou zouti, rezo, ak vizibilite pou grandi ak konfyans.',
+    who_tag:'Pou Ki Moun',who_title:'Bati Pou Moun K Ap Bati Biznis Ayiti',who_sub:'SPAP sevi chak antreprene k ap travay pou bati, grandi, ak fomalize biznis yo.',
+    w1_title:'Propriyete Ti Biznis',w1_desc:'Propriyete boutik, restoran, salon, ak biznis lokal etabli k ap chache grandi ak fomalize.',
+    w2_title:'Antreprene Enfomel',w2_desc:'Machann mache, vande ambulan, ak travaye endepandan ki pre pou estrikti operasyon biznis yo.',
+    w3_title:'Startups',w3_desc:'Nouvo antrepriz ak lide inovatif ki bezwen gidans, estrikti, ak koneksyon pou lanse ak siksè.',
+    w4_title:'Machan ak Vande',w4_desc:'Vande pwodui ki vle elaji porte yo atrave platfom nimerik tankou MyPlopPlop.',
+    w5_title:'Founis Sevis Lokal',w5_desc:'Plonbye, elektrisyen, mekanisyen, tayè, ak travaye kalifye k ap bati biznis sevis.',
+    w6_title:'Lide Biznis Kominote',w6_desc:'Lide k ap ogranize aktivite ekonomik nan kominote yo epi ede lot moun bati biznis.',
+    ben_tag:'Avantaj Manm',ben_title:'Poukisa Rejwenn SPAP?',ben_sub:'Sipo reel pou biznis reel nan chak etap kwasans.',
+    b1_title:'Sipo Estriktirasyion Biznis',b1_desc:'Gidans etap pa etap pou ogranize biznis ou: plan, finans, operasyon, ak estrikti legal.',
+    b2_title:'Fomasyon ak Atelye',b2_desc:'Atelye pratik sou jesyon biznis, maketing, finans, zouti nimerik, ak sevis kliyan.',
+    b3_title:'Gidans Fomalizasyon',b3_desc:'Ed pou navige anrejistreman, pemi, konfomite taks, ak tranzisyon de enfomel a fomel.',
+    b4_title:'Vizibilite ak Pwomosyon',b4_desc:'Biznis ou parèt nan tout ekosistem HaitiBiznis la, rive jwenn kliyan an Ayiti ak dyaspora a.',
+    b5_title:'Akse nan Opòtinite',b5_desc:'Konekte ak finansman, patenarya, kontra, ak pwogram kwasans disponib nan ekosistem nan.',
+    b6_title:'Kominote ak Referans',b6_desc:'Rejwenn yon rezo antreprene ki sipo youn lot, pataje referans, epi grandi ansanm.',
+    pow_tag:'Sa SPAP Alimante',pow_title:'Ranfose Ekosistem nan',pow_sub:'Antreprene SPAP alimante chak platfom nan ekosistem HaitiBiznis la.',
+    pow_48:'Manm SPAP se antreprene prensipal ki sevi ak zouti 48HoursReady pou bati ak lanse biznis yo.',
+    pow_plop:'Biznis SPAP lis pwodui ak sevis yo sou MyPlopPlop, rive jwenn plis kliyan nimerikman.',
+    pow_sou:'Founis sevis ak biznis livrezon nan SPAP sevi ak MsouWout pou lojistik ak transpo.',
+    pow_t4p:'Pwofesyonel kalifye nan SPAP lis sou Talent4Peace pou jwenn kliyan epi grandi biznis sevis yo.',
+    form_tag:'Aplike Kounye a',form_title:'Rejwenn SPAP',form_sub:'Ranpli fom anba a pou aplike pou manm nan SPAP.',
+    f_name:'Non Konple',f_business:'Non Biznis',f_phone:'Nimewo Telefon',f_email:'Adres Imel',f_city:'Vil / Kote Ou Ye',f_type:'Tip Biznis',f_message:'Ti mesaj - di nou sou biznis ou...',f_submit:'Aplike pou Rejwenn SPAP',
+    part_tag:'Fomasyon & Patenarya',part_title:'Kolabore ak SPAP',part_sub:'Chanm komès, minisipalite, enstitisyon, ONG, legliz, ak sponsò - asosye ak nou pou sipòte antreprene Ayiti yo.',
+    part_desc:'SPAP travay ak oganizasyon ki angaje nan devlopman ekonomik an Ayiti. Kit ou vle sponsorize pwogram fomasyon, bay mentora, finanse sibvansyon biznis, oswa ko-oganize atelye - nou akeyi kolaborasyon ou.',
+    part_cta:'Kontakte pou Patenarya',
+    cta_title:'Bati yon Ekonomi Pi Fo Ansanm',cta_desc:'Sipote antreprene. Ranfose ti biznis. Bati yon ekonomi pi estrikti.',
+    cta_join:'Rejwenn SPAP',cta_contact:'Kontakte SPAP',
+    footer_desc:'Secteur Prive des Affaires Populaire - Ede antreprene Ayiti bati biznis estrikti ak dirab.',
+    footer_ecosystem:'Ekosistem',footer_links:'Lyen Rapid',eco_part:'Fe pati de'
+  },
+  es: {
+    nav_about:'Acerca de',nav_who:'Para quien',nav_benefits:'Beneficios',nav_powers:'Que impulsa SPAP',nav_apply:'Unirse a SPAP',nav_partner:'Asociacion',
+    hero_title:'Ayudando a Emprendedores a Pasar de<br>lo <span class="gold">Informal a lo Estructurado</span>',
+    hero_sub:'Una red estrategica de negocios conectando emprendedores haitianos y pequenas empresas con estructura, capacitacion, visibilidad y oportunidades de crecimiento a traves de 48HoursReady y el ecosistema HaitiBiznis.',
+    hero_join:'Unirse a SPAP',hero_partner:'Ser Socio de SPAP',
+    about_tag:'Sobre SPAP',about_title:'Secteur Prive des Affaires Populaire',
+    about_p1:'<strong>SPAP (Secteur Prive des Affaires Populaire)</strong> es una red estrategica de negocios operando dentro del ecosistema <strong>48HoursReady</strong>, dedicada a ayudar a los emprendedores haitianos, duenos de pequenas empresas y trabajadores informales a hacer la transicion hacia negocios estructurados y sostenibles.',
+    about_p2:'A traves de capacitacion, mentoria, apoyo a la formalizacion y conexion directa con el ecosistema <strong>HaitiBiznis</strong>, SPAP empodera a los emprendedores en cada etapa. Ya sea que manejes un puesto de mercado, un servicio local, una startup en crecimiento o un negocio comunitario - SPAP te da las herramientas, la red y la visibilidad para crecer con confianza.',
+    who_tag:'Para Quien',who_title:'Construido Para los Constructores de Negocios de Haiti',who_sub:'SPAP sirve a cada emprendedor trabajando para construir, crecer y formalizar su negocio.',
+    w1_title:'Duenos de Pequenas Empresas',w1_desc:'Duenos de tiendas, restaurantes, salones y negocios locales establecidos buscando crecer y formalizarse.',
+    w2_title:'Emprendedores Informales',w2_desc:'Vendedores de mercado, vendedores ambulantes y trabajadores independientes listos para estructurar sus operaciones.',
+    w3_title:'Startups',w3_desc:'Nuevos emprendimientos e ideas innovadoras que necesitan orientacion, estructura y conexiones para lanzarse con exito.',
+    w4_title:'Comerciantes y Vendedores',w4_desc:'Vendedores de bienes y productos que quieren expandir su alcance a traves de plataformas digitales como MyPlopPlop.',
+    w5_title:'Proveedores de Servicios Locales',w5_desc:'Plomeros, electricistas, mecanicos, sastres y trabajadores calificados construyendo negocios de servicios.',
+    w6_title:'Lideres de Negocios Comunitarios',w6_desc:'Lideres organizando actividad economica en sus comunidades y ayudando a otros a construir negocios.',
+    ben_tag:'Beneficios de Miembro',ben_title:'Por Que Unirse a SPAP?',ben_sub:'Apoyo real para negocios reales en cada etapa de crecimiento.',
+    b1_title:'Soporte de Estructuracion',b1_desc:'Guia paso a paso para organizar tu negocio: planes, finanzas, operaciones y estructura legal.',
+    b2_title:'Capacitacion y Talleres',b2_desc:'Talleres practicos sobre gestion empresarial, marketing, finanzas, herramientas digitales y servicio al cliente.',
+    b3_title:'Guia de Formalizacion',b3_desc:'Ayuda para navegar registro, permisos, cumplimiento tributario y transicion de informal a formal.',
+    b4_title:'Visibilidad y Promocion',b4_desc:'Tu negocio destacado en todo el ecosistema HaitiBiznis, alcanzando clientes en Haiti y la diaspora.',
+    b5_title:'Acceso a Oportunidades',b5_desc:'Conecta con financiamiento, asociaciones, contratos y programas de crecimiento disponibles en el ecosistema.',
+    b6_title:'Comunidad y Referencias',b6_desc:'Unete a una red de emprendedores que se apoyan mutuamente, comparten referencias y crecen juntos.',
+    pow_tag:'Que Impulsa SPAP',pow_title:'Fortaleciendo el Ecosistema',pow_sub:'Los emprendedores SPAP impulsan cada plataforma del ecosistema HaitiBiznis.',
+    pow_48:'Los miembros SPAP son los emprendedores centrales usando herramientas 48HoursReady para construir y lanzar sus negocios.',
+    pow_plop:'Los negocios SPAP listan sus productos y servicios en MyPlopPlop, alcanzando mas clientes digitalmente.',
+    pow_sou:'Proveedores de servicios y negocios de entrega en SPAP usan MsouWout para logistica y transporte.',
+    pow_t4p:'Profesionales calificados de SPAP se listan en Talent4Peace para encontrar clientes y crecer su negocio de servicios.',
+    form_tag:'Aplicar Ahora',form_title:'Unirse a SPAP',form_sub:'Completa el formulario para solicitar membresia en SPAP.',
+    f_name:'Nombre Completo',f_business:'Nombre del Negocio',f_phone:'Numero de Telefono',f_email:'Correo Electronico',f_city:'Ciudad / Ubicacion',f_type:'Tipo de Negocio',f_message:'Mensaje corto - cuentanos sobre tu negocio...',f_submit:'Solicitar Unirse a SPAP',
+    part_tag:'Capacitacion & Asociaciones',part_title:'Colaborar con SPAP',part_sub:'Camaras de comercio, municipalidades, instituciones, ONGs, iglesias y patrocinadores - asociense con nosotros para apoyar a los emprendedores de Haiti.',
+    part_desc:'SPAP trabaja con organizaciones comprometidas con el desarrollo economico en Haiti. Ya sea que quieras patrocinar programas de capacitacion, proporcionar mentoria, financiar subvenciones o co-organizar talleres - damos la bienvenida a tu colaboracion.',
+    part_cta:'Contactar para Asociacion',
+    cta_title:'Construir una Economia Mas Fuerte Juntos',cta_desc:'Apoyar emprendedores. Fortalecer pequenas empresas. Construir una economia mas estructurada.',
+    cta_join:'Unirse a SPAP',cta_contact:'Contactar SPAP',
+    footer_desc:'Secteur Prive des Affaires Populaire - Ayudando a emprendedores de Haiti a construir negocios estructurados y sostenibles.',
+    footer_ecosystem:'Ecosistema',footer_links:'Enlaces Rapidos',eco_part:'Parte de'
+  }
+};
+
+let currentLang = 'fr';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.top-lang-bar a').forEach(a => a.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  const t = T[lang] || T.fr;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key]) el.placeholder = t[key];
+  });
+}
+function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
+setLang('fr');
+</script>
+</body>
+</html>
