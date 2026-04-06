@@ -120,16 +120,24 @@ section{padding:60px 20px}
 .btn-action-green{background:#2E7D32;color:#fff}
 .btn-action-green:hover{background:#1B5E20}
 
-/* ═══ FUNDING ═══ */
+/* ═══ FUNDING / RSS ═══ */
 .funding-section{background:linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);padding:50px 20px;text-align:center;color:#fff}
 .funding-section h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,2rem);margin-bottom:12px}
 .funding-section p{opacity:.9;max-width:500px;margin:0 auto 24px;font-size:.92rem;line-height:1.6}
-.funding-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px;max-width:800px;margin-left:auto;margin-right:auto}
-.funding-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:24px 20px;backdrop-filter:blur(6px);transition:transform .3s}
-.funding-card:hover{transform:translateY(-4px)}
-.funding-card .fund-icon{font-size:2rem;margin-bottom:10px}
-.funding-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
-.funding-card p{font-size:.82rem;opacity:.85;line-height:1.5}
+.fund-sources{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px}
+.fund-source{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:8px 16px;border-radius:100px;font-size:.75rem;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.fund-source:hover,.fund-source.active{background:var(--red);border-color:var(--red)}
+.fund-source img{width:20px;height:20px;border-radius:50%;background:#fff}
+.rss-feed{max-width:700px;margin:0 auto;text-align:left}
+.rss-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px 20px;margin-bottom:10px;transition:all .3s;cursor:pointer;display:block}
+.rss-item:hover{background:rgba(255,255,255,.15);transform:translateX(4px)}
+.rss-item-source{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red-light);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.rss-item-source::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red-light);flex-shrink:0}
+.rss-item h4{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.4}
+.rss-item p{font-size:.78rem;opacity:.7;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rss-item .rss-date{font-size:.68rem;opacity:.5;margin-top:6px}
+.rss-loading{padding:30px;opacity:.6;font-size:.85rem}
+.rss-error{padding:20px;opacity:.5;font-size:.82rem}
 
 /* ═══ TESTIMONIALS ═══ */
 .testimonials{background:var(--off-white);padding:50px 20px}
@@ -448,28 +456,22 @@ footer a{color:#fff;font-weight:600}
   </div>
 </section>
 
-<!-- FUNDING OPPORTUNITIES -->
+<!-- EXPLORE FUNDING -->
 <section class="funding-section" id="funding">
-  <h2 data-i18n="fund_title">&#128176; Explore Funding Opportunities</h2>
-  <p data-i18n="fund_sub">Access grants, microloans, and investment opportunities designed for Haitian entrepreneurs.</p>
-  <div class="funding-cards">
-    <div class="funding-card">
-      <div class="fund-icon">&#127974;</div>
-      <h3 data-i18n="fund1_title">Microloans</h3>
-      <p data-i18n="fund1_desc">Small business loans with flexible terms to help you start or grow your venture.</p>
-    </div>
-    <div class="funding-card">
-      <div class="fund-icon">&#128184;</div>
-      <h3 data-i18n="fund2_title">Grants</h3>
-      <p data-i18n="fund2_desc">Non-repayable funding for qualifying businesses in key sectors of Haiti's economy.</p>
-    </div>
-    <div class="funding-card">
-      <div class="fund-icon">&#129309;</div>
-      <h3 data-i18n="fund3_title">Investor Network</h3>
-      <p data-i18n="fund3_desc">Connect with diaspora and international investors looking to support Haitian businesses.</p>
-    </div>
+  <h2 data-i18n="fund_title">&#128176; Explore Funding</h2>
+  <p data-i18n="fund_sub">Latest funding opportunities from international development organizations for Haiti.</p>
+  <div class="fund-sources">
+    <span class="fund-source active" onclick="filterFeed('all')">All Sources</span>
+    <span class="fund-source" onclick="filterFeed('idb')">IDB</span>
+    <span class="fund-source" onclick="filterFeed('worldbank')">World Bank</span>
+    <span class="fund-source" onclick="filterFeed('un')">UN</span>
+    <span class="fund-source" onclick="filterFeed('undp')">UNDP</span>
+    <span class="fund-source" onclick="filterFeed('cdb')">CDB</span>
   </div>
-  <a href="#contact" class="btn btn-white" style="margin-top:30px" data-i18n="fund_cta">Apply for Funding</a>
+  <div class="rss-feed" id="rssFeed">
+    <div class="rss-loading" data-i18n="fund_loading">Loading latest funding opportunities...</div>
+  </div>
+  <a href="#contact" class="btn btn-white" style="margin-top:24px" data-i18n="fund_cta">Apply for Funding</a>
 </section>
 
 <!-- TESTIMONIALS -->
@@ -570,7 +572,7 @@ footer a{color:#fff;font-weight:600}
 </div>
 
 <!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/18095551234" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+<a href="https://wa.me/50941902005" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
@@ -596,7 +598,7 @@ const T = {
     pkg2g_title:"Configuration MyPlopPlop",
     pkg2h_title:"Traduction Creole Complete", pkg2h_detail:"Tous les materiaux en 2 langues",
     pkg2_cta:"Commencer",
-    fund_title:"&#128176; Explorez les Opportunites de Financement", fund_sub:"Accedez aux subventions, microcrédits et investissements conçus pour les entrepreneurs haitiens.",
+    fund_title:"&#128176; Explorer le Financement", fund_sub:"Dernieres opportunites de financement des organisations internationales de developpement pour Haiti.", fund_loading:"Chargement des opportunites...",
     fund1_title:"Microcredits", fund1_desc:"Prets aux petites entreprises avec des conditions flexibles pour demarrer ou developper votre projet.",
     fund2_title:"Subventions", fund2_desc:"Financement non remboursable pour les entreprises qualifiees dans des secteurs cles de l'economie haitienne.",
     fund3_title:"Reseau d'Investisseurs", fund3_desc:"Connectez-vous avec des investisseurs de la diaspora et internationaux qui soutiennent les entreprises haitiennes.",
@@ -650,7 +652,7 @@ const T = {
     pkg2g_title:"MyPlopPlop Setup",
     pkg2h_title:"Full Creole Translation", pkg2h_detail:"All materials in 2 languages",
     pkg2_cta:"Get Started",
-    fund_title:"&#128176; Explore Funding Opportunities", fund_sub:"Access grants, microloans, and investment opportunities designed for Haitian entrepreneurs.",
+    fund_title:"&#128176; Explore Funding", fund_sub:"Latest funding opportunities from international development organizations for Haiti.", fund_loading:"Loading latest opportunities...",
     fund1_title:"Microloans", fund1_desc:"Small business loans with flexible terms to help you start or grow your venture.",
     fund2_title:"Grants", fund2_desc:"Non-repayable funding for qualifying businesses in key sectors of Haiti's economy.",
     fund3_title:"Investor Network", fund3_desc:"Connect with diaspora and international investors looking to support Haitian businesses.",
@@ -704,7 +706,7 @@ const T = {
     pkg2g_title:"Konfigirasyon MyPlopPlop",
     pkg2h_title:"Tradiksyon Kreyol Konplè", pkg2h_detail:"Tout materyèl nan 2 lang",
     pkg2_cta:"Komanse",
-    fund_title:"&#128176; Eksplore Oportunite Finansman", fund_sub:"Gen akse nan sibvansyon, mikwokredi, ak envestisman ki fet pou antreprene ayisyen yo.",
+    fund_title:"&#128176; Eksplore Finansman", fund_sub:"Denyè oportunite finansman nan oganizasyon entènasyonal devlopman pou Ayiti.", fund_loading:"Chajman oportunite yo...",
     fund1_title:"Mikwokredi", fund1_desc:"Ti pre pou biznis ak kondisyon fleksib pou ede ou komanse oswa grandi.",
     fund2_title:"Sibvansyon", fund2_desc:"Finansman ou pa bezwen ranbouse pou biznis ki kalifye nan sekte kle ekonomi Ayiti a.",
     fund3_title:"Rezo Envestise", fund3_desc:"Konekte ak envestise nan dyaspora ak entenasyonal ki vle sipote biznis ayisyen yo.",
@@ -758,7 +760,7 @@ const T = {
     pkg2g_title:"Configuracion MyPlopPlop",
     pkg2h_title:"Traduccion Creole Completa", pkg2h_detail:"Todos los materiales en 2 idiomas",
     pkg2_cta:"Comenzar",
-    fund_title:"&#128176; Explora Oportunidades de Financiamiento", fund_sub:"Accede a subvenciones, microprestamos y oportunidades de inversion disenadas para emprendedores haitianos.",
+    fund_title:"&#128176; Explorar Financiamiento", fund_sub:"Ultimas oportunidades de financiamiento de organizaciones internacionales de desarrollo para Haiti.", fund_loading:"Cargando oportunidades...",
     fund1_title:"Microprestamos", fund1_desc:"Prestamos para pequenas empresas con terminos flexibles para ayudarte a comenzar o crecer.",
     fund2_title:"Subvenciones", fund2_desc:"Financiamiento no reembolsable para empresas calificadas en sectores clave de la economia haitiana.",
     fund3_title:"Red de Inversores", fund3_desc:"Conecta con inversores de la diaspora e internacionales que buscan apoyar negocios haitianos.",
@@ -811,6 +813,102 @@ function setLang(lang) {
 }
 function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
 setLang('fr');
+
+/* ═══ RSS FUNDING FEEDS ═══ */
+const FEEDS = [
+  {id:'idb', name:'Inter-American Development Bank', url:'https://www.iadb.org/en/news/rss', site:'https://www.iadb.org/en/who-we-are/country/haiti'},
+  {id:'worldbank', name:'World Bank', url:'https://feeds.worldbank.org/rss/data/site', site:'https://www.worldbank.org/en/country/haiti'},
+  {id:'un', name:'United Nations', url:'https://news.un.org/feed/subscribe/en/news/region/latin-america-and-caribbean/feed/rss.xml', site:'https://news.un.org/en/focus/haiti'},
+  {id:'undp', name:'UNDP', url:'https://www.undp.org/haiti/rss.xml', site:'https://www.undp.org/haiti'},
+  {id:'cdb', name:'Caribbean Development Bank', url:'https://www.caribank.org/rss.xml', site:'https://www.caribank.org'}
+];
+let allFeedItems = [];
+let currentFilter = 'all';
+
+async function loadFeeds() {
+  const container = document.getElementById('rssFeed');
+  const proxy = 'https://api.allorigins.win/raw?url=';
+  let items = [];
+  const promises = FEEDS.map(async feed => {
+    try {
+      const resp = await fetch(proxy + encodeURIComponent(feed.url), {signal: AbortSignal.timeout(8000)});
+      if (!resp.ok) return [];
+      const text = await resp.text();
+      const doc = new DOMParser().parseFromString(text, 'text/xml');
+      const entries = doc.querySelectorAll('item, entry');
+      const feedItems = [];
+      entries.forEach((item, i) => {
+        if (i >= 5) return;
+        const title = item.querySelector('title')?.textContent || '';
+        const desc = (item.querySelector('description, summary, content')?.textContent || '').replace(/<[^>]*>/g, '').substring(0, 160);
+        const link = item.querySelector('link')?.textContent || item.querySelector('link')?.getAttribute('href') || feed.site;
+        const pubDate = item.querySelector('pubDate, published, updated')?.textContent || '';
+        let dateStr = '';
+        if (pubDate) { try { dateStr = new Date(pubDate).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}); } catch(e){} }
+        if (title.toLowerCase().includes('haiti') || title.toLowerCase().includes('caribbean') || title.toLowerCase().includes('small business') || title.toLowerCase().includes('entrepreneur') || title.toLowerCase().includes('grant') || title.toLowerCase().includes('fund') || title.toLowerCase().includes('loan') || title.toLowerCase().includes('develop') || feedItems.length < 3) {
+          feedItems.push({source: feed.name, sourceId: feed.id, title, desc, link, date: dateStr, rawDate: pubDate ? new Date(pubDate).getTime() : 0});
+        }
+      });
+      return feedItems;
+    } catch(e) { return []; }
+  });
+  const results = await Promise.all(promises);
+  results.forEach(r => items.push(...r));
+  items.sort((a, b) => b.rawDate - a.rawDate);
+  allFeedItems = items;
+  if (items.length === 0) {
+    showStaticFunding();
+  } else {
+    renderFeed(items);
+  }
+}
+
+function renderFeed(items) {
+  const container = document.getElementById('rssFeed');
+  if (items.length === 0) {
+    container.innerHTML = '<div class="rss-error">No items found for this source. Try another filter.</div>';
+    return;
+  }
+  container.innerHTML = items.slice(0, 12).map(item =>
+    '<a href="' + item.link + '" target="_blank" class="rss-item" data-source="' + item.sourceId + '">' +
+      '<div class="rss-item-source">' + item.source + '</div>' +
+      '<h4>' + item.title + '</h4>' +
+      (item.desc ? '<p>' + item.desc + '</p>' : '') +
+      (item.date ? '<div class="rss-date">' + item.date + '</div>' : '') +
+    '</a>'
+  ).join('');
+}
+
+function filterFeed(sourceId) {
+  currentFilter = sourceId;
+  document.querySelectorAll('.fund-source').forEach(s => s.classList.remove('active'));
+  event.target.classList.add('active');
+  if (sourceId === 'all') {
+    renderFeed(allFeedItems);
+  } else {
+    renderFeed(allFeedItems.filter(i => i.sourceId === sourceId));
+  }
+}
+
+function showStaticFunding() {
+  const container = document.getElementById('rssFeed');
+  const sources = [
+    {name:'Inter-American Development Bank (IDB)', desc:'Grants, loans and technical cooperation for Haiti\'s private sector development.', link:'https://www.iadb.org/en/who-we-are/country/haiti', id:'idb'},
+    {name:'World Bank - Haiti', desc:'Development financing, business environment programs and economic recovery projects.', link:'https://www.worldbank.org/en/country/haiti', id:'worldbank'},
+    {name:'United Nations - Haiti', desc:'UN agency funding programs for sustainable development and humanitarian aid.', link:'https://news.un.org/en/focus/haiti', id:'un'},
+    {name:'UNDP Haiti', desc:'Small business grants, entrepreneurship support and economic inclusion programs.', link:'https://www.undp.org/haiti', id:'undp'},
+    {name:'Caribbean Development Bank', desc:'Regional development loans, grants and technical assistance for Caribbean entrepreneurs.', link:'https://www.caribank.org', id:'cdb'}
+  ];
+  container.innerHTML = sources.map(s =>
+    '<a href="' + s.link + '" target="_blank" class="rss-item" data-source="' + s.id + '">' +
+      '<div class="rss-item-source">' + s.name + '</div>' +
+      '<h4>Visit ' + s.name + '</h4>' +
+      '<p>' + s.desc + '</p>' +
+    '</a>'
+  ).join('');
+}
+
+loadFeeds();
 </script>
 </body>
 </html>
