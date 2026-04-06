@@ -101,6 +101,10 @@ section{padding:60px 20px}
 /* ═══ VIDEO SECTION ═══ */
 .video-section{background:linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);padding:50px 20px;text-align:center;color:#fff}
 .video-section h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,2rem);margin-bottom:20px;color:var(--gold)}
+.video-lang-bar{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+.video-lang-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:7px 18px;border-radius:100px;font-size:.78rem;font-weight:700;color:#fff;cursor:pointer;transition:all .2s}
+.video-lang-btn:hover{background:rgba(255,255,255,.25)}
+.video-lang-btn.active{background:var(--red);border-color:var(--red)}
 .video-wrapper{max-width:640px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.4);border:3px solid rgba(255,255,255,.15);position:relative;padding-bottom:56.25%;height:0}
 .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 
@@ -302,6 +306,11 @@ footer a{color:#fff;font-weight:600}
 <!-- VIDEO SECTION -->
 <section class="video-section" id="video">
   <h2 data-i18n="video_title">&#127916; Watch How 48HoursReady Works</h2>
+  <div class="video-lang-bar">
+    <span class="video-lang-btn" onclick="switchVideo('en')">&#127468;&#127463; English</span>
+    <span class="video-lang-btn active" onclick="switchVideo('ht')">&#127469;&#127481; Kreyol</span>
+    <span class="video-lang-btn" onclick="switchVideo('fr')" id="vidBtnFr" style="opacity:.5;cursor:default">&#127467;&#127479; Francais</span>
+  </div>
   <div class="video-wrapper">
     <iframe src="https://www.youtube.com/embed/aAUoNAhikUc" id="videoFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
@@ -919,6 +928,14 @@ function setLang(lang) {
   });
 }
 function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
+
+const videoMap = {en:'UfN922vZfOs', ht:'aAUoNAhikUc', fr:''};
+function switchVideo(lang) {
+  if (!videoMap[lang]) return;
+  document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoMap[lang];
+  document.querySelectorAll('.video-lang-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
 setLang('fr');
 
 /* ═══ RSS FUNDING FEEDS ═══ */
