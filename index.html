@@ -309,7 +309,7 @@ footer a{color:#fff;font-weight:600}
   <div class="video-lang-bar">
     <span class="video-lang-btn" onclick="switchVideo('en')">&#127468;&#127463; English</span>
     <span class="video-lang-btn active" onclick="switchVideo('ht')">&#127469;&#127481; Kreyol</span>
-    <span class="video-lang-btn" onclick="switchVideo('fr')" id="vidBtnFr" style="opacity:.5;cursor:default">&#127467;&#127479; Francais</span>
+    <span class="video-lang-btn" onclick="switchVideo('fr')">&#127467;&#127479; Francais</span>
   </div>
   <div class="video-wrapper">
     <iframe src="https://www.youtube.com/embed/aAUoNAhikUc" id="videoFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -972,7 +972,7 @@ function setLang(lang) {
 }
 function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
 
-const videoMap = {en:'UfN922vZfOs', ht:'aAUoNAhikUc', fr:''};
+const videoMap = {en:'UfN922vZfOs', ht:'aAUoNAhikUc', fr:'PuGMFzCyAmc'};
 function switchVideo(lang) {
   if (!videoMap[lang]) return;
   document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoMap[lang];
