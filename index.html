@@ -319,11 +319,11 @@ footer a{color:#fff;font-weight:600}
 <!-- ACTION BUTTONS -->
 <section class="action-buttons" id="programs">
   <div class="section-inner">
-    <a href="#contact" class="action-btn btn-action-red" data-i18n="act_start">Get Started</a>
-    <a href="#contact" class="action-btn btn-action-blue" data-i18n="act_student">Apply for Student Program</a>
-    <a href="#contact" class="action-btn btn-action-outline-red" data-i18n="act_ambassador">Become an Ambassador</a>
-    <a href="#contact" class="action-btn btn-action-outline-blue" data-i18n="act_influencer">Influencer Recruiter</a>
-    <a href="#contact" class="action-btn btn-action-green" data-i18n="act_learning">Start Free Learning</a>
+    <a href="#contact" class="action-btn btn-action-red" data-i18n="act_start" onclick="setProgram('Get Started')">Get Started</a>
+    <a href="#contact" class="action-btn btn-action-blue" data-i18n="act_student" onclick="setProgram('Student Program')">Apply for Student Program</a>
+    <a href="#contact" class="action-btn btn-action-outline-red" data-i18n="act_ambassador" onclick="setProgram('Ambassador')">Become an Ambassador</a>
+    <a href="#contact" class="action-btn btn-action-outline-blue" data-i18n="act_influencer" onclick="setProgram('Influencer Recruiter')">Influencer Recruiter</a>
+    <a href="#contact" class="action-btn btn-action-green" data-i18n="act_learning" onclick="setProgram('Free Learning')">Start Free Learning</a>
   </div>
 </section>
 
@@ -599,6 +599,8 @@ footer a{color:#fff;font-weight:600}
       <input type="hidden" name="_subject" value="48HoursReady - New Business Application">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://48hoursready.com/payment.html">
+      <input type="hidden" name="Program" id="programField" value="General">
       <input type="text" name="Full Name" placeholder="Full Name" data-i18n-placeholder="form_name" required>
       <input type="email" name="Email" placeholder="Email Address" data-i18n-placeholder="form_email" required>
       <input type="tel" name="Phone / WhatsApp" placeholder="Phone / WhatsApp" data-i18n-placeholder="form_phone" required>
@@ -971,8 +973,9 @@ function setLang(lang) {
   });
 }
 function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
+function setProgram(p) { document.getElementById('programField').value = p; }
 
-const videoMap = {en:'UfN922vZfOs', ht:'aAUoNAhikUc', fr:'PuGMFzCyAmc'};
+const videoMap = {en:'UfN922vZfOs', ht:'aAUoNAhikUc', fr:'cR3nVAnEzVI'};
 function switchVideo(lang) {
   if (!videoMap[lang]) return;
   document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoMap[lang];

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>48HoursReady - Payment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D21034;--red-dark:#B00D2C;
+  --blue:#00209F;--blue-dark:#001566;
+  --gold:#D4A017;--gold-light:#E8B82E;
+  --white:#FFFFFF;--off-white:#FFF8F8;
+  --dark:#1A0C0C;--text:#2A1A1A;--text-light:#6A5A5A;
+  --green:#2E7D32;
+  --body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --display:'DM Serif Display',Georgia,serif;
+}
+body{font-family:var(--body);background:var(--off-white);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+
+.top-lang-bar{
+  background:var(--red);color:#fff;font-size:.7rem;
+  padding:5px 20px;display:flex;align-items:center;justify-content:center;gap:4px;
+  position:fixed;top:0;left:0;right:0;z-index:1001;height:32px;
+}
+.top-lang-bar a{
+  color:#fff;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:100px;
+  font-size:.68rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.top-lang-bar a:hover{background:rgba(255,255,255,.3)}
+.top-lang-bar a.active{background:#fff;color:var(--red)}
+
+.payment-container{max-width:520px;width:100%;margin-top:40px}
+
+.success-header{text-align:center;margin-bottom:30px}
+.success-icon{width:70px;height:70px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;box-shadow:0 4px 20px rgba(46,125,50,.3)}
+.success-header h1{font-family:var(--display);font-size:1.6rem;color:var(--dark);margin-bottom:8px}
+.success-header p{color:var(--text-light);font-size:.9rem;line-height:1.6}
+
+.payment-section{margin-top:24px}
+.payment-section h2{font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:16px;text-align:center}
+.payment-section p{text-align:center;color:var(--text-light);font-size:.85rem;margin-bottom:16px}
+
+.payment-options{display:flex;flex-direction:column;gap:14px}
+
+.payment-card{background:var(--white);border-radius:16px;padding:20px 24px;border:2px solid rgba(0,0,0,.06);box-shadow:0 2px 12px rgba(0,0,0,.04);display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .3s;text-decoration:none;color:var(--text)}
+.payment-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:var(--blue)}
+
+.payment-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.icon-moncash{background:#FF6B00;color:#fff}
+.icon-natcash{background:#00A651;color:#fff}
+.icon-credit{background:var(--blue);color:#fff}
+
+.payment-info h3{font-size:.95rem;font-weight:700;margin-bottom:3px}
+.payment-info p{font-size:.8rem;color:var(--text-light);margin:0;text-align:left}
+.payment-info .pay-number{font-size:.82rem;font-weight:700;color:var(--dark);margin-top:4px}
+
+.payment-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--text-light);font-size:.78rem}
+.payment-divider::before,.payment-divider::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
+
+.whatsapp-help{text-align:center;margin-top:24px;padding:20px;background:rgba(37,211,102,.08);border-radius:14px;border:1px solid rgba(37,211,102,.2)}
+.whatsapp-help a{display:inline-flex;align-items:center;gap:8px;color:#25D366;font-weight:700;font-size:.9rem;text-decoration:none}
+.whatsapp-help p{font-size:.8rem;color:var(--text-light);margin-top:6px}
+
+.back-link{text-align:center;margin-top:20px}
+.back-link a{color:var(--blue);font-size:.85rem;font-weight:600;text-decoration:none}
+.back-link a:hover{text-decoration:underline}
+
+.eco-bar{background:var(--dark);padding:14px 20px;text-align:center;position:fixed;bottom:0;left:0;right:0}
+.eco-bar a{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:600;margin:0 8px;transition:color .2s;text-decoration:none}
+.eco-bar a:hover{color:#fff}
+</style>
+</head>
+<body>
+
+<!-- TOP LANGUAGE BAR -->
+<div class="top-lang-bar">
+  <a onclick="setLang('fr')" class="active" id="lang-fr">&#127467;&#127479; Francais</a>
+  <a onclick="setLang('en')" id="lang-en">&#127468;&#127463; English</a>
+  <a onclick="setLang('ht')" id="lang-ht">&#127469;&#127481; Kreyol</a>
+  <a onclick="setLang('es')" id="lang-es">&#127466;&#127480; Espanol</a>
+</div>
+
+<div class="payment-container">
+  <!-- SUCCESS -->
+  <div class="success-header">
+    <div class="success-icon">&#10003;</div>
+    <h1 data-i18n="pay_title">Application Received!</h1>
+    <p data-i18n="pay_desc">Thank you for applying to 48HoursReady. To activate your package, please complete your payment using one of the options below.</p>
+  </div>
+
+  <!-- PAYMENT OPTIONS -->
+  <div class="payment-section">
+    <h2 data-i18n="pay_choose">Choose Payment Method</h2>
+
+    <div class="payment-options">
+      <!-- MONCASH -->
+      <a href="tel:*202*50941902005*199#" class="payment-card">
+        <div class="payment-icon icon-moncash">&#128179;</div>
+        <div class="payment-info">
+          <h3>MonCash</h3>
+          <p data-i18n="pay_moncash_desc">Pay via Digicel MonCash mobile money</p>
+          <div class="pay-number">+509 4190 2005</div>
+        </div>
+      </a>
+
+      <!-- NATCASH -->
+      <a href="tel:*202*50941902005*199#" class="payment-card">
+        <div class="payment-icon icon-natcash">&#128181;</div>
+        <div class="payment-info">
+          <h3>NatCash</h3>
+          <p data-i18n="pay_natcash_desc">Pay via Natcom NatCash mobile money</p>
+          <div class="pay-number">+509 4190 2005</div>
+        </div>
+      </a>
+
+      <div class="payment-divider" data-i18n="pay_or">or</div>
+
+      <!-- CREDIT CARD -->
+      <a href="https://wa.me/50941902005?text=I%20want%20to%20pay%20by%20credit%20card%20for%2048HoursReady%20package" class="payment-card" target="_blank">
+        <div class="payment-icon icon-credit">&#128179;</div>
+        <div class="payment-info">
+          <h3 data-i18n="pay_credit_title">Credit / Debit Card</h3>
+          <p data-i18n="pay_credit_desc">Contact us on WhatsApp to complete payment by card</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- WHATSAPP HELP -->
+  <div class="whatsapp-help">
+    <a href="https://wa.me/50941902005" target="_blank">&#128172; WhatsApp +509 4190 2005</a>
+    <p data-i18n="pay_help">Need help with payment? Message us on WhatsApp and we'll guide you through the process.</p>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html" data-i18n="pay_back">&larr; Back to 48HoursReady</a>
+  </div>
+</div>
+
+<!-- ECOSYSTEM BAR -->
+<div class="eco-bar">
+  <a href="https://haitibiznis.com">HaitiBiznis</a>
+  <a href="https://myplopplop.com">MyPlopPlop</a>
+  <a href="https://talent4peace.com">Talent4Peace</a>
+  <a href="https://boxetoboxe.com">BoxeToBoxe</a>
+</div>
+
+<script>
+const T = {
+  fr: {
+    pay_title:"Candidature Recue!",
+    pay_desc:"Merci d'avoir postule a 48HoursReady. Pour activer votre forfait, veuillez completer votre paiement avec l'une des options ci-dessous.",
+    pay_choose:"Choisir le Mode de Paiement",
+    pay_moncash_desc:"Payer via MonCash Digicel",
+    pay_natcash_desc:"Payer via NatCash Natcom",
+    pay_or:"ou",
+    pay_credit_title:"Carte de Credit / Debit",
+    pay_credit_desc:"Contactez-nous sur WhatsApp pour payer par carte",
+    pay_help:"Besoin d'aide pour le paiement? Ecrivez-nous sur WhatsApp et nous vous guiderons.",
+    pay_back:"&larr; Retour a 48HoursReady"
+  },
+  en: {
+    pay_title:"Application Received!",
+    pay_desc:"Thank you for applying to 48HoursReady. To activate your package, please complete your payment using one of the options below.",
+    pay_choose:"Choose Payment Method",
+    pay_moncash_desc:"Pay via Digicel MonCash mobile money",
+    pay_natcash_desc:"Pay via Natcom NatCash mobile money",
+    pay_or:"or",
+    pay_credit_title:"Credit / Debit Card",
+    pay_credit_desc:"Contact us on WhatsApp to complete payment by card",
+    pay_help:"Need help with payment? Message us on WhatsApp and we'll guide you through the process.",
+    pay_back:"&larr; Back to 48HoursReady"
+  },
+  ht: {
+    pay_title:"Aplikasyon Resevwa!",
+    pay_desc:"Mesi paske ou aplike nan 48HoursReady. Pou aktive pake ou, tanpri konplete peman ou ak youn nan opsyon ki anba yo.",
+    pay_choose:"Chwazi Metod Peman",
+    pay_moncash_desc:"Peye atravè MonCash Digicel",
+    pay_natcash_desc:"Peye atravè NatCash Natcom",
+    pay_or:"oswa",
+    pay_credit_title:"Kat Kredi / Debi",
+    pay_credit_desc:"Kontakte nou sou WhatsApp pou peye ak kat",
+    pay_help:"Bezwen ed pou peman? Ekri nou sou WhatsApp epi nap gide ou.",
+    pay_back:"&larr; Retounen nan 48HoursReady"
+  },
+  es: {
+    pay_title:"Solicitud Recibida!",
+    pay_desc:"Gracias por aplicar a 48HoursReady. Para activar tu paquete, completa tu pago con una de las opciones a continuacion.",
+    pay_choose:"Elegir Metodo de Pago",
+    pay_moncash_desc:"Pagar via MonCash Digicel",
+    pay_natcash_desc:"Pagar via NatCash Natcom",
+    pay_or:"o",
+    pay_credit_title:"Tarjeta de Credito / Debito",
+    pay_credit_desc:"Contactanos en WhatsApp para pagar con tarjeta",
+    pay_help:"Necesitas ayuda con el pago? Escribenos en WhatsApp y te guiaremos.",
+    pay_back:"&larr; Volver a 48HoursReady"
+  }
+};
+
+let currentLang = 'fr';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.top-lang-bar a').forEach(a => a.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  const t = T[lang] || T.fr;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.innerHTML = t[key];
+  });
+}
+setLang('fr');
+</script>
+</body>
+</html>
