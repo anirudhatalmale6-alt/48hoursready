@@ -98,6 +98,54 @@ section{padding:60px 20px}
 .icon-blue{background:rgba(0,32,159,.08)}
 .icon-gold{background:rgba(212,160,23,.08)}
 
+/* ═══ VIDEO SECTION ═══ */
+.video-section{background:linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);padding:50px 20px;text-align:center;color:#fff}
+.video-section h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,2rem);margin-bottom:20px;color:var(--gold)}
+.video-wrapper{max-width:640px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.4);border:3px solid rgba(255,255,255,.15);position:relative;padding-bottom:56.25%;height:0}
+.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+
+/* ═══ ACTION BUTTONS ═══ */
+.action-buttons{background:var(--white);padding:50px 20px;text-align:center}
+.action-buttons .section-inner{display:flex;flex-direction:column;gap:14px;max-width:500px;align-items:stretch}
+.action-btn{display:block;padding:16px 24px;border-radius:12px;font-size:1rem;font-weight:700;text-align:center;transition:all .3s;border:2px solid transparent;cursor:pointer;font-family:var(--body)}
+.action-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.btn-action-red{background:var(--red);color:#fff}
+.btn-action-red:hover{background:var(--red-dark)}
+.btn-action-blue{background:var(--blue);color:#fff}
+.btn-action-blue:hover{background:var(--blue-dark)}
+.btn-action-outline-red{background:transparent;color:var(--red);border-color:var(--red)}
+.btn-action-outline-red:hover{background:var(--red);color:#fff}
+.btn-action-outline-blue{background:transparent;color:var(--blue);border-color:var(--blue)}
+.btn-action-outline-blue:hover{background:var(--blue);color:#fff}
+.btn-action-green{background:#2E7D32;color:#fff}
+.btn-action-green:hover{background:#1B5E20}
+
+/* ═══ FUNDING ═══ */
+.funding-section{background:linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);padding:50px 20px;text-align:center;color:#fff}
+.funding-section h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,2rem);margin-bottom:12px}
+.funding-section p{opacity:.9;max-width:500px;margin:0 auto 24px;font-size:.92rem;line-height:1.6}
+.funding-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px;max-width:800px;margin-left:auto;margin-right:auto}
+.funding-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:24px 20px;backdrop-filter:blur(6px);transition:transform .3s}
+.funding-card:hover{transform:translateY(-4px)}
+.funding-card .fund-icon{font-size:2rem;margin-bottom:10px}
+.funding-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.funding-card p{font-size:.82rem;opacity:.85;line-height:1.5}
+
+/* ═══ TESTIMONIALS ═══ */
+.testimonials{background:var(--off-white);padding:50px 20px}
+.testimonials .section-inner{text-align:center}
+.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:24px}
+.testimonial-card{background:var(--white);border-radius:14px;padding:24px;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 12px rgba(0,0,0,.04);text-align:left}
+.testimonial-card .stars{color:var(--gold);font-size:1rem;margin-bottom:10px}
+.testimonial-card blockquote{font-size:.88rem;color:var(--text);line-height:1.65;font-style:italic;margin-bottom:12px}
+.testimonial-card .author{font-size:.8rem;font-weight:700;color:var(--dark)}
+.testimonial-card .role{font-size:.72rem;color:var(--text-light)}
+
+/* ═══ WHATSAPP FLOAT ═══ */
+.whatsapp-float{position:fixed;bottom:20px;right:20px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:transform .3s}
+.whatsapp-float:hover{transform:scale(1.1)}
+.whatsapp-float svg{width:30px;height:30px;fill:#fff}
+
 /* ═══ HOW IT WORKS ═══ */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:30px;counter-reset:step}
 .step{text-align:center;padding:24px 16px;position:relative}
@@ -163,8 +211,10 @@ footer a{color:#fff;font-weight:600}
       <span>48Hours</span>Ready
     </div>
     <div class="nav-links">
+      <a href="#programs" data-i18n="nav_programs">Programs</a>
       <a href="#features" data-i18n="nav_features">Features</a>
-      <a href="#how" data-i18n="nav_how">How It Works</a>
+      <a href="#funding" data-i18n="nav_funding">Funding</a>
+      <a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a>
       <a href="#contact" data-i18n="nav_contact">Contact</a>
       <a href="#start" class="nav-cta" data-i18n="nav_cta">Get Started</a>
     </div>
@@ -173,8 +223,10 @@ footer a{color:#fff;font-weight:600}
 </nav>
 <div class="nav-mobile" id="mobileNav">
   <button class="close-menu" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="#programs" onclick="closeMobile()" data-i18n="nav_programs">Programs</a>
   <a href="#features" onclick="closeMobile()" data-i18n="nav_features">Features</a>
-  <a href="#how" onclick="closeMobile()" data-i18n="nav_how">How It Works</a>
+  <a href="#funding" onclick="closeMobile()" data-i18n="nav_funding">Funding</a>
+  <a href="#testimonials" onclick="closeMobile()" data-i18n="nav_testimonials">Testimonials</a>
   <a href="#contact" onclick="closeMobile()" data-i18n="nav_contact">Contact</a>
   <a href="#start" onclick="closeMobile()" style="background:var(--red);color:#fff;border-radius:100px;padding:12px 28px" data-i18n="nav_cta">Get Started</a>
 </div>
@@ -188,6 +240,26 @@ footer a{color:#fff;font-weight:600}
   <div class="hero-actions">
     <a href="#start" class="btn btn-white" data-i18n="hero_start">Start Your Business</a>
     <a href="#how" class="btn btn-ghost" data-i18n="hero_learn">Learn How It Works</a>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" id="video">
+  <h2 data-i18n="video_title">&#127916; Watch How 48HoursReady Works</h2>
+  <div class="video-wrapper">
+    <iframe src="" id="videoFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);color:#fff;font-size:1rem;font-weight:600;text-align:center;padding:20px" id="videoPlaceholder" data-i18n="video_coming">Video Coming Soon</div>
+  </div>
+</section>
+
+<!-- ACTION BUTTONS -->
+<section class="action-buttons" id="programs">
+  <div class="section-inner">
+    <a href="#contact" class="action-btn btn-action-red" data-i18n="act_start">Get Started</a>
+    <a href="#contact" class="action-btn btn-action-blue" data-i18n="act_student">Apply for Student Program</a>
+    <a href="#contact" class="action-btn btn-action-outline-red" data-i18n="act_ambassador">Become an Ambassador</a>
+    <a href="#contact" class="action-btn btn-action-outline-blue" data-i18n="act_influencer">Influencer Recruiter</a>
+    <a href="#contact" class="action-btn btn-action-green" data-i18n="act_learning">Start Free Learning</a>
   </div>
 </section>
 
@@ -264,6 +336,59 @@ footer a{color:#fff;font-weight:600}
   </div>
 </section>
 
+<!-- FUNDING OPPORTUNITIES -->
+<section class="funding-section" id="funding">
+  <h2 data-i18n="fund_title">&#128176; Explore Funding Opportunities</h2>
+  <p data-i18n="fund_sub">Access grants, microloans, and investment opportunities designed for Haitian entrepreneurs.</p>
+  <div class="funding-cards">
+    <div class="funding-card">
+      <div class="fund-icon">&#127974;</div>
+      <h3 data-i18n="fund1_title">Microloans</h3>
+      <p data-i18n="fund1_desc">Small business loans with flexible terms to help you start or grow your venture.</p>
+    </div>
+    <div class="funding-card">
+      <div class="fund-icon">&#128184;</div>
+      <h3 data-i18n="fund2_title">Grants</h3>
+      <p data-i18n="fund2_desc">Non-repayable funding for qualifying businesses in key sectors of Haiti's economy.</p>
+    </div>
+    <div class="funding-card">
+      <div class="fund-icon">&#129309;</div>
+      <h3 data-i18n="fund3_title">Investor Network</h3>
+      <p data-i18n="fund3_desc">Connect with diaspora and international investors looking to support Haitian businesses.</p>
+    </div>
+  </div>
+  <a href="#contact" class="btn btn-white" style="margin-top:30px" data-i18n="fund_cta">Apply for Funding</a>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-tag" data-i18n="test_tag">Testimonials</div>
+    <h2 class="section-title" data-i18n="test_title">Read What Our Clients Say</h2>
+    <p class="section-sub" style="margin:0 auto 10px" data-i18n="test_sub">Entrepreneurs who launched their business with 48HoursReady.</p>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote data-i18n="t1_quote">"48HoursReady helped me turn my idea into a real business in just two days. The mentorship was incredible."</blockquote>
+        <div class="author">Marie-Claire J.</div>
+        <div class="role" data-i18n="t1_role">Restaurant Owner, Port-au-Prince</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote data-i18n="t2_quote">"I went from having no plan to being fully set up with a brand, financial plan, and online store. Amazing program!"</blockquote>
+        <div class="author">Jean-Baptiste R.</div>
+        <div class="role" data-i18n="t2_role">E-commerce Entrepreneur, Cap-Haitien</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote data-i18n="t3_quote">"The funding guidance alone was worth it. They connected me with investors who believed in my vision for Haiti."</blockquote>
+        <div class="author">Sophia D.</div>
+        <div class="role" data-i18n="t3_role">Tech Startup Founder, Petion-Ville</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-inner">
@@ -332,10 +457,28 @@ footer a{color:#fff;font-weight:600}
   <a href="https://boxetoboxe.com">BoxeToBoxe</a>
 </div>
 
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/18095551234" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
 <script>
 const T = {
   fr: {
-    nav_features:"Fonctionnalites", nav_how:"Comment ca marche", nav_contact:"Contact", nav_cta:"Commencer",
+    nav_programs:"Programmes", nav_features:"Fonctionnalites", nav_how:"Comment ca marche", nav_contact:"Contact", nav_cta:"Commencer",
+    nav_funding:"Financement", nav_testimonials:"Temoignages",
+    video_title:"&#127916; Regardez Comment 48HoursReady Fonctionne", video_coming:"Video Bientot Disponible",
+    act_start:"Commencer", act_student:"Postuler au Programme Etudiant", act_ambassador:"Devenir Ambassadeur", act_influencer:"Recruteur Influenceur", act_learning:"Commencer l'Apprentissage Gratuit",
+    fund_title:"&#128176; Explorez les Opportunites de Financement", fund_sub:"Accedez aux subventions, microcrédits et investissements conçus pour les entrepreneurs haitiens.",
+    fund1_title:"Microcredits", fund1_desc:"Prets aux petites entreprises avec des conditions flexibles pour demarrer ou developper votre projet.",
+    fund2_title:"Subventions", fund2_desc:"Financement non remboursable pour les entreprises qualifiees dans des secteurs cles de l'economie haitienne.",
+    fund3_title:"Reseau d'Investisseurs", fund3_desc:"Connectez-vous avec des investisseurs de la diaspora et internationaux qui soutiennent les entreprises haitiennes.",
+    fund_cta:"Postuler au Financement",
+    test_tag:"Temoignages", test_title:"Lisez Ce Que Disent Nos Clients", test_sub:"Des entrepreneurs qui ont lance leur business avec 48HoursReady.",
+    t1_quote:"\"48HoursReady m'a aide a transformer mon idee en vrai business en seulement deux jours. Le mentorat etait incroyable.\"",
+    t2_quote:"\"Je suis passe de zero plan a etre completement installe avec une marque, un plan financier et une boutique en ligne. Programme incroyable!\"",
+    t3_quote:"\"L'accompagnement en financement seul en valait la peine. Ils m'ont connecte avec des investisseurs qui croyaient en ma vision pour Haiti.\"",
+    t1_role:"Proprietaire de Restaurant, Port-au-Prince", t2_role:"Entrepreneur E-commerce, Cap-Haitien", t3_role:"Fondatrice de Startup Tech, Petion-Ville",
     hero_title:"Lancez Votre Business<br>en <span style='color:var(--gold-light)'>48 Heures</span>",
     hero_sub:"Aider les entrepreneurs haitiens a structurer, lancer et developper leur entreprise plus vite que jamais.",
     hero_start:"Lancer Mon Business", hero_learn:"Comment ca marche",
@@ -361,7 +504,20 @@ const T = {
     footer_ecosystem:"Ecosysteme", footer_links:"Liens Rapides", eco_label:"Fait partie de"
   },
   en: {
-    nav_features:"Features", nav_how:"How It Works", nav_contact:"Contact", nav_cta:"Get Started",
+    nav_programs:"Programs", nav_features:"Features", nav_how:"How It Works", nav_contact:"Contact", nav_cta:"Get Started",
+    nav_funding:"Funding", nav_testimonials:"Testimonials",
+    video_title:"&#127916; Watch How 48HoursReady Works", video_coming:"Video Coming Soon",
+    act_start:"Get Started", act_student:"Apply for Student Program", act_ambassador:"Become an Ambassador", act_influencer:"Influencer Recruiter", act_learning:"Start Free Learning",
+    fund_title:"&#128176; Explore Funding Opportunities", fund_sub:"Access grants, microloans, and investment opportunities designed for Haitian entrepreneurs.",
+    fund1_title:"Microloans", fund1_desc:"Small business loans with flexible terms to help you start or grow your venture.",
+    fund2_title:"Grants", fund2_desc:"Non-repayable funding for qualifying businesses in key sectors of Haiti's economy.",
+    fund3_title:"Investor Network", fund3_desc:"Connect with diaspora and international investors looking to support Haitian businesses.",
+    fund_cta:"Apply for Funding",
+    test_tag:"Testimonials", test_title:"Read What Our Clients Say", test_sub:"Entrepreneurs who launched their business with 48HoursReady.",
+    t1_quote:"\"48HoursReady helped me turn my idea into a real business in just two days. The mentorship was incredible.\"",
+    t2_quote:"\"I went from having no plan to being fully set up with a brand, financial plan, and online store. Amazing program!\"",
+    t3_quote:"\"The funding guidance alone was worth it. They connected me with investors who believed in my vision for Haiti.\"",
+    t1_role:"Restaurant Owner, Port-au-Prince", t2_role:"E-commerce Entrepreneur, Cap-Haitien", t3_role:"Tech Startup Founder, Petion-Ville",
     hero_title:"Build Your Business<br>in <span style='color:var(--gold-light)'>48 Hours</span>",
     hero_sub:"Helping Haitian entrepreneurs structure, launch, and grow their businesses faster than ever.",
     hero_start:"Start Your Business", hero_learn:"Learn How It Works",
@@ -387,7 +543,20 @@ const T = {
     footer_ecosystem:"Ecosystem", footer_links:"Quick Links", eco_label:"Part of"
   },
   ht: {
-    nav_features:"Fonksyon", nav_how:"Koman li mache", nav_contact:"Kontak", nav_cta:"Komanse",
+    nav_programs:"Pwogram", nav_features:"Fonksyon", nav_how:"Koman li mache", nav_contact:"Kontak", nav_cta:"Komanse",
+    nav_funding:"Finansman", nav_testimonials:"Temwayaj",
+    video_title:"&#127916; Gade Koman 48HoursReady Fonksyone", video_coming:"Videyo Ap Vini Byento",
+    act_start:"Komanse", act_student:"Aplike pou Pwogram Etidyan", act_ambassador:"Vin yon Anbasade", act_influencer:"Rekritman Enflianse", act_learning:"Komanse Aprann Gratis",
+    fund_title:"&#128176; Eksplore Oportunite Finansman", fund_sub:"Gen akse nan sibvansyon, mikwokredi, ak envestisman ki fet pou antreprene ayisyen yo.",
+    fund1_title:"Mikwokredi", fund1_desc:"Ti pre pou biznis ak kondisyon fleksib pou ede ou komanse oswa grandi.",
+    fund2_title:"Sibvansyon", fund2_desc:"Finansman ou pa bezwen ranbouse pou biznis ki kalifye nan sekte kle ekonomi Ayiti a.",
+    fund3_title:"Rezo Envestise", fund3_desc:"Konekte ak envestise nan dyaspora ak entenasyonal ki vle sipote biznis ayisyen yo.",
+    fund_cta:"Aplike pou Finansman",
+    test_tag:"Temwayaj", test_title:"Li Sa Kliyan Nou Yo Di", test_sub:"Antreprene ki te lanse biznis yo ak 48HoursReady.",
+    t1_quote:"\"48HoursReady te ede m tounen lide m nan yon vrè biznis nan de jou selman. Mentora a te enkwayab.\"",
+    t2_quote:"\"Mwen te pase soti nan okenn plan rive nan yon mak konplè, plan finansye, ak boutik sou entènèt. Pwogram enkouyab!\"",
+    t3_quote:"\"Gidans finansman an sèlman te vo li. Yo te konekte m ak envestisè ki te kwè nan vizyon m pou Ayiti.\"",
+    t1_role:"Pwopriyetè Restoran, Potoprens", t2_role:"Antreprenè E-komès, Okap", t3_role:"Fondatris Startup Tech, Petyonvil",
     hero_title:"Bati Biznis Ou<br>nan <span style='color:var(--gold-light)'>48 Edtan</span>",
     hero_sub:"Ede antreprene ayisyen yo bati, lanse epi grandi biznis yo pi vit.",
     hero_start:"Lanse Biznis Mwen", hero_learn:"Koman li mache",
@@ -413,7 +582,20 @@ const T = {
     footer_ecosystem:"Ekosistem", footer_links:"Lyen Rapid", eco_label:"Fe pati de"
   },
   es: {
-    nav_features:"Funciones", nav_how:"Como funciona", nav_contact:"Contacto", nav_cta:"Comenzar",
+    nav_programs:"Programas", nav_features:"Funciones", nav_how:"Como funciona", nav_contact:"Contacto", nav_cta:"Comenzar",
+    nav_funding:"Financiamiento", nav_testimonials:"Testimonios",
+    video_title:"&#127916; Mira Como Funciona 48HoursReady", video_coming:"Video Proximamente",
+    act_start:"Comenzar", act_student:"Aplicar al Programa Estudiantil", act_ambassador:"Convertirse en Embajador", act_influencer:"Reclutador de Influencers", act_learning:"Comenzar Aprendizaje Gratis",
+    fund_title:"&#128176; Explora Oportunidades de Financiamiento", fund_sub:"Accede a subvenciones, microprestamos y oportunidades de inversion disenadas para emprendedores haitianos.",
+    fund1_title:"Microprestamos", fund1_desc:"Prestamos para pequenas empresas con terminos flexibles para ayudarte a comenzar o crecer.",
+    fund2_title:"Subvenciones", fund2_desc:"Financiamiento no reembolsable para empresas calificadas en sectores clave de la economia haitiana.",
+    fund3_title:"Red de Inversores", fund3_desc:"Conecta con inversores de la diaspora e internacionales que buscan apoyar negocios haitianos.",
+    fund_cta:"Aplicar al Financiamiento",
+    test_tag:"Testimonios", test_title:"Lee Lo Que Dicen Nuestros Clientes", test_sub:"Emprendedores que lanzaron su negocio con 48HoursReady.",
+    t1_quote:"\"48HoursReady me ayudo a convertir mi idea en un negocio real en solo dos dias. La mentoria fue increible.\"",
+    t2_quote:"\"Pase de no tener plan a estar completamente configurado con una marca, plan financiero y tienda en linea. Programa increible!\"",
+    t3_quote:"\"Solo la guia de financiamiento valio la pena. Me conectaron con inversores que creian en mi vision para Haiti.\"",
+    t1_role:"Propietaria de Restaurante, Puerto Principe", t2_role:"Emprendedor E-commerce, Cabo Haitiano", t3_role:"Fundadora de Startup Tech, Petion-Ville",
     hero_title:"Construye Tu Negocio<br>en <span style='color:var(--gold-light)'>48 Horas</span>",
     hero_sub:"Ayudando a emprendedores haitianos a estructurar, lanzar y hacer crecer sus negocios mas rapido.",
     hero_start:"Iniciar Mi Negocio", hero_learn:"Como Funciona",
