@@ -201,6 +201,29 @@ section{padding:60px 20px}
 .contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{outline:none;border-color:var(--red)}
 .contact-form textarea{resize:vertical;min-height:100px}
 
+/* ═══ SPAP PARTNER ═══ */
+.spap-partner{background:linear-gradient(135deg,#1a3a1a 0%,#2E7D32 50%,#1a3a1a 100%);padding:50px 20px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.spap-partner::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(212,160,23,.1),transparent 60%);pointer-events:none}
+.spap-inner{max-width:700px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px}
+.spap-logo-img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.spap-partner h2{font-family:var(--display);font-size:clamp(1.3rem,3vw,1.8rem);color:var(--gold-light)}
+.spap-partner p{opacity:.9;max-width:500px;font-size:.9rem;line-height:1.65}
+.spap-highlights{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px}
+.spap-tag{background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.3);color:var(--gold-light);padding:6px 16px;border-radius:100px;font-size:.75rem;font-weight:700}
+.btn-green{background:#2E7D32;color:#fff;border-color:#2E7D32}
+.btn-green:hover{background:#1B5E20;transform:translateY(-2px);box-shadow:0 8px 24px rgba(46,125,50,.4)}
+.btn-gold-outline{background:transparent;color:var(--gold-light);border:2px solid var(--gold)}
+.btn-gold-outline:hover{background:rgba(212,160,23,.15)}
+
+/* ═══ BANK FREE PACKAGE ═══ */
+.bank-pkg{max-width:480px;margin:24px auto 0;background:linear-gradient(145deg,rgba(46,125,50,.2),rgba(46,125,50,.05));border:2px solid #4CAF50;border-radius:20px;padding:28px 24px;text-align:center}
+.bank-pkg .package-badge{background:#4CAF50}
+.bank-pkg .package-price{color:#4CAF50;font-size:2.4rem}
+.bank-pkg .package-name{font-size:1.1rem}
+.bank-pkg .item-icon{background:rgba(76,175,80,.15)}
+.btn-pkg-green{background:#4CAF50;color:#fff;border-color:#4CAF50;font-weight:800}
+.btn-pkg-green:hover{background:#2E7D32;transform:translateY(-2px);box-shadow:0 8px 30px rgba(76,175,80,.4)}
+
 /* ═══ FOOTER ═══ */
 footer{background:var(--dark);color:#ccc;padding:40px 20px 20px;font-size:.8rem;text-align:center}
 footer a{color:#fff;font-weight:600}
@@ -380,6 +403,31 @@ footer a{color:#fff;font-weight:600}
       <a href="#contact" class="btn btn-pkg-red" style="width:100%;justify-content:center" data-i18n="pkg2_cta">Get Started</a>
     </div>
   </div>
+  <!-- FREE BANK/INSTITUTION PACKAGE -->
+  <div class="bank-pkg">
+    <div class="package-badge" data-i18n="pkgb_badge">Free Trial</div>
+    <div class="package-price" data-i18n="pkgb_price">FREE</div>
+    <div class="package-name" data-i18n="pkgb_name">Banks &amp; Institutions Package</div>
+    <ul class="package-items">
+      <li>
+        <div class="item-icon">&#127974;</div>
+        <div><span class="item-text" data-i18n="pkgb1_title">Platform Access</span><span class="item-detail" data-i18n="pkgb1_detail">Full access to 48HoursReady tools</span></div>
+      </li>
+      <li>
+        <div class="item-icon">&#128200;</div>
+        <div><span class="item-text" data-i18n="pkgb2_title">Business Directory</span><span class="item-detail" data-i18n="pkgb2_detail">Browse structured businesses ready for funding</span></div>
+      </li>
+      <li>
+        <div class="item-icon">&#129309;</div>
+        <div><span class="item-text" data-i18n="pkgb3_title">Direct Connection</span><span class="item-detail" data-i18n="pkgb3_detail">Connect with verified entrepreneurs</span></div>
+      </li>
+      <li>
+        <div class="item-icon">&#128202;</div>
+        <div><span class="item-text" data-i18n="pkgb4_title">Impact Reporting</span><span class="item-detail" data-i18n="pkgb4_detail">Track funded businesses and outcomes</span></div>
+      </li>
+    </ul>
+    <a href="#contact" class="btn btn-pkg-green" style="width:100%;justify-content:center" data-i18n="pkgb_cta">Try Free</a>
+  </div>
 </section>
 
 <!-- FEATURES -->
@@ -442,6 +490,26 @@ footer a{color:#fff;font-weight:600}
         <h3 data-i18n="s3_title">Launch & Grow</h3>
         <p data-i18n="s3_desc">Go live with your brand, products, and services across the HaitiBiznis ecosystem.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPAP PARTNER -->
+<section class="spap-partner" id="spap">
+  <div class="spap-inner">
+    <img src="assets/spap-logo.jpg" alt="SPAP Logo" class="spap-logo-img">
+    <h2 data-i18n="spap_title">&#127795; SPAP - Our Strategic Partner</h2>
+    <p data-i18n="spap_desc">The Secteur Prive des Affaires Populaire (SPAP) empowers Haiti's popular economy through structured business support, training, and advocacy. Together with 48HoursReady, we're building the backbone of Haiti's entrepreneurial future.</p>
+    <div class="spap-highlights">
+      <span class="spap-tag" data-i18n="spap_t1">Business Structuring</span>
+      <span class="spap-tag" data-i18n="spap_t2">Training Programs</span>
+      <span class="spap-tag" data-i18n="spap_t3">Advocacy</span>
+      <span class="spap-tag" data-i18n="spap_t4">Networking</span>
+      <span class="spap-tag" data-i18n="spap_t5">Funding Access</span>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+      <a href="spap.html" class="btn btn-gold-outline" data-i18n="spap_learn">Learn About SPAP</a>
+      <a href="#contact" class="btn btn-green" data-i18n="spap_join">Join SPAP</a>
     </div>
   </div>
 </section>
@@ -602,6 +670,16 @@ const T = {
     fund2_title:"Subventions", fund2_desc:"Financement non remboursable pour les entreprises qualifiees dans des secteurs cles de l'economie haitienne.",
     fund3_title:"Reseau d'Investisseurs", fund3_desc:"Connectez-vous avec des investisseurs de la diaspora et internationaux qui soutiennent les entreprises haitiennes.",
     fund_cta:"Postuler au Financement",
+    pkgb_badge:"Essai Gratuit", pkgb_price:"GRATUIT", pkgb_name:"Forfait Banques et Institutions",
+    pkgb1_title:"Acces a la Plateforme", pkgb1_detail:"Acces complet aux outils 48HoursReady",
+    pkgb2_title:"Repertoire d'Entreprises", pkgb2_detail:"Parcourir les entreprises structurees pretes au financement",
+    pkgb3_title:"Connexion Directe", pkgb3_detail:"Connectez-vous avec des entrepreneurs verifies",
+    pkgb4_title:"Rapports d'Impact", pkgb4_detail:"Suivez les entreprises financees et les resultats",
+    pkgb_cta:"Essayer Gratuitement",
+    spap_title:"&#127795; SPAP - Notre Partenaire Strategique",
+    spap_desc:"Le Secteur Prive des Affaires Populaire (SPAP) donne du pouvoir a l'economie populaire d'Haiti a travers un soutien structure aux entreprises, la formation et le plaidoyer. Ensemble avec 48HoursReady, nous construisons l'avenir entrepreneurial d'Haiti.",
+    spap_t1:"Structuration d'Entreprise", spap_t2:"Programmes de Formation", spap_t3:"Plaidoyer", spap_t4:"Reseautage", spap_t5:"Acces au Financement",
+    spap_learn:"Decouvrir le SPAP", spap_join:"Rejoindre le SPAP",
     test_tag:"Temoignages", test_title:"Lisez Ce Que Disent Nos Clients", test_sub:"Des entrepreneurs qui ont lance leur business avec 48HoursReady.",
     t1_quote:"\"48HoursReady m'a aide a transformer mon idee en vrai business en seulement deux jours. Le mentorat etait incroyable.\"",
     t2_quote:"\"Je suis passe de zero plan a etre completement installe avec une marque, un plan financier et une boutique en ligne. Programme incroyable!\"",
@@ -656,6 +734,16 @@ const T = {
     fund2_title:"Grants", fund2_desc:"Non-repayable funding for qualifying businesses in key sectors of Haiti's economy.",
     fund3_title:"Investor Network", fund3_desc:"Connect with diaspora and international investors looking to support Haitian businesses.",
     fund_cta:"Apply for Funding",
+    pkgb_badge:"Free Trial", pkgb_price:"FREE", pkgb_name:"Banks & Institutions Package",
+    pkgb1_title:"Platform Access", pkgb1_detail:"Full access to 48HoursReady tools",
+    pkgb2_title:"Business Directory", pkgb2_detail:"Browse structured businesses ready for funding",
+    pkgb3_title:"Direct Connection", pkgb3_detail:"Connect with verified entrepreneurs",
+    pkgb4_title:"Impact Reporting", pkgb4_detail:"Track funded businesses and outcomes",
+    pkgb_cta:"Try Free",
+    spap_title:"&#127795; SPAP - Our Strategic Partner",
+    spap_desc:"The Secteur Prive des Affaires Populaire (SPAP) empowers Haiti's popular economy through structured business support, training, and advocacy. Together with 48HoursReady, we're building the backbone of Haiti's entrepreneurial future.",
+    spap_t1:"Business Structuring", spap_t2:"Training Programs", spap_t3:"Advocacy", spap_t4:"Networking", spap_t5:"Funding Access",
+    spap_learn:"Learn About SPAP", spap_join:"Join SPAP",
     test_tag:"Testimonials", test_title:"Read What Our Clients Say", test_sub:"Entrepreneurs who launched their business with 48HoursReady.",
     t1_quote:"\"48HoursReady helped me turn my idea into a real business in just two days. The mentorship was incredible.\"",
     t2_quote:"\"I went from having no plan to being fully set up with a brand, financial plan, and online store. Amazing program!\"",
@@ -710,6 +798,16 @@ const T = {
     fund2_title:"Sibvansyon", fund2_desc:"Finansman ou pa bezwen ranbouse pou biznis ki kalifye nan sekte kle ekonomi Ayiti a.",
     fund3_title:"Rezo Envestise", fund3_desc:"Konekte ak envestise nan dyaspora ak entenasyonal ki vle sipote biznis ayisyen yo.",
     fund_cta:"Aplike pou Finansman",
+    pkgb_badge:"Esè Gratis", pkgb_price:"GRATIS", pkgb_name:"Pake Labank ak Enstitisyon",
+    pkgb1_title:"Akse Platfom", pkgb1_detail:"Akse konplè nan zouti 48HoursReady",
+    pkgb2_title:"Repètwa Biznis", pkgb2_detail:"Gade biznis ki strikti pare pou finansman",
+    pkgb3_title:"Koneksyon Dirèk", pkgb3_detail:"Konekte ak antreprenè verifye",
+    pkgb4_title:"Rapò Enpak", pkgb4_detail:"Swiv biznis ki finanse ak rezilta yo",
+    pkgb_cta:"Eseye Gratis",
+    spap_title:"&#127795; SPAP - Patnè Estratejik Nou",
+    spap_desc:"Sektè Prive Zafè Popilè (SPAP) bay ekonomi popilè Ayiti a fòs atravè sipò biznis estrikti, fòmasyon, ak pledwaye. Ansanm ak 48HoursReady, nap bati fondasyon avni antreprenè Ayiti a.",
+    spap_t1:"Striktirasyon Biznis", spap_t2:"Pwogram Fòmasyon", spap_t3:"Pledwaye", spap_t4:"Rezo", spap_t5:"Akse Finansman",
+    spap_learn:"Aprann sou SPAP", spap_join:"Rejwenn SPAP",
     test_tag:"Temwayaj", test_title:"Li Sa Kliyan Nou Yo Di", test_sub:"Antreprene ki te lanse biznis yo ak 48HoursReady.",
     t1_quote:"\"48HoursReady te ede m tounen lide m nan yon vrè biznis nan de jou selman. Mentora a te enkwayab.\"",
     t2_quote:"\"Mwen te pase soti nan okenn plan rive nan yon mak konplè, plan finansye, ak boutik sou entènèt. Pwogram enkouyab!\"",
@@ -764,6 +862,16 @@ const T = {
     fund2_title:"Subvenciones", fund2_desc:"Financiamiento no reembolsable para empresas calificadas en sectores clave de la economia haitiana.",
     fund3_title:"Red de Inversores", fund3_desc:"Conecta con inversores de la diaspora e internacionales que buscan apoyar negocios haitianos.",
     fund_cta:"Aplicar al Financiamiento",
+    pkgb_badge:"Prueba Gratis", pkgb_price:"GRATIS", pkgb_name:"Paquete Bancos e Instituciones",
+    pkgb1_title:"Acceso a la Plataforma", pkgb1_detail:"Acceso completo a herramientas 48HoursReady",
+    pkgb2_title:"Directorio de Negocios", pkgb2_detail:"Buscar negocios estructurados listos para financiamiento",
+    pkgb3_title:"Conexion Directa", pkgb3_detail:"Conecta con emprendedores verificados",
+    pkgb4_title:"Reportes de Impacto", pkgb4_detail:"Seguimiento de negocios financiados y resultados",
+    pkgb_cta:"Probar Gratis",
+    spap_title:"&#127795; SPAP - Nuestro Socio Estrategico",
+    spap_desc:"El Sector Privado de Negocios Populares (SPAP) potencia la economia popular de Haiti a traves de apoyo empresarial estructurado, capacitacion y defensa. Junto con 48HoursReady, estamos construyendo el futuro emprendedor de Haiti.",
+    spap_t1:"Estructuracion Empresarial", spap_t2:"Programas de Capacitacion", spap_t3:"Defensa", spap_t4:"Networking", spap_t5:"Acceso a Financiamiento",
+    spap_learn:"Conocer SPAP", spap_join:"Unirse a SPAP",
     test_tag:"Testimonios", test_title:"Lee Lo Que Dicen Nuestros Clientes", test_sub:"Emprendedores que lanzaron su negocio con 48HoursReady.",
     t1_quote:"\"48HoursReady me ayudo a convertir mi idea en un negocio real en solo dos dias. La mentoria fue increible.\"",
     t2_quote:"\"Pase de no tener plan a estar completamente configurado con una marca, plan financiero y tienda en linea. Programa increible!\"",
