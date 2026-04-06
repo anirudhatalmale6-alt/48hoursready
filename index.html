@@ -156,8 +156,8 @@ section{padding:60px 20px}
 .package-card.featured{border-color:var(--red)}
 .package-card.featured .package-badge{background:var(--red)}
 .package-badge{display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 16px;border-radius:100px;margin-bottom:12px}
-.package-price{font-family:var(--display);font-size:2.8rem;color:#fff;margin-bottom:4px}
-.package-price span{font-size:1rem;opacity:.7;vertical-align:super}
+.package-price{font-family:var(--display);font-size:2.8rem;color:var(--red);margin-bottom:4px}
+.package-price span{font-size:1rem;color:var(--red);vertical-align:super}
 .package-name{font-family:var(--display);font-size:1.25rem;margin-bottom:16px;color:rgba(255,255,255,.9)}
 .package-items{list-style:none;text-align:left;margin-bottom:24px}
 .package-items li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;font-size:.88rem}
@@ -238,7 +238,7 @@ footer a{color:#fff;font-weight:600}
       <a href="#programs" data-i18n="nav_programs">Programs</a>
       <a href="#features" data-i18n="nav_features">Features</a>
       <a href="#funding" data-i18n="nav_funding">Funding</a>
-      <a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a>
+      <a href="spap.html" data-i18n="nav_spap">SPAP</a>
       <a href="#contact" data-i18n="nav_contact">Contact</a>
       <a href="#start" class="nav-cta" data-i18n="nav_cta">Get Started</a>
     </div>
@@ -249,6 +249,7 @@ footer a{color:#fff;font-weight:600}
   <button class="close-menu" onclick="this.parentElement.classList.remove('open')">&times;</button>
   <a href="#programs" onclick="closeMobile()" data-i18n="nav_programs">Programs</a>
   <a href="#features" onclick="closeMobile()" data-i18n="nav_features">Features</a>
+  <a href="spap.html" onclick="closeMobile()" data-i18n="nav_spap">SPAP</a>
   <a href="#funding" onclick="closeMobile()" data-i18n="nav_funding">Funding</a>
   <a href="#testimonials" onclick="closeMobile()" data-i18n="nav_testimonials">Testimonials</a>
   <a href="#contact" onclick="closeMobile()" data-i18n="nav_contact">Contact</a>
@@ -577,7 +578,7 @@ footer a{color:#fff;font-weight:600}
 const T = {
   fr: {
     nav_programs:"Programmes", nav_features:"Fonctionnalites", nav_how:"Comment ca marche", nav_contact:"Contact", nav_cta:"Commencer",
-    nav_funding:"Financement", nav_testimonials:"Temoignages",
+    nav_funding:"Financement", nav_testimonials:"Temoignages", nav_spap:"SPAP",
     video_title:"&#127916; Regardez Comment 48HoursReady Fonctionne", video_coming:"Video Bientot Disponible",
     act_start:"Commencer", act_student:"Postuler au Programme Etudiant", act_ambassador:"Devenir Ambassadeur", act_influencer:"Recruteur Influenceur", act_learning:"Commencer l'Apprentissage Gratuit",
     pkg_label:"Nos Forfaits", pkg_heading:"Choisissez Votre Forfait", pkg_sub:"Tout ce dont vous avez besoin pour lancer votre entreprise, pret en 48 heures.",
@@ -631,7 +632,7 @@ const T = {
   },
   en: {
     nav_programs:"Programs", nav_features:"Features", nav_how:"How It Works", nav_contact:"Contact", nav_cta:"Get Started",
-    nav_funding:"Funding", nav_testimonials:"Testimonials",
+    nav_funding:"Funding", nav_testimonials:"Testimonials", nav_spap:"SPAP",
     video_title:"&#127916; Watch How 48HoursReady Works", video_coming:"Video Coming Soon",
     act_start:"Get Started", act_student:"Apply for Student Program", act_ambassador:"Become an Ambassador", act_influencer:"Influencer Recruiter", act_learning:"Start Free Learning",
     pkg_label:"Our Packages", pkg_heading:"Choose Your Package", pkg_sub:"Everything you need to launch your business, ready in 48 hours.",
@@ -685,7 +686,7 @@ const T = {
   },
   ht: {
     nav_programs:"Pwogram", nav_features:"Fonksyon", nav_how:"Koman li mache", nav_contact:"Kontak", nav_cta:"Komanse",
-    nav_funding:"Finansman", nav_testimonials:"Temwayaj",
+    nav_funding:"Finansman", nav_testimonials:"Temwayaj", nav_spap:"SPAP",
     video_title:"&#127916; Gade Koman 48HoursReady Fonksyone", video_coming:"Videyo Ap Vini Byento",
     act_start:"Komanse", act_student:"Aplike pou Pwogram Etidyan", act_ambassador:"Vin yon Anbasade", act_influencer:"Rekritman Enflianse", act_learning:"Komanse Aprann Gratis",
     pkg_label:"Pake Nou Yo", pkg_heading:"Chwazi Pake Ou", pkg_sub:"Tout sa ou bezwen pou lanse biznis ou, pare nan 48 edtan.",
@@ -739,7 +740,7 @@ const T = {
   },
   es: {
     nav_programs:"Programas", nav_features:"Funciones", nav_how:"Como funciona", nav_contact:"Contacto", nav_cta:"Comenzar",
-    nav_funding:"Financiamiento", nav_testimonials:"Testimonios",
+    nav_funding:"Financiamiento", nav_testimonials:"Testimonios", nav_spap:"SPAP",
     video_title:"&#127916; Mira Como Funciona 48HoursReady", video_coming:"Video Proximamente",
     act_start:"Comenzar", act_student:"Aplicar al Programa Estudiantil", act_ambassador:"Convertirse en Embajador", act_influencer:"Reclutador de Influencers", act_learning:"Comenzar Aprendizaje Gratis",
     pkg_label:"Nuestros Paquetes", pkg_heading:"Elige Tu Paquete", pkg_sub:"Todo lo que necesitas para lanzar tu negocio, listo en 48 horas.",
