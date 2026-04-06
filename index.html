@@ -162,7 +162,7 @@ section{padding:60px 20px}
 .package-section{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 50%,var(--blue-dark) 100%);padding:60px 20px;text-align:center;color:#fff;position:relative;overflow:hidden}
 .package-section::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(210,16,52,.06) 0%,transparent 50%);pointer-events:none}
 .package-section .section-tag{background:rgba(255,255,255,.15);color:#fff}
-.package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;max-width:800px;margin:24px auto 0}
+.package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:900px;margin:24px auto 0}
 .package-card{background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.2);border-radius:24px;padding:32px 24px;position:relative;backdrop-filter:blur(8px);transition:transform .3s}
 .package-card:hover{transform:translateY(-4px)}
 .package-card.featured{border-color:var(--red)}
@@ -219,7 +219,24 @@ section{padding:60px 20px}
 .btn-gold-outline{background:transparent;color:var(--gold-light);border:2px solid var(--gold)}
 .btn-gold-outline:hover{background:rgba(212,160,23,.15)}
 
-/* ═══ BANK FREE PACKAGE ═══ */
+/* ═══ STUDENT PACKAGE ═══ */
+.student-pkg{background:linear-gradient(145deg,rgba(0,32,159,.15),rgba(0,32,159,.05));border:2px solid var(--blue);border-radius:20px;padding:28px 24px;text-align:center}
+.student-pkg .package-badge{background:var(--blue)}
+.student-pkg .package-price{color:var(--blue);font-size:2.4rem}
+.student-pkg .package-price span{color:var(--blue)}
+.student-pkg .item-icon{background:rgba(0,32,159,.1)}
+.btn-pkg-blue{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:800}
+.btn-pkg-blue:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,32,159,.4)}
+
+/* ═══ AMBASSADOR SECTION ═══ */
+.ambassador-section{background:var(--white);padding:40px 20px;text-align:center}
+.ambassador-cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.amb-card{background:linear-gradient(145deg,rgba(212,160,23,.08),rgba(212,160,23,.02));border:2px solid var(--gold);border-radius:16px;padding:24px 20px;min-width:200px;flex:1;max-width:280px}
+.amb-card .amb-earn{font-family:var(--display);font-size:2rem;color:var(--gold);margin-bottom:4px}
+.amb-card .amb-pkg{font-size:.85rem;font-weight:700;color:var(--dark);margin-bottom:4px}
+.amb-card .amb-desc{font-size:.78rem;color:var(--text-light)}
+
+/* ═══ BANK PACKAGE ═══ */
 .bank-pkg{max-width:480px;margin:24px auto 0;background:linear-gradient(145deg,rgba(46,125,50,.2),rgba(46,125,50,.05));border:2px solid #4CAF50;border-radius:20px;padding:28px 24px;text-align:center}
 .bank-pkg .package-badge{background:#4CAF50}
 .bank-pkg .package-price{color:var(--red);font-size:2.4rem}
@@ -333,6 +350,20 @@ footer a{color:#fff;font-weight:600}
   <h2 style="font-family:var(--display);font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:6px" data-i18n="pkg_heading">Choose Your Package</h2>
   <p style="opacity:.8;margin-bottom:10px;font-size:.92rem" data-i18n="pkg_sub">Everything you need to launch your business, ready in 48 hours.</p>
   <div class="package-grid">
+    <!-- $79 STUDENT PACKAGE -->
+    <div class="package-card student-pkg">
+      <div class="package-badge" data-i18n="pkgs_badge">Student Special</div>
+      <div class="package-price"><span>$</span>79</div>
+      <div class="package-name" data-i18n="pkgs_name">Student Package</div>
+      <ul class="package-items">
+        <li><div class="item-icon">&#127912;</div><div><span class="item-text" data-i18n="pkgs1_title">Logo Design</span><span class="item-detail" data-i18n="pkgs1_detail">2 variants</span></div></li>
+        <li><div class="item-icon">&#128221;</div><div><span class="item-text" data-i18n="pkgs2_title">Executive Summary</span></div></li>
+        <li><div class="item-icon">&#128200;</div><div><span class="item-text" data-i18n="pkgs3_title">Pitch Deck</span><span class="item-detail" data-i18n="pkgs3_detail">GPT-Verified</span></div></li>
+        <li><div class="item-icon">&#127760;</div><div><span class="item-text" data-i18n="pkgs4_title">Website</span><span class="item-detail" data-i18n="pkgs4_detail">1 page</span></div></li>
+        <li><div class="item-icon">&#128722;</div><div><span class="item-text" data-i18n="pkgs5_title">MyPlopPlop Setup</span></div></li>
+      </ul>
+      <a href="#contact" class="btn btn-pkg-blue" style="width:100%;justify-content:center" data-i18n="pkgs_cta" onclick="setProgram('Student Program')">Get Started</a>
+    </div>
     <!-- $199 PACKAGE -->
     <div class="package-card">
       <div class="package-badge" data-i18n="pkg_badge">Popular</div>
@@ -436,6 +467,25 @@ footer a{color:#fff;font-weight:600}
       </li>
     </ul>
     <a href="#contact" class="btn btn-pkg-green" style="width:100%;justify-content:center" data-i18n="pkgb_cta">Get Started</a>
+  </div>
+
+  <!-- AMBASSADOR EARNINGS -->
+  <div style="max-width:600px;margin:30px auto 0">
+    <h3 style="font-family:var(--display);font-size:1.2rem;color:#fff;margin-bottom:6px" data-i18n="amb_title">&#127775; Become an Ambassador</h3>
+    <p style="font-size:.85rem;opacity:.8;margin-bottom:16px" data-i18n="amb_desc">Earn money for every client you refer to 48HoursReady!</p>
+    <div class="ambassador-cards">
+      <div class="amb-card">
+        <div class="amb-earn">$25</div>
+        <div class="amb-pkg" data-i18n="amb_pkg1">Per $199 Package</div>
+        <div class="amb-desc" data-i18n="amb_pkg1_desc">Earn $25 for each Business Ready referral</div>
+      </div>
+      <div class="amb-card">
+        <div class="amb-earn">$30</div>
+        <div class="amb-pkg" data-i18n="amb_pkg2">Per $249 Package</div>
+        <div class="amb-desc" data-i18n="amb_pkg2_desc">Earn $30 for each 2 Languages referral</div>
+      </div>
+    </div>
+    <a href="#contact" class="btn btn-gold-outline" style="margin-top:16px" data-i18n="amb_cta" onclick="setProgram('Ambassador')">Become an Ambassador</a>
   </div>
 </section>
 
@@ -630,6 +680,7 @@ footer a{color:#fff;font-weight:600}
       </select>
       <select name="Package Interest" required>
         <option value="" disabled selected data-i18n="form_pkg_q">-- Which package? --</option>
+        <option value="$79 Student" data-i18n="form_pkg_79">$79 - Student Package</option>
         <option value="$199 Business Ready" data-i18n="form_pkg_199">$199 - Business Ready Package</option>
         <option value="$249 Two Languages" data-i18n="form_pkg_249">$249 - 2 Languages Package</option>
         <option value="Bank/Institution" data-i18n="form_pkg_bank">$199 - Banks & Institutions</option>
@@ -695,6 +746,8 @@ const T = {
     pkg3_title:"Resume Executif", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verifie 9+",
     pkg5_title:"Video Explicative", pkg6_title:"Site Web", pkg6_detail:"3 sections",
     pkg7_title:"Configuration MyPlopPlop", pkg_cta:"Commencer",
+    pkgs_badge:"Special Etudiants", pkgs_name:"Forfait Etudiant", pkgs1_title:"Design de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resume Executif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifie", pkgs4_title:"Site Web", pkgs4_detail:"1 page", pkgs5_title:"Configuration MyPlopPlop", pkgs_cta:"Commencer",
+    amb_title:"&#127775; Devenez Ambassadeur", amb_desc:"Gagnez de l'argent pour chaque client que vous referez a 48HoursReady!", amb_pkg1:"Par Forfait $199", amb_pkg1_desc:"Gagnez $25 pour chaque referral Business Ready", amb_pkg2:"Par Forfait $249", amb_pkg2_desc:"Gagnez $30 pour chaque referral 2 Langues", amb_cta:"Devenir Ambassadeur",
     pkg2_badge:"Meilleure Valeur", pkg2_name:"Forfait 2 Langues",
     pkg2a_title:"Design de Logo", pkg2a_detail:"4 variantes professionnelles",
     pkg2b_title:"Cartes de Visite", pkg2b_detail:"Design pret a imprimer",
@@ -745,7 +798,7 @@ const T = {
     form_sector:"-- Secteur d'Activite --", form_sec_food:"Alimentation et Restaurant", form_sec_retail:"Commerce et Detail", form_sec_services:"Services", form_sec_tech:"Technologie", form_sec_agri:"Agriculture", form_sec_edu:"Education", form_sec_health:"Sante", form_sec_transport:"Transport", form_sec_construction:"Construction", form_sec_other:"Autre",
     form_logo_q:"-- Avez-vous un logo? --", form_logo_yes:"Oui, j'ai un logo", form_logo_no:"Non, j'en ai besoin",
     form_web_q:"-- Avez-vous un site web? --", form_web_yes:"Oui, j'ai un site web", form_web_no:"Non, j'en ai besoin",
-    form_pkg_q:"-- Quel forfait? --", form_pkg_199:"$199 - Forfait Business Ready", form_pkg_249:"$249 - Forfait 2 Langues", form_pkg_bank:"$199 - Banques et Institutions",
+    form_pkg_q:"-- Quel forfait? --", form_pkg_79:"$79 - Forfait Etudiant", form_pkg_199:"$199 - Forfait Business Ready", form_pkg_249:"$249 - Forfait 2 Langues", form_pkg_bank:"$199 - Banques et Institutions",
     form_city:"Ville / Localisation", form_desc:"Decrivez brievement votre entreprise ou idee...",
     form_send:"Soumettre la Candidature",
     footer_desc:"Aider les entrepreneurs haitiens a construire et lancer leurs entreprises plus vite.",
@@ -763,6 +816,8 @@ const T = {
     pkg3_title:"Executive Summary", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verified 9+",
     pkg5_title:"Video Explainer", pkg6_title:"Website", pkg6_detail:"3 sections",
     pkg7_title:"MyPlopPlop Setup", pkg_cta:"Get Started",
+    pkgs_badge:"Student Special", pkgs_name:"Student Package", pkgs1_title:"Logo Design", pkgs1_detail:"2 variants", pkgs2_title:"Executive Summary", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verified", pkgs4_title:"Website", pkgs4_detail:"1 page", pkgs5_title:"MyPlopPlop Setup", pkgs_cta:"Get Started",
+    amb_title:"&#127775; Become an Ambassador", amb_desc:"Earn money for every client you refer to 48HoursReady!", amb_pkg1:"Per $199 Package", amb_pkg1_desc:"Earn $25 for each Business Ready referral", amb_pkg2:"Per $249 Package", amb_pkg2_desc:"Earn $30 for each 2 Languages referral", amb_cta:"Become an Ambassador",
     pkg2_badge:"Best Value", pkg2_name:"2 Languages Package",
     pkg2a_title:"Logo Design", pkg2a_detail:"4 professional variants",
     pkg2b_title:"Business Cards", pkg2b_detail:"Print-ready design",
@@ -813,7 +868,7 @@ const T = {
     form_sector:"-- Business Sector --", form_sec_food:"Food & Restaurant", form_sec_retail:"Retail & Commerce", form_sec_services:"Services", form_sec_tech:"Technology", form_sec_agri:"Agriculture", form_sec_edu:"Education", form_sec_health:"Health", form_sec_transport:"Transport", form_sec_construction:"Construction", form_sec_other:"Other",
     form_logo_q:"-- Do you have a logo? --", form_logo_yes:"Yes, I have a logo", form_logo_no:"No, I need one",
     form_web_q:"-- Do you have a website? --", form_web_yes:"Yes, I have a website", form_web_no:"No, I need one",
-    form_pkg_q:"-- Which package? --", form_pkg_199:"$199 - Business Ready Package", form_pkg_249:"$249 - 2 Languages Package", form_pkg_bank:"$199 - Banks & Institutions",
+    form_pkg_q:"-- Which package? --", form_pkg_79:"$79 - Student Package", form_pkg_199:"$199 - Business Ready Package", form_pkg_249:"$249 - 2 Languages Package", form_pkg_bank:"$199 - Banks & Institutions",
     form_city:"City / Location", form_desc:"Briefly describe your business or idea...",
     form_send:"Submit Application",
     footer_desc:"Helping Haitian entrepreneurs build and launch businesses faster.",
@@ -831,6 +886,8 @@ const T = {
     pkg3_title:"Rezime Egzekitif", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verifye 9+",
     pkg5_title:"Videyo Eksplikatif", pkg6_title:"Sit Web", pkg6_detail:"3 seksyon",
     pkg7_title:"Konfigirasyon MyPlopPlop", pkg_cta:"Komanse",
+    pkgs_badge:"Espesyal Etidyan", pkgs_name:"Pake Etidyan", pkgs1_title:"Desen Logo", pkgs1_detail:"2 varyant", pkgs2_title:"Rezime Egzekitif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifye", pkgs4_title:"Sit Web", pkgs4_detail:"1 paj", pkgs5_title:"Konfigirasyon MyPlopPlop", pkgs_cta:"Komanse",
+    amb_title:"&#127775; Vin yon Anbasadè", amb_desc:"Touche lajan pou chak kliyan ou refere nan 48HoursReady!", amb_pkg1:"Pa Pake $199", amb_pkg1_desc:"Touche $25 pou chak referans Business Ready", amb_pkg2:"Pa Pake $249", amb_pkg2_desc:"Touche $30 pou chak referans 2 Lang", amb_cta:"Vin yon Anbasadè",
     pkg2_badge:"Pi Bon Vale", pkg2_name:"Pake 2 Lang",
     pkg2a_title:"Desen Logo", pkg2a_detail:"4 varyant pwofesyonèl",
     pkg2b_title:"Kat Biznis", pkg2b_detail:"Desen pare pou enprime",
@@ -881,7 +938,7 @@ const T = {
     form_sector:"-- Sektè Biznis --", form_sec_food:"Manje ak Restoran", form_sec_retail:"Komès ak Detay", form_sec_services:"Sèvis", form_sec_tech:"Teknoloji", form_sec_agri:"Agrikilti", form_sec_edu:"Edikasyon", form_sec_health:"Sante", form_sec_transport:"Transpò", form_sec_construction:"Konstriksyon", form_sec_other:"Lòt",
     form_logo_q:"-- Ou gen yon logo? --", form_logo_yes:"Wi, mwen gen yon logo", form_logo_no:"Non, mwen bezwen youn",
     form_web_q:"-- Ou gen yon sit web? --", form_web_yes:"Wi, mwen gen yon sit web", form_web_no:"Non, mwen bezwen youn",
-    form_pkg_q:"-- Ki pake? --", form_pkg_199:"$199 - Pake Business Ready", form_pkg_249:"$249 - Pake 2 Lang", form_pkg_bank:"$199 - Labank ak Enstitisyon",
+    form_pkg_q:"-- Ki pake? --", form_pkg_79:"$79 - Pake Etidyan", form_pkg_199:"$199 - Pake Business Ready", form_pkg_249:"$249 - Pake 2 Lang", form_pkg_bank:"$199 - Labank ak Enstitisyon",
     form_city:"Vil / Anplasman", form_desc:"Dekri biznis ou oswa lide ou an bref...",
     form_send:"Soumèt Aplikasyon",
     footer_desc:"Ede antreprene ayisyen bati epi lanse biznis yo pi vit.",
@@ -899,6 +956,8 @@ const T = {
     pkg3_title:"Resumen Ejecutivo", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verificado 9+",
     pkg5_title:"Video Explicativo", pkg6_title:"Sitio Web", pkg6_detail:"3 secciones",
     pkg7_title:"Configuracion MyPlopPlop", pkg_cta:"Comenzar",
+    pkgs_badge:"Especial Estudiantes", pkgs_name:"Paquete Estudiante", pkgs1_title:"Diseno de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resumen Ejecutivo", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verificado", pkgs4_title:"Sitio Web", pkgs4_detail:"1 pagina", pkgs5_title:"Configuracion MyPlopPlop", pkgs_cta:"Comenzar",
+    amb_title:"&#127775; Conviertete en Embajador", amb_desc:"Gana dinero por cada cliente que refieras a 48HoursReady!", amb_pkg1:"Por Paquete $199", amb_pkg1_desc:"Gana $25 por cada referido Business Ready", amb_pkg2:"Por Paquete $249", amb_pkg2_desc:"Gana $30 por cada referido 2 Idiomas", amb_cta:"Ser Embajador",
     pkg2_badge:"Mejor Valor", pkg2_name:"Paquete 2 Idiomas",
     pkg2a_title:"Diseno de Logo", pkg2a_detail:"4 variantes profesionales",
     pkg2b_title:"Tarjetas de Presentacion", pkg2b_detail:"Listo para imprimir",
@@ -949,7 +1008,7 @@ const T = {
     form_sector:"-- Sector de Negocio --", form_sec_food:"Comida y Restaurante", form_sec_retail:"Comercio y Retail", form_sec_services:"Servicios", form_sec_tech:"Tecnologia", form_sec_agri:"Agricultura", form_sec_edu:"Educacion", form_sec_health:"Salud", form_sec_transport:"Transporte", form_sec_construction:"Construccion", form_sec_other:"Otro",
     form_logo_q:"-- Tienes un logo? --", form_logo_yes:"Si, tengo un logo", form_logo_no:"No, necesito uno",
     form_web_q:"-- Tienes un sitio web? --", form_web_yes:"Si, tengo un sitio web", form_web_no:"No, necesito uno",
-    form_pkg_q:"-- Cual paquete? --", form_pkg_199:"$199 - Paquete Business Ready", form_pkg_249:"$249 - Paquete 2 Idiomas", form_pkg_bank:"$199 - Bancos e Instituciones",
+    form_pkg_q:"-- Cual paquete? --", form_pkg_79:"$79 - Paquete Estudiante", form_pkg_199:"$199 - Paquete Business Ready", form_pkg_249:"$249 - Paquete 2 Idiomas", form_pkg_bank:"$199 - Bancos e Instituciones",
     form_city:"Ciudad / Ubicacion", form_desc:"Describe brevemente tu negocio o idea...",
     form_send:"Enviar Solicitud",
     footer_desc:"Ayudando a emprendedores haitianos a construir y lanzar negocios mas rapido.",
