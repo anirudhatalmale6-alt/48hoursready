@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>48HoursReady - Ambassador Referral Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D21034;--red-dark:#B00D2C;
+  --blue:#00209F;--blue-dark:#001566;
+  --gold:#D4A017;--gold-light:#E8B82E;
+  --white:#FFFFFF;--off-white:#FFF8F8;
+  --dark:#1A0C0C;--text:#2A1A1A;--text-light:#6A5A5A;
+  --green:#2E7D32;
+  --body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --display:'DM Serif Display',Georgia,serif;
+}
+body{font-family:var(--body);background:var(--off-white);color:var(--text);min-height:100vh}
+
+.top-lang-bar{
+  background:var(--red);color:#fff;font-size:.7rem;
+  padding:5px 20px;display:flex;align-items:center;justify-content:center;gap:4px;
+  position:fixed;top:0;left:0;right:0;z-index:1001;height:32px;
+}
+.top-lang-bar a{
+  color:#fff;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:100px;
+  font-size:.68rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.top-lang-bar a:hover{background:rgba(255,255,255,.3)}
+.top-lang-bar a.active{background:#fff;color:var(--red)}
+
+.hero{
+  background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);
+  color:#fff;text-align:center;padding:80px 20px 50px;
+}
+.hero h1{font-family:var(--display);font-size:2rem;margin-bottom:12px}
+.hero p{font-size:1rem;opacity:.9;max-width:600px;margin:0 auto;line-height:1.7}
+
+.container{max-width:800px;margin:0 auto;padding:30px 20px 100px}
+
+/* EARNINGS CARDS */
+.earnings-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:30px 0}
+.earn-card{background:var(--white);border-radius:16px;padding:24px;text-align:center;border:2px solid rgba(0,0,0,.06);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.earn-card .amount{font-family:var(--display);font-size:2.2rem;color:var(--red);margin:8px 0}
+.earn-card .per{font-size:.85rem;color:var(--text-light)}
+.earn-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+
+/* HOW IT WORKS */
+.how-section{margin:40px 0}
+.how-section h2{font-family:var(--display);font-size:1.5rem;text-align:center;margin-bottom:24px;color:var(--dark)}
+.steps{display:flex;flex-direction:column;gap:16px}
+.step{display:flex;align-items:flex-start;gap:16px;background:var(--white);border-radius:14px;padding:20px;border:1px solid rgba(0,0,0,.05)}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex-shrink:0}
+.step-text h3{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.step-text p{font-size:.85rem;color:var(--text-light);line-height:1.6}
+
+/* FORM */
+.form-section{margin:40px 0}
+.form-section h2{font-family:var(--display);font-size:1.5rem;text-align:center;margin-bottom:8px;color:var(--dark)}
+.form-section>p{text-align:center;color:var(--text-light);font-size:.88rem;margin-bottom:24px}
+.ref-form{background:var(--white);border-radius:16px;padding:28px;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.ref-form input,.ref-form select,.ref-form textarea{width:100%;padding:12px 16px;border:1.5px solid rgba(0,0,0,.12);border-radius:10px;font-size:.88rem;font-family:var(--body);margin-bottom:12px;transition:border .2s}
+.ref-form input:focus,.ref-form select:focus,.ref-form textarea:focus{outline:none;border-color:var(--blue)}
+.ref-form textarea{min-height:80px;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:100px;font-weight:700;font-size:.92rem;cursor:pointer;border:none;transition:all .25s;font-family:var(--body)}
+.btn-red{background:var(--red);color:#fff;width:100%}
+.btn-red:hover{background:var(--red-dark);transform:translateY(-2px)}
+
+/* LINK GENERATOR */
+.link-gen{margin:40px 0;text-align:center}
+.link-gen h2{font-family:var(--display);font-size:1.5rem;margin-bottom:8px;color:var(--dark)}
+.link-gen>p{color:var(--text-light);font-size:.88rem;margin-bottom:20px}
+.gen-box{background:var(--white);border-radius:16px;padding:28px;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.gen-row{display:flex;gap:10px;margin-bottom:16px}
+.gen-row input{flex:1;padding:12px 16px;border:1.5px solid rgba(0,0,0,.12);border-radius:10px;font-size:.88rem;font-family:var(--body)}
+.gen-row input:focus{outline:none;border-color:var(--blue)}
+.btn-blue{background:var(--blue);color:#fff;white-space:nowrap}
+.btn-blue:hover{background:var(--blue-dark)}
+
+.link-result{display:none;margin-top:16px;padding:16px;background:rgba(46,125,50,.08);border-radius:12px;border:1px solid rgba(46,125,50,.2)}
+.link-result.show{display:block}
+.link-result h4{font-size:.85rem;color:var(--green);margin-bottom:8px}
+.link-url{font-size:.82rem;word-break:break-all;background:var(--white);padding:10px 14px;border-radius:8px;border:1px solid rgba(0,0,0,.1);margin-bottom:10px;font-family:monospace}
+.copy-btn{background:var(--green);color:#fff;border:none;padding:8px 20px;border-radius:100px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--body)}
+.copy-btn:hover{opacity:.9}
+
+/* PLATFORM LINKS */
+.platforms{margin:30px 0}
+.platforms h2{font-family:var(--display);font-size:1.3rem;text-align:center;margin-bottom:16px;color:var(--dark)}
+.plat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.plat-card{background:var(--white);border-radius:14px;padding:18px;text-align:center;border:2px solid rgba(0,0,0,.06);transition:all .3s;text-decoration:none;color:var(--text)}
+.plat-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:var(--blue)}
+.plat-card .plat-icon{font-size:2rem;margin-bottom:8px}
+.plat-card h4{font-size:.9rem;font-weight:700;margin-bottom:4px}
+.plat-card p{font-size:.75rem;color:var(--text-light)}
+
+.back-link{text-align:center;margin-top:30px}
+.back-link a{color:var(--blue);font-size:.85rem;font-weight:600;text-decoration:none}
+.back-link a:hover{text-decoration:underline}
+
+.eco-bar{background:var(--dark);padding:14px 20px;text-align:center;position:fixed;bottom:0;left:0;right:0}
+.eco-bar a{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:600;margin:0 8px;transition:color .2s;text-decoration:none}
+.eco-bar a:hover{color:#fff}
+
+@media(max-width:600px){
+  .hero h1{font-size:1.5rem}
+  .gen-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP LANGUAGE BAR -->
+<div class="top-lang-bar">
+  <a onclick="setLang('fr')" class="active" id="lang-fr">&#127467;&#127479; Francais</a>
+  <a onclick="setLang('en')" id="lang-en">&#127468;&#127463; English</a>
+  <a onclick="setLang('ht')" id="lang-ht">&#127469;&#127481; Kreyol</a>
+  <a onclick="setLang('es')" id="lang-es">&#127466;&#127480; Espanol</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1 data-i18n="hero_title">Ambassador Referral Program</h1>
+  <p data-i18n="hero_desc">Earn money by referring entrepreneurs to 48HoursReady. Share your unique link and earn commissions on every signup.</p>
+</div>
+
+<div class="container">
+
+  <!-- EARNINGS -->
+  <div class="earnings-row">
+    <div class="earn-card">
+      <h3 data-i18n="earn1_title">Business Ready Referral</h3>
+      <div class="amount">$25</div>
+      <div class="per" data-i18n="earn1_per">per $199 package signup</div>
+    </div>
+    <div class="earn-card">
+      <h3 data-i18n="earn2_title">Two Languages Referral</h3>
+      <div class="amount">$30</div>
+      <div class="per" data-i18n="earn2_per">per $249 package signup</div>
+    </div>
+    <div class="earn-card">
+      <h3 data-i18n="earn3_title">Student Referral</h3>
+      <div class="amount">$10</div>
+      <div class="per" data-i18n="earn3_per">per $79 package signup</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section">
+    <h2 data-i18n="how_title">How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h3 data-i18n="step1_title">Register as Ambassador</h3>
+          <p data-i18n="step1_desc">Fill out the form below with your name and contact info to join the ambassador program.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h3 data-i18n="step2_title">Get Your Unique Link</h3>
+          <p data-i18n="step2_desc">Generate your personal referral link using the link generator. Share it with entrepreneurs you know.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h3 data-i18n="step3_title">Earn Commissions</h3>
+          <p data-i18n="step3_desc">When someone signs up through your link, we track the referral. You earn $25 for every $199 package and $30 for every $249 package.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <h3 data-i18n="step4_title">Get Paid</h3>
+          <p data-i18n="step4_desc">Receive your earnings via MonCash, NatCash, or bank transfer. Payments processed monthly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERRAL LINK GENERATOR -->
+  <div class="link-gen">
+    <h2 data-i18n="gen_title">Generate Your Referral Link</h2>
+    <p data-i18n="gen_desc">Enter your first and last name to create your unique referral link for each platform.</p>
+    <div class="gen-box">
+      <div class="gen-row">
+        <input type="text" id="refFirstName" placeholder="First Name" data-i18n-placeholder="gen_first">
+        <input type="text" id="refLastName" placeholder="Last Name" data-i18n-placeholder="gen_last">
+        <button class="btn btn-blue" onclick="generateLinks()" data-i18n="gen_btn">Generate</button>
+      </div>
+      <div class="link-result" id="linkResult">
+        <h4 data-i18n="gen_ready">Your referral links are ready!</h4>
+        <div id="genLinks"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECOSYSTEM PLATFORMS -->
+  <div class="platforms">
+    <h2 data-i18n="plat_title">Refer Across the Ecosystem</h2>
+    <div class="plat-grid">
+      <a href="https://48hoursready.com" class="plat-card" target="_blank">
+        <div class="plat-icon">&#128640;</div>
+        <h4>48HoursReady</h4>
+        <p data-i18n="plat_48">Business launch packages</p>
+      </a>
+      <a href="https://myplopplop.com" class="plat-card" target="_blank">
+        <div class="plat-icon">&#128722;</div>
+        <h4>MyPlopPlop</h4>
+        <p data-i18n="plat_plop">Digital marketplace</p>
+      </a>
+      <a href="https://msouwout.com" class="plat-card" target="_blank">
+        <div class="plat-icon">&#128663;</div>
+        <h4>MsouWout</h4>
+        <p data-i18n="plat_sou">Logistics & delivery</p>
+      </a>
+      <a href="https://talent4peace.com" class="plat-card" target="_blank">
+        <div class="plat-icon">&#11088;</div>
+        <h4>Talent4Peace</h4>
+        <p data-i18n="plat_t4p">Talent & services</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- AMBASSADOR SIGNUP FORM -->
+  <div class="form-section">
+    <h2 data-i18n="form_title">Register as Ambassador</h2>
+    <p data-i18n="form_desc">Sign up to join our ambassador program and start earning today.</p>
+    <form class="ref-form" action="https://formsubmit.co/business@haitibiznis.com" method="POST">
+      <input type="hidden" name="_subject" value="48HoursReady - New Ambassador Registration">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://48hoursready.com/referral-success.html">
+      <input type="text" name="Full Name" placeholder="Full Name" data-i18n-placeholder="f_name" required>
+      <input type="email" name="Email" placeholder="Email Address" data-i18n-placeholder="f_email" required>
+      <input type="tel" name="Phone / WhatsApp" placeholder="Phone / WhatsApp" data-i18n-placeholder="f_phone" required>
+      <input type="text" name="City / Location" placeholder="City / Location" data-i18n-placeholder="f_city" required>
+      <select name="Preferred Platform" required>
+        <option value="" disabled selected data-i18n="f_plat_q">-- Which platform do you want to promote? --</option>
+        <option value="48HoursReady">48HoursReady</option>
+        <option value="MyPlopPlop">MyPlopPlop</option>
+        <option value="MsouWout">MsouWout</option>
+        <option value="Talent4Peace">Talent4Peace</option>
+        <option value="All Platforms" data-i18n="f_plat_all">All Platforms</option>
+      </select>
+      <select name="Payment Method" required>
+        <option value="" disabled selected data-i18n="f_pay_q">-- Preferred payment method --</option>
+        <option value="MonCash">MonCash</option>
+        <option value="NatCash">NatCash</option>
+        <option value="Bank Transfer" data-i18n="f_pay_bank">Bank Transfer</option>
+      </select>
+      <input type="text" name="Payment Number" placeholder="MonCash / NatCash Number or Bank Details" data-i18n-placeholder="f_pay_num" required>
+      <textarea name="Why Ambassador" placeholder="Why do you want to be an ambassador? (optional)" data-i18n-placeholder="f_why"></textarea>
+      <button type="submit" class="btn btn-red" data-i18n="f_submit">Join Ambassador Program</button>
+    </form>
+  </div>
+
+  <!-- WHATSAPP -->
+  <div style="text-align:center;margin-top:24px;padding:20px;background:rgba(37,211,102,.08);border-radius:14px;border:1px solid rgba(37,211,102,.2)">
+    <a href="https://wa.me/50941902005?text=I%20want%20to%20join%20the%20Ambassador%20Referral%20Program" target="_blank" style="display:inline-flex;align-items:center;gap:8px;color:#25D366;font-weight:700;font-size:.9rem;text-decoration:none">&#128172; WhatsApp +509 4190 2005</a>
+    <p style="font-size:.8rem;color:var(--text-light);margin-top:6px" data-i18n="wa_help">Questions about the ambassador program? Message us on WhatsApp.</p>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html" data-i18n="back">&larr; Back to 48HoursReady</a>
+  </div>
+</div>
+
+<!-- ECOSYSTEM BAR -->
+<div class="eco-bar">
+  <a href="https://haitibiznis.com">HaitiBiznis</a>
+  <a href="https://myplopplop.com">MyPlopPlop</a>
+  <a href="https://msouwout.com">MsouWout</a>
+  <a href="https://talent4peace.com">Talent4Peace</a>
+  <a href="https://boxetoboxe.com">BoxeToBoxe</a>
+</div>
+
+<script>
+const T = {
+  fr: {
+    hero_title:"Programme Ambassadeur & Parrainage",
+    hero_desc:"Gagnez de l'argent en referant des entrepreneurs a 48HoursReady. Partagez votre lien unique et gagnez des commissions sur chaque inscription.",
+    earn1_title:"Parrainage Business Ready", earn1_per:"par inscription forfait $199",
+    earn2_title:"Parrainage Deux Langues", earn2_per:"par inscription forfait $249",
+    earn3_title:"Parrainage Etudiant", earn3_per:"par inscription forfait $79",
+    how_title:"Comment Ca Marche",
+    step1_title:"Inscrivez-vous comme Ambassadeur", step1_desc:"Remplissez le formulaire ci-dessous avec votre nom et vos coordonnees pour rejoindre le programme ambassadeur.",
+    step2_title:"Obtenez Votre Lien Unique", step2_desc:"Generez votre lien de parrainage personnel. Partagez-le avec les entrepreneurs que vous connaissez.",
+    step3_title:"Gagnez des Commissions", step3_desc:"Quand quelqu'un s'inscrit via votre lien, nous suivons le parrainage. Vous gagnez $25 pour chaque forfait $199 et $30 pour chaque forfait $249.",
+    step4_title:"Recevez Votre Paiement", step4_desc:"Recevez vos gains via MonCash, NatCash ou virement bancaire. Paiements traites mensuellement.",
+    gen_title:"Generez Votre Lien de Parrainage",
+    gen_desc:"Entrez votre prenom et nom pour creer votre lien de parrainage unique pour chaque plateforme.",
+    gen_first:"Prenom", gen_last:"Nom", gen_btn:"Generer",
+    gen_ready:"Vos liens de parrainage sont prets!",
+    plat_title:"Parrainez Sur Tout l'Ecosysteme",
+    plat_48:"Forfaits lancement d'entreprise", plat_plop:"Marketplace numerique", plat_sou:"Logistique et livraison", plat_t4p:"Talents et services",
+    form_title:"Inscrivez-vous comme Ambassadeur",
+    form_desc:"Inscrivez-vous pour rejoindre notre programme ambassadeur et commencer a gagner des aujourd'hui.",
+    f_name:"Nom Complet", f_email:"Adresse Email", f_phone:"Telephone / WhatsApp", f_city:"Ville / Emplacement",
+    f_plat_q:"-- Quelle plateforme voulez-vous promouvoir? --", f_plat_all:"Toutes les Plateformes",
+    f_pay_q:"-- Mode de paiement prefere --", f_pay_bank:"Virement Bancaire",
+    f_pay_num:"Numero MonCash / NatCash ou Details Bancaires",
+    f_why:"Pourquoi voulez-vous etre ambassadeur? (optionnel)",
+    f_submit:"Rejoindre le Programme Ambassadeur",
+    wa_help:"Des questions sur le programme ambassadeur? Ecrivez-nous sur WhatsApp.",
+    back:"&larr; Retour a 48HoursReady"
+  },
+  en: {
+    hero_title:"Ambassador Referral Program",
+    hero_desc:"Earn money by referring entrepreneurs to 48HoursReady. Share your unique link and earn commissions on every signup.",
+    earn1_title:"Business Ready Referral", earn1_per:"per $199 package signup",
+    earn2_title:"Two Languages Referral", earn2_per:"per $249 package signup",
+    earn3_title:"Student Referral", earn3_per:"per $79 package signup",
+    how_title:"How It Works",
+    step1_title:"Register as Ambassador", step1_desc:"Fill out the form below with your name and contact info to join the ambassador program.",
+    step2_title:"Get Your Unique Link", step2_desc:"Generate your personal referral link using the link generator. Share it with entrepreneurs you know.",
+    step3_title:"Earn Commissions", step3_desc:"When someone signs up through your link, we track the referral. You earn $25 for every $199 package and $30 for every $249 package.",
+    step4_title:"Get Paid", step4_desc:"Receive your earnings via MonCash, NatCash, or bank transfer. Payments processed monthly.",
+    gen_title:"Generate Your Referral Link",
+    gen_desc:"Enter your first and last name to create your unique referral link for each platform.",
+    gen_first:"First Name", gen_last:"Last Name", gen_btn:"Generate",
+    gen_ready:"Your referral links are ready!",
+    plat_title:"Refer Across the Ecosystem",
+    plat_48:"Business launch packages", plat_plop:"Digital marketplace", plat_sou:"Logistics & delivery", plat_t4p:"Talent & services",
+    form_title:"Register as Ambassador",
+    form_desc:"Sign up to join our ambassador program and start earning today.",
+    f_name:"Full Name", f_email:"Email Address", f_phone:"Phone / WhatsApp", f_city:"City / Location",
+    f_plat_q:"-- Which platform do you want to promote? --", f_plat_all:"All Platforms",
+    f_pay_q:"-- Preferred payment method --", f_pay_bank:"Bank Transfer",
+    f_pay_num:"MonCash / NatCash Number or Bank Details",
+    f_why:"Why do you want to be an ambassador? (optional)",
+    f_submit:"Join Ambassador Program",
+    wa_help:"Questions about the ambassador program? Message us on WhatsApp.",
+    back:"&larr; Back to 48HoursReady"
+  },
+  ht: {
+    hero_title:"Pwogram Anbasade ak Referans",
+    hero_desc:"Fè lajan lè ou refere antreprenè nan 48HoursReady. Pataje lyen inik ou epi touche komisyon sou chak enskripsyon.",
+    earn1_title:"Referans Business Ready", earn1_per:"pou chak enskripsyon pakè $199",
+    earn2_title:"Referans De Lang", earn2_per:"pou chak enskripsyon pakè $249",
+    earn3_title:"Referans Etidyan", earn3_per:"pou chak enskripsyon pakè $79",
+    how_title:"Koman Li Fonksyone",
+    step1_title:"Enskri kòm Anbasadè", step1_desc:"Ranpli fòm ki anba a ak non ou ak enfòmasyon kontak ou pou rejwenn pwogram anbasadè a.",
+    step2_title:"Jwenn Lyen Inik Ou", step2_desc:"Jenere lyen referans pèsonèl ou. Pataje li ak antreprenè ou konnen.",
+    step3_title:"Touche Komisyon", step3_desc:"Lè yon moun enskri atravè lyen ou, nou swiv referans la. Ou touche $25 pou chak pakè $199 ak $30 pou chak pakè $249.",
+    step4_title:"Resevwa Peman Ou", step4_desc:"Resevwa lajan ou via MonCash, NatCash oswa transfè bank. Peman trete chak mwa.",
+    gen_title:"Jenere Lyen Referans Ou",
+    gen_desc:"Antre premye non ou ak siyati ou pou kreye lyen referans inik ou pou chak platfòm.",
+    gen_first:"Premye Non", gen_last:"Siyati", gen_btn:"Jenere",
+    gen_ready:"Lyen referans ou yo prè!",
+    plat_title:"Refere Nan Tout Ekosistèm Nan",
+    plat_48:"Pakè lansman biznis", plat_plop:"Mache nimerik", plat_sou:"Lojistik ak livrezon", plat_t4p:"Talan ak sèvis",
+    form_title:"Enskri kòm Anbasadè",
+    form_desc:"Enskri pou rejwenn pwogram anbasadè nou an epi kòmanse touche jodi a.",
+    f_name:"Non Konplè", f_email:"Adrès Imèl", f_phone:"Telefòn / WhatsApp", f_city:"Vil / Kote",
+    f_plat_q:"-- Ki platfòm ou vle pwomosyone? --", f_plat_all:"Tout Platfòm",
+    f_pay_q:"-- Metòd peman prefere --", f_pay_bank:"Transfè Bank",
+    f_pay_num:"Nimewo MonCash / NatCash oswa Detay Bank",
+    f_why:"Poukisa ou vle vin anbasadè? (opsyonèl)",
+    f_submit:"Rejwenn Pwogram Anbasadè",
+    wa_help:"Kesyon sou pwogram anbasadè a? Ekri nou sou WhatsApp.",
+    back:"&larr; Retounen nan 48HoursReady"
+  },
+  es: {
+    hero_title:"Programa de Embajador y Referidos",
+    hero_desc:"Gana dinero refiriendo emprendedores a 48HoursReady. Comparte tu enlace unico y gana comisiones por cada inscripcion.",
+    earn1_title:"Referido Business Ready", earn1_per:"por inscripcion paquete $199",
+    earn2_title:"Referido Dos Idiomas", earn2_per:"por inscripcion paquete $249",
+    earn3_title:"Referido Estudiante", earn3_per:"por inscripcion paquete $79",
+    how_title:"Como Funciona",
+    step1_title:"Registrate como Embajador", step1_desc:"Completa el formulario con tu nombre e informacion de contacto para unirte al programa de embajadores.",
+    step2_title:"Obtiene Tu Enlace Unico", step2_desc:"Genera tu enlace de referido personal. Compartelo con los emprendedores que conoces.",
+    step3_title:"Gana Comisiones", step3_desc:"Cuando alguien se inscribe a traves de tu enlace, rastreamos el referido. Ganas $25 por cada paquete $199 y $30 por cada paquete $249.",
+    step4_title:"Recibe Tu Pago", step4_desc:"Recibe tus ganancias via MonCash, NatCash o transferencia bancaria. Pagos procesados mensualmente.",
+    gen_title:"Genera Tu Enlace de Referido",
+    gen_desc:"Ingresa tu nombre y apellido para crear tu enlace de referido unico para cada plataforma.",
+    gen_first:"Nombre", gen_last:"Apellido", gen_btn:"Generar",
+    gen_ready:"Tus enlaces de referido estan listos!",
+    plat_title:"Refiere En Todo el Ecosistema",
+    plat_48:"Paquetes de lanzamiento", plat_plop:"Marketplace digital", plat_sou:"Logistica y entrega", plat_t4p:"Talento y servicios",
+    form_title:"Registrate como Embajador",
+    form_desc:"Inscribete para unirte a nuestro programa de embajadores y comienza a ganar hoy.",
+    f_name:"Nombre Completo", f_email:"Correo Electronico", f_phone:"Telefono / WhatsApp", f_city:"Ciudad / Ubicacion",
+    f_plat_q:"-- Cual plataforma quieres promover? --", f_plat_all:"Todas las Plataformas",
+    f_pay_q:"-- Metodo de pago preferido --", f_pay_bank:"Transferencia Bancaria",
+    f_pay_num:"Numero MonCash / NatCash o Datos Bancarios",
+    f_why:"Por que quieres ser embajador? (opcional)",
+    f_submit:"Unirse al Programa de Embajador",
+    wa_help:"Preguntas sobre el programa de embajadores? Escribenos en WhatsApp.",
+    back:"&larr; Volver a 48HoursReady"
+  }
+};
+
+let currentLang = 'fr';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.top-lang-bar a').forEach(a => a.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  const t = T[lang] || T.fr;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key]) el.placeholder = t[key];
+  });
+}
+
+const PLATFORMS = [
+  {name:'48HoursReady', url:'https://48hoursready.com'},
+  {name:'MyPlopPlop', url:'https://myplopplop.com'},
+  {name:'MsouWout', url:'https://msouwout.com'},
+  {name:'Talent4Peace', url:'https://talent4peace.com'}
+];
+
+function generateLinks() {
+  var first = document.getElementById('refFirstName').value.trim();
+  var last = document.getElementById('refLastName').value.trim();
+  if (!first || !last) { alert('Please enter your first and last name.'); return; }
+  var code = (first + '-' + last).toLowerCase().replace(/[^a-z0-9-]/g, '');
+  var container = document.getElementById('genLinks');
+  container.innerHTML = '';
+  PLATFORMS.forEach(function(p) {
+    var link = p.url + '/?ref=' + code;
+    var div = document.createElement('div');
+    div.style.cssText = 'margin-bottom:12px;text-align:left';
+    div.innerHTML =
+      '<div style="font-weight:700;font-size:.82rem;margin-bottom:4px">' + p.name + '</div>' +
+      '<div class="link-url" id="link-' + p.name + '">' + link + '</div>' +
+      '<button class="copy-btn" onclick="copyLink(\'' + p.name + '\')" data-i18n="copy_btn">Copy Link</button>';
+    container.appendChild(div);
+  });
+  document.getElementById('linkResult').classList.add('show');
+}
+
+function copyLink(platform) {
+  var el = document.getElementById('link-' + platform);
+  var text = el.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btns = el.parentElement.querySelectorAll('.copy-btn');
+    btns[0].textContent = 'Copied!';
+    setTimeout(function() { btns[0].textContent = 'Copy Link'; }, 2000);
+  });
+}
+
+setLang('fr');
+</script>
+</body>
+</html>

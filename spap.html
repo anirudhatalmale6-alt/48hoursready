@@ -333,6 +333,9 @@ footer a{color:#fff;font-weight:600}
     <form class="form-card" action="https://formsubmit.co/business@haitibiznis.com" method="POST">
       <input type="hidden" name="_subject" value="SPAP - New Member Application">
       <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://48hoursready.com/payment.html">
+      <input type="hidden" name="Referred By" id="referralField" value="">
       <div class="form-row">
         <input type="text" name="fullname" placeholder="Full Name" data-i18n-placeholder="f_name" required>
         <input type="text" name="business" placeholder="Business Name" data-i18n-placeholder="f_business">
@@ -590,6 +593,25 @@ function setLang(lang) {
 }
 function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
 setLang('fr');
+
+/* ═══ REFERRAL TRACKING ═══ */
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var ref = params.get('ref');
+  if (ref) {
+    var field = document.getElementById('referralField');
+    if (field) field.value = ref;
+    try { sessionStorage.setItem('48hr_ref', ref); } catch(e) {}
+  } else {
+    try {
+      var saved = sessionStorage.getItem('48hr_ref');
+      if (saved) {
+        var field = document.getElementById('referralField');
+        if (field) field.value = saved;
+      }
+    } catch(e) {}
+  }
+})();
 </script>
 </body>
 </html>
