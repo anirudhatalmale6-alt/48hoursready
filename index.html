@@ -12,6 +12,8 @@
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00209F">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -271,6 +273,12 @@ footer a{color:#fff;font-weight:600}
   .contact-grid{grid-template-columns:1fr!important}
   .footer-inner{flex-direction:column;text-align:center}
 }
+.install-banner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,#00209F 0%,#D21034 100%);color:#fff;padding:14px 20px;box-shadow:0 -4px 20px rgba(0,0,0,.15);align-items:center;gap:12px}
+.install-banner.show{display:flex}
+.install-banner-text{flex:1;font-size:.82rem;font-weight:600}
+.install-banner-text small{display:block;font-size:.7rem;font-weight:400;opacity:.8;margin-top:2px}
+.install-banner-btn{background:#fff;color:#00209F;border:none;padding:10px 22px;border-radius:100px;font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap}
+.install-banner-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.2rem;cursor:pointer;padding:4px}
 </style>
 </head>
 <body>
@@ -807,7 +815,8 @@ const T = {
     form_city:"Ville / Localisation", form_desc:"Decrivez brievement votre entreprise ou idee...",
     form_send:"Soumettre la Candidature",
     footer_desc:"Aider les entrepreneurs haitiens a construire et lancer leurs entreprises plus vite.",
-    footer_ecosystem:"Ecosysteme", footer_links:"Liens Rapides", eco_label:"Fait partie de"
+    footer_ecosystem:"Ecosysteme", footer_links:"Liens Rapides", eco_label:"Fait partie de",
+    install_text:"Installer 48HoursReady<small>Ajouter à votre écran d'accueil</small>", install_btn:"Installer"
   },
   en: {
     nav_programs:"Programs", nav_features:"Features", nav_how:"How It Works", nav_contact:"Contact", nav_cta:"Get Started",
@@ -877,7 +886,8 @@ const T = {
     form_city:"City / Location", form_desc:"Briefly describe your business or idea...",
     form_send:"Submit Application",
     footer_desc:"Helping Haitian entrepreneurs build and launch businesses faster.",
-    footer_ecosystem:"Ecosystem", footer_links:"Quick Links", eco_label:"Part of"
+    footer_ecosystem:"Ecosystem", footer_links:"Quick Links", eco_label:"Part of",
+    install_text:"Install 48HoursReady<small>Add to your home screen for quick access</small>", install_btn:"Install"
   },
   ht: {
     nav_programs:"Pwogram", nav_features:"Fonksyon", nav_how:"Koman li mache", nav_contact:"Kontak", nav_cta:"Komanse",
@@ -947,7 +957,8 @@ const T = {
     form_city:"Vil / Anplasman", form_desc:"Dekri biznis ou oswa lide ou an bref...",
     form_send:"Soumèt Aplikasyon",
     footer_desc:"Ede antreprene ayisyen bati epi lanse biznis yo pi vit.",
-    footer_ecosystem:"Ekosistem", footer_links:"Lyen Rapid", eco_label:"Fe pati de"
+    footer_ecosystem:"Ekosistem", footer_links:"Lyen Rapid", eco_label:"Fe pati de",
+    install_text:"Enstale 48HoursReady<small>Mete sou ekran lakay ou</small>", install_btn:"Enstale"
   },
   es: {
     nav_programs:"Programas", nav_features:"Funciones", nav_how:"Como funciona", nav_contact:"Contacto", nav_cta:"Comenzar",
@@ -1017,7 +1028,8 @@ const T = {
     form_city:"Ciudad / Ubicacion", form_desc:"Describe brevemente tu negocio o idea...",
     form_send:"Enviar Solicitud",
     footer_desc:"Ayudando a emprendedores haitianos a construir y lanzar negocios mas rapido.",
-    footer_ecosystem:"Ecosistema", footer_links:"Enlaces Rapidos", eco_label:"Parte de"
+    footer_ecosystem:"Ecosistema", footer_links:"Enlaces Rapidos", eco_label:"Parte de",
+    install_text:"Instalar 48HoursReady<small>Añadir a tu pantalla de inicio</small>", install_btn:"Instalar"
   }
 };
 
@@ -1162,6 +1174,36 @@ loadFeeds();
     } catch(e) {}
   }
 })();
+</script>
+<div class="install-banner" id="installBanner">
+  <div class="install-banner-text" data-i18n="install_text">Installer 48HoursReady<small>Ajouter à votre écran d'accueil</small></div>
+  <button class="install-banner-btn" id="installBtn" data-i18n="install_btn">Installer</button>
+  <button class="install-banner-close" id="installClose">&times;</button>
+</div>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}
+var deferredPrompt=null;
+var iBanner=document.getElementById('installBanner');
+var iBtn=document.getElementById('installBtn');
+var iClose=document.getElementById('installClose');
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();deferredPrompt=e;iBanner.classList.add('show');
+});
+iBtn.addEventListener('click',function(){
+  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){iBanner.classList.remove('show');deferredPrompt=null})}
+});
+iClose.addEventListener('click',function(){iBanner.classList.remove('show');sessionStorage.setItem('48hr_install_dismissed','1')});
+setTimeout(function(){
+  if(!deferredPrompt&&!sessionStorage.getItem('48hr_install_dismissed')&&!window.matchMedia('(display-mode: standalone)').matches){
+    iBanner.classList.add('show');
+    iBtn.addEventListener('click',function(){
+      var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+      if(isIOS){alert('Tap the Share button, then "Add to Home Screen"')}
+      else{alert('Tap the menu (⋮), then "Install app"')}
+      iBanner.classList.remove('show');
+    },{once:true});
+  }
+},3000);
 </script>
 </body>
 </html>
