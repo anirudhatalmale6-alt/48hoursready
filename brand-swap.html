@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Branded Swap — 48HoursReady</title>
+<meta name="description" content="Remove third-party branding from your pitch decks and documents. Powered by 48HoursReady.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D21034;--red-dark:#B00D2C;
+  --blue:#00209F;--blue-dark:#001566;
+  --gold:#D4A017;--gold-light:#E8B82E;
+  --white:#FFFFFF;--off-white:#FFF8F8;--cream:#FDF6F0;
+  --dark:#1A0C0C;--text:#2A1A1A;--text-light:#6A5A5A;--text-muted:#9A8A8A;
+  --border:#E8DEDE;
+  --body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --display:'DM Serif Display',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);background:var(--off-white);color:var(--text);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh;
+  display:flex;flex-direction:column;
+}
+
+/* ═══ HEADER ═══ */
+.site-header{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(12px);background:rgba(255,255,255,.92);
+}
+.header-logo{
+  font-family:var(--display);font-size:1.25rem;color:var(--blue);
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+}
+.header-logo .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--red);
+  display:inline-block;animation:pulse-dot 2s ease infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.header-back{
+  font-size:.82rem;font-weight:600;color:var(--text-light);
+  display:flex;align-items:center;gap:6px;text-decoration:none;
+  padding:8px 16px;border-radius:8px;transition:all .2s;
+}
+.header-back:hover{background:var(--cream);color:var(--text)}
+.header-back svg{width:16px;height:16px}
+
+/* ═══ HERO ═══ */
+.hero{
+  text-align:center;padding:56px 24px 40px;
+  background:linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle, rgba(210,16,52,.04) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg, var(--red), var(--red-dark));
+  color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 16px;border-radius:100px;margin-bottom:20px;
+  box-shadow:0 2px 12px rgba(210,16,52,.25);
+}
+.hero-badge svg{width:14px;height:14px}
+.hero h1{
+  font-family:var(--display);font-size:clamp(2rem,5vw,3.2rem);
+  color:var(--dark);line-height:1.15;margin-bottom:12px;
+}
+.hero h1 em{color:var(--red);font-style:italic}
+.hero p{
+  font-size:clamp(.9rem,2vw,1.05rem);color:var(--text-light);
+  max-width:520px;margin:0 auto;line-height:1.6;
+}
+
+/* ═══ MAIN CONTENT ═══ */
+.main{flex:1;padding:0 24px 60px;max-width:800px;margin:0 auto;width:100%}
+
+/* ═══ UPLOAD ZONE ═══ */
+.upload-zone{
+  border:2px dashed var(--border);border-radius:20px;
+  padding:48px 32px;text-align:center;cursor:pointer;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+  background:var(--white);
+}
+.upload-zone::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(0,32,159,.02), rgba(210,16,52,.02));
+  opacity:0;transition:opacity .3s;
+}
+.upload-zone:hover,.upload-zone.drag-over{
+  border-color:var(--red);border-style:solid;
+  box-shadow:0 0 0 4px rgba(210,16,52,.08);
+  transform:translateY(-2px);
+}
+.upload-zone:hover::before,.upload-zone.drag-over::before{opacity:1}
+.upload-zone.drag-over{background:rgba(210,16,52,.02)}
+.upload-icon{
+  width:64px;height:64px;margin:0 auto 16px;
+  background:linear-gradient(135deg, var(--cream), var(--off-white));
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);
+}
+.upload-icon svg{width:28px;height:28px;color:var(--red)}
+.upload-zone h3{font-family:var(--display);font-size:1.2rem;margin-bottom:6px;color:var(--dark)}
+.upload-zone p{font-size:.85rem;color:var(--text-muted)}
+.upload-zone .browse-link{color:var(--red);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.upload-zone input{display:none}
+
+/* ═══ FILE INFO ═══ */
+.file-info{
+  display:none;align-items:center;gap:14px;
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+  padding:16px 20px;margin-top:20px;
+}
+.file-info.visible{display:flex}
+.file-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg, var(--red), var(--red-dark));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.file-icon svg{width:20px;height:20px;color:#fff}
+.file-meta{flex:1;min-width:0}
+.file-meta .name{font-weight:700;font-size:.9rem;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-meta .size{font-size:.78rem;color:var(--text-muted);margin-top:2px}
+.file-remove{
+  width:32px;height:32px;border-radius:8px;border:1px solid var(--border);
+  background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;flex-shrink:0;
+}
+.file-remove:hover{background:var(--cream);border-color:var(--red)}
+.file-remove svg{width:14px;height:14px;color:var(--text-light)}
+
+/* ═══ PROGRESS ═══ */
+.progress-section{display:none;margin-top:28px}
+.progress-section.visible{display:block}
+.progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.progress-label{font-size:.82rem;font-weight:600;color:var(--text)}
+.progress-pct{font-size:.78rem;font-weight:700;color:var(--red);font-variant-numeric:tabular-nums}
+.progress-track{
+  height:6px;background:var(--cream);border-radius:100px;overflow:hidden;
+  position:relative;
+}
+.progress-fill{
+  height:100%;width:0%;border-radius:100px;
+  background:linear-gradient(90deg, var(--red), var(--gold));
+  transition:width .3s ease;position:relative;
+}
+.progress-fill::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:20px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.4));
+  animation:shimmer 1.2s ease infinite;
+}
+@keyframes shimmer{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
+.progress-status{font-size:.78rem;color:var(--text-muted);margin-top:8px}
+
+/* ═══ PREVIEW ═══ */
+.preview-section{display:none;margin-top:32px}
+.preview-section.visible{display:block}
+.preview-label{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:14px;
+}
+.preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.preview-card{
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;position:relative;
+}
+.preview-card .tag{
+  position:absolute;top:10px;left:10px;z-index:2;
+  font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;
+}
+.preview-card .tag.before{background:var(--dark);color:#fff}
+.preview-card .tag.after{background:var(--red);color:#fff}
+.preview-card canvas{width:100%;height:auto;display:block}
+@media(max-width:500px){.preview-grid{grid-template-columns:1fr}}
+
+/* ═══ ACTIONS ═══ */
+.actions{display:none;margin-top:28px;gap:12px;flex-direction:column;align-items:stretch}
+.actions.visible{display:flex}
+.btn-download{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(135deg, var(--red), var(--red-dark));
+  color:#fff;font-family:var(--body);font-size:.95rem;font-weight:700;
+  padding:16px 28px;border:none;border-radius:14px;cursor:pointer;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 4px 20px rgba(210,16,52,.3);
+}
+.btn-download:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(210,16,52,.4);
+}
+.btn-download:active{transform:translateY(0)}
+.btn-download svg{width:20px;height:20px}
+.btn-reset{
+  background:none;border:1px solid var(--border);color:var(--text-light);
+  font-family:var(--body);font-size:.85rem;font-weight:600;
+  padding:12px 20px;border-radius:12px;cursor:pointer;transition:all .2s;
+}
+.btn-reset:hover{background:var(--cream);border-color:var(--text-muted)}
+
+/* ═══ COMPLETE ═══ */
+.complete-msg{
+  display:none;align-items:center;gap:10px;
+  background:linear-gradient(135deg, #E8F5E9, #F1F8E9);
+  border:1px solid #C8E6C9;border-radius:12px;
+  padding:14px 18px;margin-top:16px;
+  font-size:.85rem;font-weight:600;color:#2E7D32;
+}
+.complete-msg.visible{display:flex}
+.complete-msg svg{width:20px;height:20px;flex-shrink:0}
+
+/* ═══ FOOTER ═══ */
+.site-footer{
+  text-align:center;padding:28px 24px;
+  border-top:1px solid var(--border);
+  font-size:.78rem;color:var(--text-muted);
+  margin-top:auto;
+}
+.site-footer a{color:var(--red);font-weight:600}
+
+/* ═══ UTILITY ═══ */
+.fade-in{animation:fadeIn .5s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="index.html" class="header-logo">
+    <span class="dot"></span>
+    48HoursReady
+  </a>
+  <a href="index.html" class="header-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back
+  </a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 8l-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/></svg>
+    Tool
+  </div>
+  <h1>Branded <em>Swap</em></h1>
+  <p>Remove third-party branding from your pitch decks and documents. Upload, clean, download.</p>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Upload Zone -->
+  <div class="upload-zone" id="uploadZone">
+    <div class="upload-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+    </div>
+    <h3>Drop your PDF here</h3>
+    <p>or <span class="browse-link">browse files</span> to upload</p>
+    <input type="file" id="fileInput" accept=".pdf">
+  </div>
+
+  <!-- File Info -->
+  <div class="file-info" id="fileInfo">
+    <div class="file-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+    </div>
+    <div class="file-meta">
+      <div class="name" id="fileName"></div>
+      <div class="size" id="fileSize"></div>
+    </div>
+    <button class="file-remove" id="fileRemove" title="Remove file">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-section" id="progressSection">
+    <div class="progress-header">
+      <span class="progress-label">Processing...</span>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-status" id="progressStatus">Preparing...</div>
+  </div>
+
+  <!-- Preview -->
+  <div class="preview-section" id="previewSection">
+    <div class="preview-label">Preview &mdash; Page 1</div>
+    <div class="preview-grid">
+      <div class="preview-card">
+        <span class="tag before">Before</span>
+        <canvas id="previewBefore"></canvas>
+      </div>
+      <div class="preview-card">
+        <span class="tag after">After</span>
+        <canvas id="previewAfter"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Complete -->
+  <div class="complete-msg" id="completeMsg">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+    <span id="completeText">Done! All pages cleaned successfully.</span>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions" id="actions">
+    <button class="btn-download" id="btnDownload">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Branded PDF
+    </button>
+    <button class="btn-reset" id="btnReset">Upload another file</button>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  &copy; 2026 <a href="index.html">48HoursReady</a>. A HaitiBiznis Platform.
+</footer>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+const { jsPDF } = window.jspdf;
+
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+const fileInfo = document.getElementById('fileInfo');
+const fileName = document.getElementById('fileName');
+const fileSize = document.getElementById('fileSize');
+const fileRemove = document.getElementById('fileRemove');
+const progressSection = document.getElementById('progressSection');
+const progressFill = document.getElementById('progressFill');
+const progressPct = document.getElementById('progressPct');
+const progressStatus = document.getElementById('progressStatus');
+const previewSection = document.getElementById('previewSection');
+const previewBefore = document.getElementById('previewBefore');
+const previewAfter = document.getElementById('previewAfter');
+const completeMsg = document.getElementById('completeMsg');
+const completeText = document.getElementById('completeText');
+const actions = document.getElementById('actions');
+const btnDownload = document.getElementById('btnDownload');
+const btnReset = document.getElementById('btnReset');
+
+let resultBlob = null;
+let originalFileName = '';
+
+/* ── Upload Zone Events ── */
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type === 'application/pdf') handleFile(file);
+});
+fileInput.addEventListener('change', () => {
+  if (fileInput.files[0]) handleFile(fileInput.files[0]);
+});
+fileRemove.addEventListener('click', resetAll);
+btnReset.addEventListener('click', resetAll);
+btnDownload.addEventListener('click', downloadResult);
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+function handleFile(file) {
+  originalFileName = file.name.replace(/\.pdf$/i, '');
+  fileName.textContent = file.name;
+  fileSize.textContent = formatSize(file.size);
+  fileInfo.classList.add('visible');
+  uploadZone.style.display = 'none';
+  processFile(file);
+}
+
+function resetAll() {
+  uploadZone.style.display = '';
+  fileInfo.classList.remove('visible');
+  progressSection.classList.remove('visible');
+  previewSection.classList.remove('visible');
+  completeMsg.classList.remove('visible');
+  actions.classList.remove('visible');
+  progressFill.style.width = '0%';
+  fileInput.value = '';
+  resultBlob = null;
+}
+
+function setProgress(pct, status) {
+  progressFill.style.width = pct + '%';
+  progressPct.textContent = Math.round(pct) + '%';
+  if (status) progressStatus.textContent = status;
+}
+
+/* ── Core Processing ── */
+async function processFile(file) {
+  progressSection.classList.add('visible', 'fade-in');
+  setProgress(5, 'Loading PDF...');
+
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const totalPages = pdf.numPages;
+
+  setProgress(10, `Loaded ${totalPages} pages. Processing...`);
+
+  /* Determine landscape vs portrait from first page */
+  const firstPage = await pdf.getPage(1);
+  const vp0 = firstPage.getViewport({ scale: 1 });
+  const isLandscape = vp0.width > vp0.height;
+
+  /* Use jsPDF with matching orientation */
+  const orientation = isLandscape ? 'landscape' : 'portrait';
+  const pdfDoc = new jsPDF({ orientation, unit: 'px', format: [vp0.width, vp0.height], compress: true });
+
+  for (let i = 1; i <= totalPages; i++) {
+    const page = await pdf.getPage(i);
+    const scale = 2; /* render at 2x for quality */
+    const viewport = page.getViewport({ scale });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext('2d');
+
+    await page.render({ canvasContext: ctx, viewport }).promise;
+
+    /* ── Save "before" preview for page 1 ── */
+    if (i === 1) {
+      previewBefore.width = viewport.width;
+      previewBefore.height = viewport.height;
+      previewBefore.getContext('2d').drawImage(canvas, 0, 0);
+    }
+
+    /* ── Remove NotebookLM branding (bottom-right) ── */
+    const w = canvas.width;
+    const h = canvas.height;
+    const logoLeft = Math.floor(w * 0.82);
+    const logoTop = Math.floor(h * 0.93);
+
+    /* Sample background color from area just above/left of logo */
+    const sampleX = Math.max(0, logoLeft - 60);
+    const sampleY = Math.max(0, logoTop - 20);
+    const sampleW = 40;
+    const sampleH = 15;
+    const sampleData = ctx.getImageData(sampleX, sampleY, sampleW, sampleH).data;
+    let rSum = 0, gSum = 0, bSum = 0;
+    const pixelCount = sampleW * sampleH;
+    for (let p = 0; p < pixelCount; p++) {
+      rSum += sampleData[p * 4];
+      gSum += sampleData[p * 4 + 1];
+      bSum += sampleData[p * 4 + 2];
+    }
+    const bgR = Math.round(rSum / pixelCount);
+    const bgG = Math.round(gSum / pixelCount);
+    const bgB = Math.round(bSum / pixelCount);
+
+    ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
+    ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
+
+    /* ── Save "after" preview for page 1 ── */
+    if (i === 1) {
+      previewAfter.width = viewport.width;
+      previewAfter.height = viewport.height;
+      previewAfter.getContext('2d').drawImage(canvas, 0, 0);
+      previewSection.classList.add('visible', 'fade-in');
+    }
+
+    /* ── Add page to jsPDF ── */
+    const imgData = canvas.toDataURL('image/jpeg', 0.92);
+    const pageVP = page.getViewport({ scale: 1 });
+    if (i > 1) pdfDoc.addPage([pageVP.width, pageVP.height], pageVP.width > pageVP.height ? 'landscape' : 'portrait');
+    pdfDoc.addImage(imgData, 'JPEG', 0, 0, pageVP.width, pageVP.height);
+
+    const pct = 10 + (i / totalPages) * 85;
+    setProgress(pct, `Processing page ${i} of ${totalPages}...`);
+  }
+
+  setProgress(98, 'Generating PDF...');
+
+  resultBlob = pdfDoc.output('blob');
+
+  setProgress(100, 'Complete!');
+  completeText.textContent = `Done! ${totalPages} page${totalPages > 1 ? 's' : ''} cleaned successfully.`;
+  completeMsg.classList.add('visible', 'fade-in');
+  actions.classList.add('visible', 'fade-in');
+}
+
+function downloadResult() {
+  if (!resultBlob) return;
+  const url = URL.createObjectURL(resultBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = originalFileName + '_Branded.pdf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
