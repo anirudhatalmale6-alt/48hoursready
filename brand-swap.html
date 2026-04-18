@@ -258,7 +258,7 @@ body{
     Tool
   </div>
   <h1>Branded <em>Swap</em></h1>
-  <p>Remove third-party branding from your pitch decks and documents. Upload, clean, download.</p>
+  <p>Remove third-party branding from your pitch decks, documents, and videos. Upload, clean, download.</p>
 </section>
 
 <!-- MAIN -->
@@ -269,9 +269,10 @@ body{
     <div class="upload-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
     </div>
-    <h3>Drop your PDF here</h3>
+    <h3>Drop your PDF or Video here</h3>
     <p>or <span class="browse-link">browse files</span> to upload</p>
-    <input type="file" id="fileInput" accept=".pdf">
+    <p style="font-size:.75rem;color:var(--text-muted);margin-top:8px">Supports PDF, MP4, MOV, WebM</p>
+    <input type="file" id="fileInput" accept=".pdf,.mp4,.mov,.webm,video/mp4,video/quicktime,video/webm">
   </div>
 
   <!-- File Info -->
@@ -300,7 +301,7 @@ body{
     <div class="progress-status" id="progressStatus">Preparing...</div>
   </div>
 
-  <!-- Preview -->
+  <!-- Preview (PDF) -->
   <div class="preview-section" id="previewSection">
     <div class="preview-label">Preview &mdash; Page 1</div>
     <div class="preview-grid">
@@ -314,6 +315,18 @@ body{
       </div>
     </div>
   </div>
+
+  <!-- Preview (Video) -->
+  <div class="preview-section" id="videoPreviewSection">
+    <div class="preview-label">Video Preview</div>
+    <div style="border-radius:14px;overflow:hidden;background:#000">
+      <video id="videoPreview" style="width:100%;display:block" controls></video>
+    </div>
+  </div>
+
+  <!-- Hidden video processing elements -->
+  <video id="sourceVideo" style="display:none" muted></video>
+  <canvas id="videoCanvas" style="display:none"></canvas>
 
   <!-- Complete -->
   <div class="complete-msg" id="completeMsg">
@@ -372,7 +385,7 @@ uploadZone.addEventListener('drop', e => {
   e.preventDefault();
   uploadZone.classList.remove('drag-over');
   const file = e.dataTransfer.files[0];
-  if (file && file.type === 'application/pdf') handleFile(file);
+  if (file) handleFile(file);
 });
 fileInput.addEventListener('change', () => {
   if (fileInput.files[0]) handleFile(fileInput.files[0]);
@@ -387,13 +400,26 @@ function formatSize(bytes) {
   return (bytes / 1048576).toFixed(1) + ' MB';
 }
 
+let fileType = 'pdf'; /* 'pdf' or 'video' */
+
 function handleFile(file) {
-  originalFileName = file.name.replace(/\.pdf$/i, '');
   fileName.textContent = file.name;
   fileSize.textContent = formatSize(file.size);
   fileInfo.classList.add('visible');
   uploadZone.style.display = 'none';
-  processFile(file);
+
+  if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+    fileType = 'pdf';
+    originalFileName = file.name.replace(/\.pdf$/i, '');
+    processFile(file);
+  } else if (file.type.startsWith('video/') || /\.(mp4|mov|webm)$/i.test(file.name)) {
+    fileType = 'video';
+    originalFileName = file.name.replace(/\.(mp4|mov|webm)$/i, '');
+    processVideo(file);
+  } else {
+    alert('Please upload a PDF or video file (MP4, MOV, WebM).');
+    resetAll();
+  }
 }
 
 function resetAll() {
@@ -401,11 +427,16 @@ function resetAll() {
   fileInfo.classList.remove('visible');
   progressSection.classList.remove('visible');
   previewSection.classList.remove('visible');
+  document.getElementById('videoPreviewSection').classList.remove('visible');
   completeMsg.classList.remove('visible');
   actions.classList.remove('visible');
   progressFill.style.width = '0%';
   fileInput.value = '';
   resultBlob = null;
+  var vp = document.getElementById('videoPreview');
+  if (vp.src) { vp.pause(); vp.removeAttribute('src'); vp.load(); }
+  var sv = document.getElementById('sourceVideo');
+  if (sv.src) { sv.pause(); sv.removeAttribute('src'); sv.load(); }
 }
 
 function setProgress(pct, status) {
@@ -512,11 +543,137 @@ function downloadResult() {
   const url = URL.createObjectURL(resultBlob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = originalFileName + '_Branded.pdf';
+  a.download = originalFileName + '_Branded.' + (fileType === 'video' ? 'webm' : 'pdf');
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+/* ══════════════════════════════════════════════════════
+   VIDEO PROCESSING — Canvas + MediaRecorder
+   Covers bottom-right watermark area with sampled bg color
+   ══════════════════════════════════════════════════════ */
+async function processVideo(file) {
+  progressSection.classList.add('visible', 'fade-in');
+  setProgress(5, 'Loading video...');
+
+  const sourceVideo = document.getElementById('sourceVideo');
+  const videoCanvas = document.getElementById('videoCanvas');
+  const ctx = videoCanvas.getContext('2d');
+
+  /* Load video */
+  const videoURL = URL.createObjectURL(file);
+  sourceVideo.src = videoURL;
+
+  await new Promise((resolve, reject) => {
+    sourceVideo.onloadedmetadata = resolve;
+    sourceVideo.onerror = () => reject(new Error('Failed to load video'));
+  });
+
+  await sourceVideo.play().then(() => { sourceVideo.pause(); sourceVideo.currentTime = 0; });
+  await new Promise(r => { sourceVideo.onseeked = r; sourceVideo.currentTime = 0; });
+
+  const vw = sourceVideo.videoWidth;
+  const vh = sourceVideo.videoHeight;
+  videoCanvas.width = vw;
+  videoCanvas.height = vh;
+
+  setProgress(10, 'Video loaded (' + vw + 'x' + vh + '). Preparing...');
+
+  /* Define watermark region (bottom-right ~18% x 7%) */
+  const logoX = Math.floor(vw * 0.82);
+  const logoY = Math.floor(vh * 0.91);
+  const logoW = vw - logoX;
+  const logoH = vh - logoY;
+
+  /* Sample background color from first frame */
+  ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+  const sampleX = Math.max(0, logoX - 40);
+  const sampleY = Math.max(0, logoY - 15);
+  const sampleData = ctx.getImageData(sampleX, sampleY, 30, 10).data;
+  let rSum = 0, gSum = 0, bSum = 0;
+  const pxCount = 30 * 10;
+  for (let p = 0; p < pxCount; p++) {
+    rSum += sampleData[p * 4];
+    gSum += sampleData[p * 4 + 1];
+    bSum += sampleData[p * 4 + 2];
+  }
+  const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
+
+  setProgress(15, 'Recording cleaned video...');
+
+  /* Set up MediaRecorder to capture the canvas */
+  const stream = videoCanvas.captureStream(30);
+  /* Add audio track from source if available */
+  try {
+    const audioCtx = new AudioContext();
+    const audioSource = audioCtx.createMediaElementSource(sourceVideo);
+    const audioDest = audioCtx.createMediaStreamDestination();
+    audioSource.connect(audioDest);
+    audioSource.connect(audioCtx.destination);
+    audioDest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+  } catch(e) { /* no audio or can't capture - continue without */ }
+
+  const chunks = [];
+  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+  const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 5000000 });
+  recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+
+  const duration = sourceVideo.duration;
+  let recordingDone = false;
+
+  const recordPromise = new Promise(resolve => {
+    recorder.onstop = () => { recordingDone = true; resolve(); };
+  });
+
+  recorder.start(100);
+  sourceVideo.currentTime = 0;
+  sourceVideo.playbackRate = 1;
+  await sourceVideo.play();
+
+  /* Draw frames with watermark covered */
+  function drawFrame() {
+    if (sourceVideo.paused || sourceVideo.ended) return;
+    ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(logoX, logoY, logoW, logoH);
+    const pct = 15 + (sourceVideo.currentTime / duration) * 80;
+    setProgress(pct, 'Processing... ' + Math.round(sourceVideo.currentTime) + 's / ' + Math.round(duration) + 's');
+    requestAnimationFrame(drawFrame);
+  }
+  drawFrame();
+
+  /* Wait for video to finish playing */
+  await new Promise(resolve => {
+    sourceVideo.onended = () => {
+      /* Draw one final frame */
+      ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(logoX, logoY, logoW, logoH);
+      setTimeout(() => { recorder.stop(); resolve(); }, 200);
+    };
+  });
+
+  await recordPromise;
+
+  setProgress(98, 'Generating video file...');
+
+  resultBlob = new Blob(chunks, { type: mimeType });
+
+  /* Show preview */
+  const previewVideo = document.getElementById('videoPreview');
+  previewVideo.src = URL.createObjectURL(resultBlob);
+  document.getElementById('videoPreviewSection').classList.add('visible', 'fade-in');
+
+  /* Update UI */
+  setProgress(100, 'Complete!');
+  completeText.textContent = 'Done! Video cleaned successfully (' + Math.round(duration) + 's).';
+  completeMsg.classList.add('visible', 'fade-in');
+  btnDownload.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Branded Video';
+  actions.classList.add('visible', 'fade-in');
+
+  URL.revokeObjectURL(videoURL);
 }
 </script>
 </body>
