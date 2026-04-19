@@ -571,22 +571,21 @@ async function processVideo(file) {
   const videoCanvas = document.getElementById('videoCanvas');
   const ctx = videoCanvas.getContext('2d');
 
-  /* Load video */
+  /* Load video (keep muted so user doesn't hear it during processing) */
   const videoURL = URL.createObjectURL(file);
   sourceVideo.src = videoURL;
-  sourceVideo.muted = false;
+  sourceVideo.muted = true;
+  sourceVideo.volume = 0;
 
   await new Promise((resolve, reject) => {
     sourceVideo.onloadedmetadata = resolve;
     sourceVideo.onerror = () => reject(new Error('Failed to load video'));
   });
 
-  /* Need to play briefly to initialize audio */
-  sourceVideo.muted = true;
+  /* Brief play to initialize tracks */
   await sourceVideo.play();
   sourceVideo.pause();
   sourceVideo.currentTime = 0;
-  sourceVideo.muted = false;
   await new Promise(r => { sourceVideo.onseeked = r; });
 
   const vw = sourceVideo.videoWidth;
@@ -616,27 +615,31 @@ async function processVideo(file) {
   }
   const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
 
-  /* Determine text color (light bg = dark text, dark bg = light text) */
-  const bgLum = (Math.round(rSum/pxCount) * 0.299 + Math.round(gSum/pxCount) * 0.587 + Math.round(bSum/pxCount) * 0.114);
-  const textColor = bgLum > 128 ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)';
-  const brandFontSize = Math.max(10, Math.floor(vh * 0.018));
+  /* Branding text settings */
+  const brandFontSize = Math.max(14, Math.floor(vh * 0.022));
+  const brandText = 'Powered by 48HoursReady.com';
 
   setProgress(15, 'Recording cleaned video with audio...');
 
-  /* ── AUDIO: capture audio from source video via captureStream ── */
+  /* ── AUDIO: Use Web Audio API to capture audio WITHOUT playing through speakers ── */
   const canvasStream = videoCanvas.captureStream(30);
+  let audioCtx = null;
 
-  /* Get audio from the source video using captureStream */
-  let audioTrack = null;
   try {
-    const srcStream = sourceVideo.captureStream ? sourceVideo.captureStream() : sourceVideo.mozCaptureStream();
-    const audioTracks = srcStream.getAudioTracks();
-    if (audioTracks.length > 0) {
-      audioTrack = audioTracks[0];
-      canvasStream.addTrack(audioTrack);
-    }
+    audioCtx = new AudioContext();
+    const audioSource = audioCtx.createMediaElementSource(sourceVideo);
+    const audioDest = audioCtx.createMediaStreamDestination();
+    /* Route audio to recording destination ONLY (not to speakers) */
+    audioSource.connect(audioDest);
+    /* Do NOT connect to audioCtx.destination — this prevents speaker playback */
+    audioDest.stream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
   } catch(e) {
-    console.log('Could not capture audio track:', e);
+    console.log('Audio capture setup:', e);
+    /* Fallback: try captureStream */
+    try {
+      var srcStream = sourceVideo.captureStream ? sourceVideo.captureStream() : sourceVideo.mozCaptureStream();
+      srcStream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
+    } catch(e2) { console.log('No audio capture available'); }
   }
 
   const chunks = [];
@@ -654,28 +657,57 @@ async function processVideo(file) {
     recorder.onstop = resolve;
   });
 
+  /* sourceVideo stays muted - audio goes through Web Audio API to recorder only */
   recorder.start(100);
   sourceVideo.currentTime = 0;
   sourceVideo.playbackRate = 1;
+  sourceVideo.muted = true;
+  sourceVideo.volume = 0;
   await sourceVideo.play();
 
-  /* Draw frames: cover watermark + add "Powered by 48HoursReady.com" */
+  /* Helper: draw branding text with semi-transparent background pill */
+  function drawBranding() {
+    ctx.font = 'bold ' + brandFontSize + 'px Arial, Helvetica, sans-serif';
+    var textWidth = ctx.measureText(brandText).width;
+    var pillPadX = 10;
+    var pillPadY = 6;
+    var pillW = textWidth + pillPadX * 2;
+    var pillH = brandFontSize + pillPadY * 2;
+    var pillX = vw - pillW - 10;
+    var pillY = vh - pillH - 8;
+
+    /* Semi-transparent dark background */
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+    ctx.beginPath();
+    var r = 6;
+    ctx.moveTo(pillX + r, pillY);
+    ctx.lineTo(pillX + pillW - r, pillY);
+    ctx.quadraticCurveTo(pillX + pillW, pillY, pillX + pillW, pillY + r);
+    ctx.lineTo(pillX + pillW, pillY + pillH - r);
+    ctx.quadraticCurveTo(pillX + pillW, pillY + pillH, pillX + pillW - r, pillY + pillH);
+    ctx.lineTo(pillX + r, pillY + pillH);
+    ctx.quadraticCurveTo(pillX, pillY + pillH, pillX, pillY + pillH - r);
+    ctx.lineTo(pillX, pillY + r);
+    ctx.quadraticCurveTo(pillX, pillY, pillX + r, pillY);
+    ctx.closePath();
+    ctx.fill();
+
+    /* White text */
+    ctx.fillStyle = '#FFFFFF';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
+  }
+
+  /* Draw frames: cover watermark + add branding */
   function drawFrame() {
     if (sourceVideo.paused || sourceVideo.ended) return;
     ctx.drawImage(sourceVideo, 0, 0, vw, vh);
-
-    /* Cover the NotebookLM watermark */
     ctx.fillStyle = bgColor;
     ctx.fillRect(logoX, logoY, logoW, logoH);
+    drawBranding();
 
-    /* Add "Powered by 48HoursReady.com" branding */
-    ctx.font = brandFontSize + 'px "Plus Jakarta Sans", Arial, sans-serif';
-    ctx.fillStyle = textColor;
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'bottom';
-    ctx.fillText('Powered by 48HoursReady.com', vw - 12, vh - 8);
-
-    const pct = 15 + (sourceVideo.currentTime / duration) * 80;
+    var pct = 15 + (sourceVideo.currentTime / duration) * 80;
     setProgress(pct, 'Processing... ' + Math.round(sourceVideo.currentTime) + 's / ' + Math.round(duration) + 's');
     requestAnimationFrame(drawFrame);
   }
@@ -684,15 +716,10 @@ async function processVideo(file) {
   /* Wait for video to finish playing */
   await new Promise(resolve => {
     sourceVideo.onended = () => {
-      /* Draw one final frame */
       ctx.drawImage(sourceVideo, 0, 0, vw, vh);
       ctx.fillStyle = bgColor;
       ctx.fillRect(logoX, logoY, logoW, logoH);
-      ctx.font = brandFontSize + 'px "Plus Jakarta Sans", Arial, sans-serif';
-      ctx.fillStyle = textColor;
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText('Powered by 48HoursReady.com', vw - 12, vh - 8);
+      drawBranding();
       setTimeout(() => { recorder.stop(); resolve(); }, 300);
     };
   });
