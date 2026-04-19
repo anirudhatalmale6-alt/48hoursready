@@ -510,6 +510,15 @@ async function processFile(file) {
     ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
     ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
 
+    /* ── Add "Powered by 48HoursReady.com" branding ── */
+    const brandSize = Math.max(14, Math.floor(h * 0.018));
+    const brandLum = (bgR * 0.299 + bgG * 0.587 + bgB * 0.114);
+    ctx.font = '600 ' + brandSize + 'px "Plus Jakarta Sans", Arial, sans-serif';
+    ctx.fillStyle = brandLum > 128 ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.75)';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('Powered by 48HoursReady.com', w - 20, h - 14);
+
     /* ── Save "after" preview for page 1 ── */
     if (i === 1) {
       previewAfter.width = viewport.width;
@@ -552,7 +561,7 @@ function downloadResult() {
 
 /* ══════════════════════════════════════════════════════
    VIDEO PROCESSING — Canvas + MediaRecorder
-   Covers bottom-right watermark area with sampled bg color
+   Covers watermark, adds "Powered by 48HoursReady.com", keeps audio
    ══════════════════════════════════════════════════════ */
 async function processVideo(file) {
   progressSection.classList.add('visible', 'fade-in');
@@ -565,14 +574,20 @@ async function processVideo(file) {
   /* Load video */
   const videoURL = URL.createObjectURL(file);
   sourceVideo.src = videoURL;
+  sourceVideo.muted = false;
 
   await new Promise((resolve, reject) => {
     sourceVideo.onloadedmetadata = resolve;
     sourceVideo.onerror = () => reject(new Error('Failed to load video'));
   });
 
-  await sourceVideo.play().then(() => { sourceVideo.pause(); sourceVideo.currentTime = 0; });
-  await new Promise(r => { sourceVideo.onseeked = r; sourceVideo.currentTime = 0; });
+  /* Need to play briefly to initialize audio */
+  sourceVideo.muted = true;
+  await sourceVideo.play();
+  sourceVideo.pause();
+  sourceVideo.currentTime = 0;
+  sourceVideo.muted = false;
+  await new Promise(r => { sourceVideo.onseeked = r; });
 
   const vw = sourceVideo.videoWidth;
   const vh = sourceVideo.videoHeight;
@@ -581,7 +596,7 @@ async function processVideo(file) {
 
   setProgress(10, 'Video loaded (' + vw + 'x' + vh + '). Preparing...');
 
-  /* Define watermark region (bottom-right ~18% x 7%) */
+  /* Define watermark region (bottom-right ~18% x 9%) */
   const logoX = Math.floor(vw * 0.82);
   const logoY = Math.floor(vh * 0.91);
   const logoW = vw - logoX;
@@ -601,30 +616,42 @@ async function processVideo(file) {
   }
   const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
 
-  setProgress(15, 'Recording cleaned video...');
+  /* Determine text color (light bg = dark text, dark bg = light text) */
+  const bgLum = (Math.round(rSum/pxCount) * 0.299 + Math.round(gSum/pxCount) * 0.587 + Math.round(bSum/pxCount) * 0.114);
+  const textColor = bgLum > 128 ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)';
+  const brandFontSize = Math.max(10, Math.floor(vh * 0.018));
 
-  /* Set up MediaRecorder to capture the canvas */
-  const stream = videoCanvas.captureStream(30);
-  /* Add audio track from source if available */
+  setProgress(15, 'Recording cleaned video with audio...');
+
+  /* ── AUDIO: capture audio from source video via captureStream ── */
+  const canvasStream = videoCanvas.captureStream(30);
+
+  /* Get audio from the source video using captureStream */
+  let audioTrack = null;
   try {
-    const audioCtx = new AudioContext();
-    const audioSource = audioCtx.createMediaElementSource(sourceVideo);
-    const audioDest = audioCtx.createMediaStreamDestination();
-    audioSource.connect(audioDest);
-    audioSource.connect(audioCtx.destination);
-    audioDest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
-  } catch(e) { /* no audio or can't capture - continue without */ }
+    const srcStream = sourceVideo.captureStream ? sourceVideo.captureStream() : sourceVideo.mozCaptureStream();
+    const audioTracks = srcStream.getAudioTracks();
+    if (audioTracks.length > 0) {
+      audioTrack = audioTracks[0];
+      canvasStream.addTrack(audioTrack);
+    }
+  } catch(e) {
+    console.log('Could not capture audio track:', e);
+  }
 
   const chunks = [];
-  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
-  const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 5000000 });
+  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')
+    ? 'video/webm;codecs=vp9,opus'
+    : MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')
+      ? 'video/webm;codecs=vp8,opus'
+      : 'video/webm';
+  const recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 5000000, audioBitsPerSecond: 128000 });
   recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
 
   const duration = sourceVideo.duration;
-  let recordingDone = false;
 
   const recordPromise = new Promise(resolve => {
-    recorder.onstop = () => { recordingDone = true; resolve(); };
+    recorder.onstop = resolve;
   });
 
   recorder.start(100);
@@ -632,12 +659,22 @@ async function processVideo(file) {
   sourceVideo.playbackRate = 1;
   await sourceVideo.play();
 
-  /* Draw frames with watermark covered */
+  /* Draw frames: cover watermark + add "Powered by 48HoursReady.com" */
   function drawFrame() {
     if (sourceVideo.paused || sourceVideo.ended) return;
     ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+
+    /* Cover the NotebookLM watermark */
     ctx.fillStyle = bgColor;
     ctx.fillRect(logoX, logoY, logoW, logoH);
+
+    /* Add "Powered by 48HoursReady.com" branding */
+    ctx.font = brandFontSize + 'px "Plus Jakarta Sans", Arial, sans-serif';
+    ctx.fillStyle = textColor;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('Powered by 48HoursReady.com', vw - 12, vh - 8);
+
     const pct = 15 + (sourceVideo.currentTime / duration) * 80;
     setProgress(pct, 'Processing... ' + Math.round(sourceVideo.currentTime) + 's / ' + Math.round(duration) + 's');
     requestAnimationFrame(drawFrame);
@@ -651,7 +688,12 @@ async function processVideo(file) {
       ctx.drawImage(sourceVideo, 0, 0, vw, vh);
       ctx.fillStyle = bgColor;
       ctx.fillRect(logoX, logoY, logoW, logoH);
-      setTimeout(() => { recorder.stop(); resolve(); }, 200);
+      ctx.font = brandFontSize + 'px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = textColor;
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('Powered by 48HoursReady.com', vw - 12, vh - 8);
+      setTimeout(() => { recorder.stop(); resolve(); }, 300);
     };
   });
 
