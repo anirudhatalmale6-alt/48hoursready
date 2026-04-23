@@ -250,6 +250,8 @@ section{padding:60px 20px}
 .bank-pkg .item-icon{background:rgba(76,175,80,.15)}
 .btn-pkg-green{background:#4CAF50;color:#fff;border-color:#4CAF50;font-weight:800}
 .btn-pkg-green:hover{background:#2E7D32;transform:translateY(-2px);box-shadow:0 8px 30px rgba(76,175,80,.4)}
+.btn-stripe{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4);font-weight:700;font-size:.82rem}
+.btn-stripe:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6);transform:translateY(-2px)}
 
 /* ═══ FOOTER ═══ */
 footer{background:var(--dark);color:#ccc;padding:40px 20px 20px;font-size:.8rem;text-align:center}
@@ -374,6 +376,7 @@ footer a{color:#fff;font-weight:600}
         <li><div class="item-icon">&#128722;</div><div><span class="item-text" data-i18n="pkgs5_title">MyPlopPlop Setup</span></div></li>
       </ul>
       <a href="#contact" class="btn btn-pkg-blue" style="width:100%;justify-content:center" data-i18n="pkgs_cta" onclick="setProgram('Student Program')">Get Started</a>
+      <a href="https://buy.stripe.com/test_9B63co7SobSognSfrvgYU07" target="_blank" class="btn btn-stripe" style="width:100%;justify-content:center;margin-top:8px" data-i18n="pkgs_stripe">Pay with Card</a>
     </div>
     <!-- $199 PACKAGE -->
     <div class="package-card">
@@ -403,6 +406,7 @@ footer a{color:#fff;font-weight:600}
         </li>
       </ul>
       <a href="#contact" class="btn btn-pkg" style="width:100%;justify-content:center" data-i18n="pkg_cta">Get Started</a>
+      <a href="https://buy.stripe.com/test_9B63co7SobSognSfrvgYU07" target="_blank" class="btn btn-stripe" style="width:100%;justify-content:center;margin-top:8px" data-i18n="pkg_stripe">Pay with Card</a>
     </div>
     <!-- $249 PACKAGE -->
     <div class="package-card featured">
@@ -436,6 +440,7 @@ footer a{color:#fff;font-weight:600}
         </li>
       </ul>
       <a href="#contact" class="btn btn-pkg-red" style="width:100%;justify-content:center" data-i18n="pkg2_cta">Get Started</a>
+      <a href="https://buy.stripe.com/test_9B63co7SobSognSfrvgYU07" target="_blank" class="btn btn-stripe" style="width:100%;justify-content:center;margin-top:8px" data-i18n="pkg2_stripe">Pay with Card</a>
     </div>
   </div>
 </section>
@@ -696,15 +701,15 @@ const T = {
     pkg2_title:"Cartes de Visite", pkg2_detail:"Design pret a imprimer",
     pkg3_title:"Resume Executif", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verifie 9+",
     pkg5_title:"Video Explicative",
-    pkg_cta:"Commencer",
-    pkgs_badge:"Special Etudiants", pkgs_name:"Forfait Etudiant", pkgs1_title:"Design de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resume Executif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifie", pkgs4_title:"Site Web", pkgs4_detail:"1 page", pkgs5_title:"Configuration MyPlopPlop", pkgs_cta:"Commencer",
+    pkg_cta:"Commencer", pkg_stripe:"Payer par Carte",
+    pkgs_badge:"Special Etudiants", pkgs_name:"Forfait Etudiant", pkgs1_title:"Design de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resume Executif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifie", pkgs4_title:"Site Web", pkgs4_detail:"1 page", pkgs5_title:"Configuration MyPlopPlop", pkgs_cta:"Commencer", pkgs_stripe:"Payer par Carte",
     pkg2_badge:"Meilleure Valeur", pkg2_name:"Forfait 2 Langues",
     pkg2a_title:"Design de Logo", pkg2a_detail:"4 variantes professionnelles",
     pkg2b_title:"Cartes de Visite", pkg2b_detail:"Design pret a imprimer",
     pkg2c_title:"Resume Executif", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verifie 9+",
     pkg2e_title:"Video Explicative",
     pkg2h_title:"Traduction Creole Complete", pkg2h_detail:"Tous les materiaux en 2 langues",
-    pkg2_cta:"Commencer",
+    pkg2_cta:"Commencer", pkg2_stripe:"Payer par Carte",
     fund_title:"&#128176; Explorer le Financement", fund_sub:"Dernieres opportunites de financement des organisations internationales de developpement pour Haiti.", fund_loading:"Chargement des opportunites...",
     fund1_title:"Microcredits", fund1_desc:"Prets aux petites entreprises avec des conditions flexibles pour demarrer ou developper votre projet.",
     fund2_title:"Subventions", fund2_desc:"Financement non remboursable pour les entreprises qualifiees dans des secteurs cles de l'economie haitienne.",
@@ -759,15 +764,15 @@ const T = {
     pkg2_title:"Business Cards", pkg2_detail:"Print-ready design",
     pkg3_title:"Executive Summary", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verified 9+",
     pkg5_title:"Video Explainer",
-    pkg_cta:"Get Started",
-    pkgs_badge:"Student Special", pkgs_name:"Student Package", pkgs1_title:"Logo Design", pkgs1_detail:"2 variants", pkgs2_title:"Executive Summary", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verified", pkgs4_title:"Website", pkgs4_detail:"1 page", pkgs5_title:"MyPlopPlop Setup", pkgs_cta:"Get Started",
+    pkg_cta:"Get Started", pkg_stripe:"Pay with Card",
+    pkgs_badge:"Student Special", pkgs_name:"Student Package", pkgs1_title:"Logo Design", pkgs1_detail:"2 variants", pkgs2_title:"Executive Summary", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verified", pkgs4_title:"Website", pkgs4_detail:"1 page", pkgs5_title:"MyPlopPlop Setup", pkgs_cta:"Get Started", pkgs_stripe:"Pay with Card",
     pkg2_badge:"Best Value", pkg2_name:"2 Languages Package",
     pkg2a_title:"Logo Design", pkg2a_detail:"4 professional variants",
     pkg2b_title:"Business Cards", pkg2b_detail:"Print-ready design",
     pkg2c_title:"Executive Summary", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verified 9+",
     pkg2e_title:"Video Explainer",
     pkg2h_title:"Full Creole Translation", pkg2h_detail:"All materials in 2 languages",
-    pkg2_cta:"Get Started",
+    pkg2_cta:"Get Started", pkg2_stripe:"Pay with Card",
     fund_title:"&#128176; Explore Funding", fund_sub:"Latest funding opportunities from international development organizations for Haiti.", fund_loading:"Loading latest opportunities...",
     fund1_title:"Microloans", fund1_desc:"Small business loans with flexible terms to help you start or grow your venture.",
     fund2_title:"Grants", fund2_desc:"Non-repayable funding for qualifying businesses in key sectors of Haiti's economy.",
@@ -822,15 +827,15 @@ const T = {
     pkg2_title:"Kat Biznis", pkg2_detail:"Desen pare pou enprime",
     pkg3_title:"Rezime Egzekitif", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verifye 9+",
     pkg5_title:"Videyo Eksplikatif",
-    pkg_cta:"Komanse",
-    pkgs_badge:"Espesyal Etidyan", pkgs_name:"Pake Etidyan", pkgs1_title:"Desen Logo", pkgs1_detail:"2 varyant", pkgs2_title:"Rezime Egzekitif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifye", pkgs4_title:"Sit Web", pkgs4_detail:"1 paj", pkgs5_title:"Konfigirasyon MyPlopPlop", pkgs_cta:"Komanse",
+    pkg_cta:"Komanse", pkg_stripe:"Peye ak Kat",
+    pkgs_badge:"Espesyal Etidyan", pkgs_name:"Pake Etidyan", pkgs1_title:"Desen Logo", pkgs1_detail:"2 varyant", pkgs2_title:"Rezime Egzekitif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifye", pkgs4_title:"Sit Web", pkgs4_detail:"1 paj", pkgs5_title:"Konfigirasyon MyPlopPlop", pkgs_cta:"Komanse", pkgs_stripe:"Peye ak Kat",
     pkg2_badge:"Pi Bon Vale", pkg2_name:"Pake 2 Lang",
     pkg2a_title:"Desen Logo", pkg2a_detail:"4 varyant pwofesyonèl",
     pkg2b_title:"Kat Biznis", pkg2b_detail:"Desen pare pou enprime",
     pkg2c_title:"Rezime Egzekitif", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verifye 9+",
     pkg2e_title:"Videyo Eksplikatif",
     pkg2h_title:"Tradiksyon Kreyol Konplè", pkg2h_detail:"Tout materyèl nan 2 lang",
-    pkg2_cta:"Komanse",
+    pkg2_cta:"Komanse", pkg2_stripe:"Peye ak Kat",
     fund_title:"&#128176; Eksplore Finansman", fund_sub:"Denyè oportunite finansman nan oganizasyon entènasyonal devlopman pou Ayiti.", fund_loading:"Chajman oportunite yo...",
     fund1_title:"Mikwokredi", fund1_desc:"Ti pre pou biznis ak kondisyon fleksib pou ede ou komanse oswa grandi.",
     fund2_title:"Sibvansyon", fund2_desc:"Finansman ou pa bezwen ranbouse pou biznis ki kalifye nan sekte kle ekonomi Ayiti a.",
@@ -885,15 +890,15 @@ const T = {
     pkg2_title:"Tarjetas de Presentacion", pkg2_detail:"Listo para imprimir",
     pkg3_title:"Resumen Ejecutivo", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verificado 9+",
     pkg5_title:"Video Explicativo",
-    pkg_cta:"Comenzar",
-    pkgs_badge:"Especial Estudiantes", pkgs_name:"Paquete Estudiante", pkgs1_title:"Diseno de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resumen Ejecutivo", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verificado", pkgs4_title:"Sitio Web", pkgs4_detail:"1 pagina", pkgs5_title:"Configuracion MyPlopPlop", pkgs_cta:"Comenzar",
+    pkg_cta:"Comenzar", pkg_stripe:"Pagar con Tarjeta",
+    pkgs_badge:"Especial Estudiantes", pkgs_name:"Paquete Estudiante", pkgs1_title:"Diseno de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resumen Ejecutivo", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verificado", pkgs4_title:"Sitio Web", pkgs4_detail:"1 pagina", pkgs5_title:"Configuracion MyPlopPlop", pkgs_cta:"Comenzar", pkgs_stripe:"Pagar con Tarjeta",
     pkg2_badge:"Mejor Valor", pkg2_name:"Paquete 2 Idiomas",
     pkg2a_title:"Diseno de Logo", pkg2a_detail:"4 variantes profesionales",
     pkg2b_title:"Tarjetas de Presentacion", pkg2b_detail:"Listo para imprimir",
     pkg2c_title:"Resumen Ejecutivo", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verificado 9+",
     pkg2e_title:"Video Explicativo",
     pkg2h_title:"Traduccion Creole Completa", pkg2h_detail:"Todos los materiales en 2 idiomas",
-    pkg2_cta:"Comenzar",
+    pkg2_cta:"Comenzar", pkg2_stripe:"Pagar con Tarjeta",
     fund_title:"&#128176; Explorar Financiamiento", fund_sub:"Ultimas oportunidades de financiamiento de organizaciones internacionales de desarrollo para Haiti.", fund_loading:"Cargando oportunidades...",
     fund1_title:"Microprestamos", fund1_desc:"Prestamos para pequenas empresas con terminos flexibles para ayudarte a comenzar o crecer.",
     fund2_title:"Subvenciones", fund2_desc:"Financiamiento no reembolsable para empresas calificadas en sectores clave de la economia haitiana.",
