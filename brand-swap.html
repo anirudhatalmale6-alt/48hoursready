@@ -510,14 +510,24 @@ async function processFile(file) {
     ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
     ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
 
-    /* ── Add "Powered by 48HoursReady.com" branding ── */
-    const brandSize = Math.max(14, Math.floor(h * 0.018));
-    const brandLum = (bgR * 0.299 + bgG * 0.587 + bgB * 0.114);
+    /* ── Add "Powered by 48HoursReady.com" branding with background ── */
+    const brandSize = Math.max(12, Math.floor(h * 0.014));
+    const brandText = 'Powered by 48HoursReady.com';
     ctx.font = '600 ' + brandSize + 'px "Plus Jakarta Sans", Arial, sans-serif';
-    ctx.fillStyle = brandLum > 128 ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.75)';
+    const brandMetrics = ctx.measureText(brandText);
+    const brandPadX = 10, brandPadY = 6;
+    const brandW = brandMetrics.width + brandPadX * 2;
+    const brandH = brandSize + brandPadY * 2;
+    const brandX = w - brandW - 8;
+    const brandY = h - brandH - 8;
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
+    ctx.beginPath();
+    ctx.roundRect(brandX, brandY, brandW, brandH, 4);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
-    ctx.fillText('Powered by 48HoursReady.com', w - 20, h - 14);
+    ctx.fillText(brandText, w - 8 - brandPadX, h - 8 - brandPadY);
 
     /* ── Save "after" preview for page 1 ── */
     if (i === 1) {
