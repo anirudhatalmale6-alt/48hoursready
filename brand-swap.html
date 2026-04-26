@@ -581,11 +581,11 @@ async function processVideo(file) {
   const videoCanvas = document.getElementById('videoCanvas');
   const ctx = videoCanvas.getContext('2d');
 
-  /* Load video (keep muted so user doesn't hear it during processing) */
+  /* Load video — unmuted so audio track is decoded, but routed away from speakers via Web Audio API */
   const videoURL = URL.createObjectURL(file);
   sourceVideo.src = videoURL;
-  sourceVideo.muted = true;
-  sourceVideo.volume = 0;
+  sourceVideo.muted = false;
+  sourceVideo.volume = 1;
 
   await new Promise((resolve, reject) => {
     sourceVideo.onloadedmetadata = resolve;
@@ -625,31 +625,36 @@ async function processVideo(file) {
   }
   const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
 
-  /* Branding text settings */
-  const brandFontSize = Math.max(14, Math.floor(vh * 0.022));
+  /* Branding text settings — small and subtle */
+  const brandFontSize = Math.max(10, Math.floor(vh * 0.014));
   const brandText = 'Powered by 48HoursReady.com';
 
   setProgress(15, 'Recording cleaned video with audio...');
 
-  /* ── AUDIO: Use Web Audio API to capture audio WITHOUT playing through speakers ── */
+  /* ── AUDIO: Route audio to recorder only, silence speakers ── */
   const canvasStream = videoCanvas.captureStream(30);
   let audioCtx = null;
+  let audioRouted = false;
 
   try {
-    audioCtx = new AudioContext();
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const audioSource = audioCtx.createMediaElementSource(sourceVideo);
     const audioDest = audioCtx.createMediaStreamDestination();
-    /* Route audio to recording destination ONLY (not to speakers) */
-    audioSource.connect(audioDest);
-    /* Do NOT connect to audioCtx.destination — this prevents speaker playback */
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = 1;
+    audioSource.connect(gainNode);
+    gainNode.connect(audioDest);
+    /* createMediaElementSource disconnects from speakers automatically — audio goes to recorder only */
     audioDest.stream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
+    audioRouted = true;
   } catch(e) {
-    console.log('Audio capture setup:', e);
-    /* Fallback: try captureStream */
+    console.log('Web Audio API failed, trying captureStream fallback:', e);
     try {
+      sourceVideo.muted = true;
       var srcStream = sourceVideo.captureStream ? sourceVideo.captureStream() : sourceVideo.mozCaptureStream();
       srcStream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
-    } catch(e2) { console.log('No audio capture available'); }
+      audioRouted = true;
+    } catch(e2) { console.log('No audio capture available:', e2); }
   }
 
   const chunks = [];
@@ -667,12 +672,15 @@ async function processVideo(file) {
     recorder.onstop = resolve;
   });
 
-  /* sourceVideo stays muted - audio goes through Web Audio API to recorder only */
+  /* Audio routed through Web Audio API to recorder — speakers are silent because createMediaElementSource detaches output */
   recorder.start(100);
   sourceVideo.currentTime = 0;
   sourceVideo.playbackRate = 1;
-  sourceVideo.muted = true;
-  sourceVideo.volume = 0;
+  /* Keep unmuted so audio track is decoded and captured */
+  if (audioRouted && audioCtx) {
+    sourceVideo.muted = false;
+    sourceVideo.volume = 1;
+  }
   await sourceVideo.play();
 
   /* Helper: draw branding text with semi-transparent background pill */
@@ -686,8 +694,8 @@ async function processVideo(file) {
     var pillX = vw - pillW - 10;
     var pillY = vh - pillH - 8;
 
-    /* Semi-transparent dark background */
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+    /* Semi-transparent dark background — subtle */
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
     ctx.beginPath();
     var r = 6;
     ctx.moveTo(pillX + r, pillY);
@@ -702,8 +710,8 @@ async function processVideo(file) {
     ctx.closePath();
     ctx.fill();
 
-    /* White text */
-    ctx.fillStyle = '#FFFFFF';
+    /* White text — subtle */
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
     ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
