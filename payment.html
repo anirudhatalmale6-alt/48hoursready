@@ -114,6 +114,7 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
   <div class="pkg-summary">
     <h1 id="pkgTitle">48HoursReady</h1>
     <div class="pkg-price" id="pkgPrice">$99</div>
+    <div class="pkg-htg" id="pkgHtg" style="font-size:.85rem;opacity:.75;margin-top:2px"></div>
     <div class="pkg-name" id="pkgName" data-i18n="pkg_label_business">Business Ready Package</div>
   </div>
 
@@ -199,10 +200,23 @@ var params = new URLSearchParams(window.location.search);
 var pkgKey = params.get('package') || 'business';
 var pkg = packages[pkgKey] || packages.business;
 
+var HTG_RATE = 136.54;
 document.getElementById('pkgPrice').textContent = '$' + pkg.price;
-document.getElementById('moncashAmount').textContent = 'Amount: $' + pkg.price;
-document.getElementById('natcashAmount').textContent = 'Amount: $' + pkg.price;
-document.getElementById('creditAmount').textContent = 'Amount: $' + pkg.price;
+var htgAmount = Math.round(pkg.price * HTG_RATE);
+document.getElementById('pkgHtg').textContent = '≈ ' + htgAmount.toLocaleString() + ' HTG';
+document.getElementById('moncashAmount').innerHTML = '$' + pkg.price + ' <span style="opacity:.7">(' + htgAmount.toLocaleString() + ' HTG)</span>';
+document.getElementById('natcashAmount').innerHTML = '$' + pkg.price + ' <span style="opacity:.7">(' + htgAmount.toLocaleString() + ' HTG)</span>';
+document.getElementById('creditAmount').textContent = '$' + pkg.price;
+
+fetch('https://open.er-api.com/v6/latest/USD').then(function(r){return r.json()}).then(function(data){
+  if(data.rates&&data.rates.HTG){
+    HTG_RATE=data.rates.HTG;
+    htgAmount=Math.round(pkg.price*HTG_RATE);
+    document.getElementById('pkgHtg').textContent='≈ '+htgAmount.toLocaleString()+' HTG (1 USD = '+HTG_RATE.toFixed(2)+' HTG)';
+    document.getElementById('moncashAmount').innerHTML='$'+pkg.price+' <span style="opacity:.7">('+htgAmount.toLocaleString()+' HTG)</span>';
+    document.getElementById('natcashAmount').innerHTML='$'+pkg.price+' <span style="opacity:.7">('+htgAmount.toLocaleString()+' HTG)</span>';
+  }
+}).catch(function(){});
 
 var waMsg = encodeURIComponent('I want to pay $' + pkg.price + ' for 48HoursReady ' + pkg.name_en + ' via ');
 document.getElementById('moncashLink').href = 'https://wa.me/50941902005?text=' + waMsg + 'MonCash';
