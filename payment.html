@@ -23,7 +23,7 @@
   --body:'Plus Jakarta Sans',system-ui,sans-serif;
   --display:'DM Serif Display',Georgia,serif;
 }
-body{font-family:var(--body);background:var(--off-white);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+body{font-family:var(--body);background:var(--off-white);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
 
 .top-lang-bar{
   background:var(--red);color:#fff;font-size:.7rem;
@@ -37,16 +37,38 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
 .top-lang-bar a:hover{background:rgba(255,255,255,.3)}
 .top-lang-bar a.active{background:#fff;color:var(--red)}
 
-.payment-container{max-width:520px;width:100%;margin-top:40px}
+.payment-container{max-width:520px;width:100%;margin-top:48px}
 
-.success-header{text-align:center;margin-bottom:30px}
-.success-icon{width:70px;height:70px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;box-shadow:0 4px 20px rgba(46,125,50,.3)}
-.success-header h1{font-family:var(--display);font-size:1.6rem;color:var(--dark);margin-bottom:8px}
-.success-header p{color:var(--text-light);font-size:.9rem;line-height:1.6}
+.pkg-summary{
+  text-align:center;padding:28px 24px;margin-bottom:24px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  border-radius:20px;color:#fff;
+}
+.pkg-summary h1{font-family:var(--display);font-size:1.5rem;margin-bottom:4px}
+.pkg-summary .pkg-price{font-size:2.5rem;font-weight:900;margin:8px 0}
+.pkg-summary .pkg-name{font-size:.9rem;opacity:.8}
 
-.payment-section{margin-top:24px}
+.student-id-section{
+  background:var(--white);border-radius:16px;padding:20px 24px;margin-bottom:20px;
+  border:2px solid rgba(212,160,23,.3);
+}
+.student-id-section h3{font-size:.92rem;font-weight:700;color:var(--dark);margin-bottom:8px}
+.student-id-section p{font-size:.8rem;color:var(--text-light);margin-bottom:14px;line-height:1.5}
+.upload-area{
+  border:2px dashed rgba(0,32,159,.2);border-radius:12px;padding:24px;text-align:center;
+  cursor:pointer;transition:all .3s;background:var(--off-white);
+}
+.upload-area:hover{border-color:var(--blue);background:rgba(0,32,159,.03)}
+.upload-area input{display:none}
+.upload-area .upload-icon{font-size:1.5rem;margin-bottom:6px}
+.upload-area .upload-text{font-size:.82rem;font-weight:600;color:var(--blue)}
+.upload-area .upload-hint{font-size:.72rem;color:var(--text-light);margin-top:4px}
+.upload-preview{display:none;margin-top:12px;text-align:center}
+.upload-preview img{max-width:200px;border-radius:10px;border:2px solid var(--blue)}
+.upload-preview .upload-name{font-size:.78rem;font-weight:600;color:var(--green);margin-top:6px}
+
+.payment-section{margin-top:4px}
 .payment-section h2{font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:16px;text-align:center}
-.payment-section p{text-align:center;color:var(--text-light);font-size:.85rem;margin-bottom:16px}
 
 .payment-options{display:flex;flex-direction:column;gap:14px}
 
@@ -61,6 +83,7 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
 .payment-info h3{font-size:.95rem;font-weight:700;margin-bottom:3px}
 .payment-info p{font-size:.8rem;color:var(--text-light);margin:0;text-align:left}
 .payment-info .pay-number{font-size:.82rem;font-weight:700;color:var(--dark);margin-top:4px}
+.payment-info .pay-amount{font-size:.88rem;font-weight:800;color:var(--red);margin-top:2px}
 
 .payment-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--text-light);font-size:.78rem}
 .payment-divider::before,.payment-divider::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
@@ -69,7 +92,7 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
 .whatsapp-help a{display:inline-flex;align-items:center;gap:8px;color:#25D366;font-weight:700;font-size:.9rem;text-decoration:none}
 .whatsapp-help p{font-size:.8rem;color:var(--text-light);margin-top:6px}
 
-.back-link{text-align:center;margin-top:20px}
+.back-link{text-align:center;margin-top:20px;margin-bottom:60px}
 .back-link a{color:var(--blue);font-size:.85rem;font-weight:600;text-decoration:none}
 .back-link a:hover{text-decoration:underline}
 
@@ -80,7 +103,6 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
 </head>
 <body>
 
-<!-- TOP LANGUAGE BAR -->
 <div class="top-lang-bar">
   <a onclick="setLang('fr')" class="active" id="lang-fr">&#127467;&#127479; Francais</a>
   <a onclick="setLang('en')" id="lang-en">&#127468;&#127463; English</a>
@@ -89,52 +111,65 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
 </div>
 
 <div class="payment-container">
-  <!-- SUCCESS -->
-  <div class="success-header">
-    <div class="success-icon">&#10003;</div>
-    <h1 data-i18n="pay_title">Application Received!</h1>
-    <p data-i18n="pay_desc">Thank you for applying to 48HoursReady. To activate your package, please complete your payment using one of the options below.</p>
+  <div class="pkg-summary">
+    <h1 id="pkgTitle">48HoursReady</h1>
+    <div class="pkg-price" id="pkgPrice">$99</div>
+    <div class="pkg-name" id="pkgName" data-i18n="pkg_label_business">Business Ready Package</div>
   </div>
 
-  <!-- PAYMENT OPTIONS -->
+  <!-- STUDENT ID UPLOAD (only for student package) -->
+  <div class="student-id-section" id="studentSection" style="display:none">
+    <h3 data-i18n="sid_title">&#127891; Student Verification</h3>
+    <p data-i18n="sid_desc">Upload your student ID card or enrollment proof to qualify for the student discount.</p>
+    <div class="upload-area" onclick="document.getElementById('studentFile').click()">
+      <input type="file" id="studentFile" accept="image/*,.pdf" onchange="handleUpload(this)">
+      <div class="upload-icon">&#128247;</div>
+      <div class="upload-text" data-i18n="sid_upload">Tap to upload Student ID</div>
+      <div class="upload-hint" data-i18n="sid_hint">Photo of student ID, enrollment letter, or school card</div>
+    </div>
+    <div class="upload-preview" id="uploadPreview">
+      <img id="previewImg" src="" alt="Preview">
+      <div class="upload-name" id="uploadName"></div>
+    </div>
+  </div>
+
   <div class="payment-section">
     <h2 data-i18n="pay_choose">Choose Payment Method</h2>
 
     <div class="payment-options">
-      <!-- MONCASH -->
-      <a href="tel:*202*50941902005*199#" class="payment-card">
+      <a id="moncashLink" class="payment-card">
         <div class="payment-icon icon-moncash">&#128179;</div>
         <div class="payment-info">
           <h3>MonCash</h3>
           <p data-i18n="pay_moncash_desc">Pay via Digicel MonCash mobile money</p>
           <div class="pay-number">+509 4190 2005</div>
+          <div class="pay-amount" id="moncashAmount">Amount: $99</div>
         </div>
       </a>
 
-      <!-- NATCASH -->
-      <a href="tel:*202*50941902005*199#" class="payment-card">
+      <a id="natcashLink" class="payment-card">
         <div class="payment-icon icon-natcash">&#128181;</div>
         <div class="payment-info">
           <h3>NatCash</h3>
           <p data-i18n="pay_natcash_desc">Pay via Natcom NatCash mobile money</p>
           <div class="pay-number">+509 4190 2005</div>
+          <div class="pay-amount" id="natcashAmount">Amount: $99</div>
         </div>
       </a>
 
       <div class="payment-divider" data-i18n="pay_or">or</div>
 
-      <!-- CREDIT CARD -->
-      <a href="https://wa.me/50941902005?text=I%20want%20to%20pay%20by%20credit%20card%20for%2048HoursReady%20package" class="payment-card" target="_blank">
+      <a id="creditLink" class="payment-card" target="_blank">
         <div class="payment-icon icon-credit">&#128179;</div>
         <div class="payment-info">
           <h3 data-i18n="pay_credit_title">Credit / Debit Card</h3>
-          <p data-i18n="pay_credit_desc">Contact us on WhatsApp to complete payment by card</p>
+          <p data-i18n="pay_credit_desc">Pay securely with your credit or debit card</p>
+          <div class="pay-amount" id="creditAmount">Amount: $99</div>
         </div>
       </a>
     </div>
   </div>
 
-  <!-- WHATSAPP HELP -->
   <div class="whatsapp-help">
     <a href="https://wa.me/50941902005" target="_blank">&#128172; WhatsApp +509 4190 2005</a>
     <p data-i18n="pay_help">Need help with payment? Message us on WhatsApp and we'll guide you through the process.</p>
@@ -145,79 +180,133 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
   </div>
 </div>
 
-<!-- ECOSYSTEM BAR -->
 <div class="eco-bar">
   <a href="https://haitibiznis.com">HaitiBiznis</a>
   <a href="https://myplopplop.com">MyPlopPlop</a>
   <a href="https://msouwout.com">MsouWout</a>
-  <a href="https://talent4peace.com">Talent4Peace</a>
+  <a href="https://prolakay.haitibiznis.com">ProLakay</a>
   <a href="https://boxetoboxe.com">BoxeToBoxe</a>
 </div>
 
 <script>
-const T = {
+var packages = {
+  student: { price: 79, name_fr:'Forfait Etudiant', name_en:'Student Package', name_ht:'Pake Etidyan', name_es:'Paquete Estudiante', student:true },
+  business: { price: 99, name_fr:'Business Ready Package', name_en:'Business Ready Package', name_ht:'Pake Biznis Ready', name_es:'Paquete Business Ready', student:false },
+  '2lang': { price: 129, name_fr:'Forfait 2 Langues', name_en:'2 Languages Package', name_ht:'Pake 2 Lang', name_es:'Paquete 2 Idiomas', student:false }
+};
+
+var params = new URLSearchParams(window.location.search);
+var pkgKey = params.get('package') || 'business';
+var pkg = packages[pkgKey] || packages.business;
+
+document.getElementById('pkgPrice').textContent = '$' + pkg.price;
+document.getElementById('moncashAmount').textContent = 'Amount: $' + pkg.price;
+document.getElementById('natcashAmount').textContent = 'Amount: $' + pkg.price;
+document.getElementById('creditAmount').textContent = 'Amount: $' + pkg.price;
+
+var waMsg = encodeURIComponent('I want to pay $' + pkg.price + ' for 48HoursReady ' + pkg.name_en + ' via ');
+document.getElementById('moncashLink').href = 'https://wa.me/50941902005?text=' + waMsg + 'MonCash';
+document.getElementById('natcashLink').href = 'https://wa.me/50941902005?text=' + waMsg + 'NatCash';
+document.getElementById('creditLink').href = 'https://wa.me/50941902005?text=' + waMsg + 'Credit%20Card';
+
+if (pkg.student) {
+  document.getElementById('studentSection').style.display = 'block';
+}
+
+function handleUpload(input) {
+  if (input.files && input.files[0]) {
+    var file = input.files[0];
+    var preview = document.getElementById('uploadPreview');
+    var img = document.getElementById('previewImg');
+    var name = document.getElementById('uploadName');
+    if (file.type.startsWith('image/')) {
+      var reader = new FileReader();
+      reader.onload = function(e) { img.src = e.target.result; };
+      reader.readAsDataURL(file);
+      img.style.display = 'block';
+    } else {
+      img.style.display = 'none';
+    }
+    name.textContent = '✓ ' + file.name;
+    preview.style.display = 'block';
+  }
+}
+
+var T = {
   fr: {
-    pay_title:"Candidature Recue!",
-    pay_desc:"Merci d'avoir postule a 48HoursReady. Pour activer votre forfait, veuillez completer votre paiement avec l'une des options ci-dessous.",
     pay_choose:"Choisir le Mode de Paiement",
     pay_moncash_desc:"Payer via MonCash Digicel",
     pay_natcash_desc:"Payer via NatCash Natcom",
     pay_or:"ou",
     pay_credit_title:"Carte de Credit / Debit",
-    pay_credit_desc:"Contactez-nous sur WhatsApp pour payer par carte",
-    pay_help:"Besoin d'aide pour le paiement? Ecrivez-nous sur WhatsApp et nous vous guiderons.",
-    pay_back:"&larr; Retour a 48HoursReady"
+    pay_credit_desc:"Payez en toute securite avec votre carte",
+    pay_help:"Besoin d'aide pour le paiement? Ecrivez-nous sur WhatsApp.",
+    pay_back:"&larr; Retour a 48HoursReady",
+    sid_title:"&#127891; Verification Etudiant",
+    sid_desc:"Telechargez votre carte d'etudiant ou preuve d'inscription pour beneficier du tarif etudiant.",
+    sid_upload:"Appuyez pour telecharger votre carte d'etudiant",
+    sid_hint:"Photo de carte d'etudiant, lettre d'inscription ou carte scolaire"
   },
   en: {
-    pay_title:"Application Received!",
-    pay_desc:"Thank you for applying to 48HoursReady. To activate your package, please complete your payment using one of the options below.",
     pay_choose:"Choose Payment Method",
     pay_moncash_desc:"Pay via Digicel MonCash mobile money",
     pay_natcash_desc:"Pay via Natcom NatCash mobile money",
     pay_or:"or",
     pay_credit_title:"Credit / Debit Card",
-    pay_credit_desc:"Contact us on WhatsApp to complete payment by card",
-    pay_help:"Need help with payment? Message us on WhatsApp and we'll guide you through the process.",
-    pay_back:"&larr; Back to 48HoursReady"
+    pay_credit_desc:"Pay securely with your credit or debit card",
+    pay_help:"Need help with payment? Message us on WhatsApp.",
+    pay_back:"&larr; Back to 48HoursReady",
+    sid_title:"&#127891; Student Verification",
+    sid_desc:"Upload your student ID card or enrollment proof to qualify for the student discount.",
+    sid_upload:"Tap to upload Student ID",
+    sid_hint:"Photo of student ID, enrollment letter, or school card"
   },
   ht: {
-    pay_title:"Aplikasyon Resevwa!",
-    pay_desc:"Mesi paske ou aplike nan 48HoursReady. Pou aktive pake ou, tanpri konplete peman ou ak youn nan opsyon ki anba yo.",
     pay_choose:"Chwazi Metod Peman",
-    pay_moncash_desc:"Peye atravè MonCash Digicel",
-    pay_natcash_desc:"Peye atravè NatCash Natcom",
+    pay_moncash_desc:"Peye atrave MonCash Digicel",
+    pay_natcash_desc:"Peye atrave NatCash Natcom",
     pay_or:"oswa",
     pay_credit_title:"Kat Kredi / Debi",
-    pay_credit_desc:"Kontakte nou sou WhatsApp pou peye ak kat",
-    pay_help:"Bezwen ed pou peman? Ekri nou sou WhatsApp epi nap gide ou.",
-    pay_back:"&larr; Retounen nan 48HoursReady"
+    pay_credit_desc:"Peye an sekirite ak kat ou",
+    pay_help:"Bezwen ed pou peman? Ekri nou sou WhatsApp.",
+    pay_back:"&larr; Retounen nan 48HoursReady",
+    sid_title:"&#127891; Verifikasyon Etidyan",
+    sid_desc:"Telechaje kat etidyan ou oswa prev enskripsyon pou jwenn pri etidyan an.",
+    sid_upload:"Peze pou telechaje kat etidyan",
+    sid_hint:"Foto kat etidyan, let enskripsyon oswa kat lekol"
   },
   es: {
-    pay_title:"Solicitud Recibida!",
-    pay_desc:"Gracias por aplicar a 48HoursReady. Para activar tu paquete, completa tu pago con una de las opciones a continuacion.",
     pay_choose:"Elegir Metodo de Pago",
     pay_moncash_desc:"Pagar via MonCash Digicel",
     pay_natcash_desc:"Pagar via NatCash Natcom",
     pay_or:"o",
     pay_credit_title:"Tarjeta de Credito / Debito",
-    pay_credit_desc:"Contactanos en WhatsApp para pagar con tarjeta",
-    pay_help:"Necesitas ayuda con el pago? Escribenos en WhatsApp y te guiaremos.",
-    pay_back:"&larr; Volver a 48HoursReady"
+    pay_credit_desc:"Paga de forma segura con tu tarjeta",
+    pay_help:"Necesitas ayuda con el pago? Escribenos en WhatsApp.",
+    pay_back:"&larr; Volver a 48HoursReady",
+    sid_title:"&#127891; Verificacion Estudiantil",
+    sid_desc:"Sube tu identificacion estudiantil o comprobante de inscripcion para obtener el descuento.",
+    sid_upload:"Toca para subir identificacion estudiantil",
+    sid_hint:"Foto de identificacion, carta de inscripcion o tarjeta escolar"
   }
 };
 
-let currentLang = 'fr';
+var currentLang = 'fr';
 function setLang(lang) {
   currentLang = lang;
-  document.querySelectorAll('.top-lang-bar a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.top-lang-bar a').forEach(function(a) { a.classList.remove('active'); });
   document.getElementById('lang-' + lang).classList.add('active');
-  const t = T[lang] || T.fr;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
+  var t = T[lang] || T.fr;
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
     if (t[key]) el.innerHTML = t[key];
   });
+  var nameKey = 'name_' + lang;
+  document.getElementById('pkgName').textContent = pkg[nameKey] || pkg.name_en;
 }
-setLang('fr');
+
+var savedLang = localStorage.getItem('48hr_lang');
+setLang(savedLang || 'fr');
 </script>
 </body>
 </html>
