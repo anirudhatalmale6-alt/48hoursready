@@ -252,6 +252,7 @@ section{padding:60px 20px}
 .btn-pkg-green:hover{background:#2E7D32;transform:translateY(-2px);box-shadow:0 8px 30px rgba(76,175,80,.4)}
 .btn-stripe{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4);font-weight:700;font-size:.82rem}
 .btn-stripe:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6);transform:translateY(-2px)}
+.pkg-payment-note{margin-top:14px;font-size:.72rem;font-weight:600;color:rgba(255,255,255,.55);text-align:center;padding-top:10px;border-top:1px solid rgba(255,255,255,.1)}
 
 /* ═══ FOOTER ═══ */
 footer{background:var(--dark);color:#ccc;padding:40px 20px 20px;font-size:.8rem;text-align:center}
@@ -369,14 +370,17 @@ footer a{color:#fff;font-weight:600}
       <div class="package-price" style="color:var(--red);text-shadow:0 2px 12px rgba(210,16,52,.18)"><span>$</span>79</div>
       <div class="package-name" data-i18n="pkgs_name">Student Package</div>
       <ul class="package-items">
-        <li><div class="item-icon">&#127912;</div><div><span class="item-text" data-i18n="pkgs1_title">Logo Design</span><span class="item-detail" data-i18n="pkgs1_detail">2 variants</span></div></li>
-        <li><div class="item-icon">&#128221;</div><div><span class="item-text" data-i18n="pkgs2_title">Executive Summary</span></div></li>
-        <li><div class="item-icon">&#128200;</div><div><span class="item-text" data-i18n="pkgs3_title">Pitch Deck</span><span class="item-detail" data-i18n="pkgs3_detail">GPT-Verified</span></div></li>
-        <li><div class="item-icon">&#127760;</div><div><span class="item-text" data-i18n="pkgs4_title">Website</span><span class="item-detail" data-i18n="pkgs4_detail">1 page</span></div></li>
-        <li><div class="item-icon">&#128722;</div><div><span class="item-text" data-i18n="pkgs5_title">MyPlopPlop Setup</span></div></li>
+        <li><div class="item-icon">&#127912;</div><div><span class="item-text" data-i18n="pkgs1_title">Logo Design</span><span class="item-detail" data-i18n="pkgs1_detail">4 professional variants</span></div></li>
+        <li><div class="item-icon">&#128196;</div><div><span class="item-text" data-i18n="pkgs2_title">Business Cards</span><span class="item-detail" data-i18n="pkgs2_detail">Print-ready design</span></div></li>
+        <li><div class="item-icon">&#128221;</div><div><span class="item-text" data-i18n="pkgs3_title">Executive Summary</span></div></li>
+        <li><div class="item-icon">&#128200;</div><div><span class="item-text" data-i18n="pkgs4_title">Pitch Deck</span><span class="item-detail" data-i18n="pkgs4_detail">GPT-Verified 9+</span></div></li>
+        <li><div class="item-icon">&#127909;</div><div><span class="item-text" data-i18n="pkgs5_title">Video Explainer</span></div></li>
+        <li><div class="item-icon">&#127760;</div><div><span class="item-text" data-i18n="pkgs6_title">Website</span><span class="item-detail" data-i18n="pkgs6_detail">3 sections</span></div></li>
+        <li><div class="item-icon">&#128722;</div><div><span class="item-text" data-i18n="pkgs7_title">Set up on MyPlopPlop</span></div></li>
       </ul>
       <a href="#contact" class="btn btn-pkg-blue" style="width:100%;justify-content:center" data-i18n="pkgs_cta" onclick="setProgram('Student Program')">Get Started</a>
       <a href="https://buy.stripe.com/5kQbIU2y44pW8VqcfjgYU05" target="_blank" class="btn btn-stripe" style="width:100%;justify-content:center;margin-top:8px" data-i18n="pkgs_stripe">Pay with Card</a>
+      <div class="pkg-payment-note" data-i18n="pkg_payment_note">We accept MonCash, NatCash &amp; Credit Card</div>
     </div>
     <!-- $99 PACKAGE -->
     <div class="package-card">
@@ -384,29 +388,17 @@ footer a{color:#fff;font-weight:600}
       <div class="package-price"><span>$</span>99</div>
       <div class="package-name" data-i18n="pkg_name">Business Ready Package</div>
       <ul class="package-items">
-        <li>
-          <div class="item-icon">&#127912;</div>
-          <div><span class="item-text" data-i18n="pkg1_title">Logo Design</span><span class="item-detail" data-i18n="pkg1_detail">4 professional variants</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#128196;</div>
-          <div><span class="item-text" data-i18n="pkg2_title">Business Cards</span><span class="item-detail" data-i18n="pkg2_detail">Print-ready design</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#128221;</div>
-          <div><span class="item-text" data-i18n="pkg3_title">Executive Summary</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#128200;</div>
-          <div><span class="item-text" data-i18n="pkg4_title">Pitch Deck</span><span class="item-detail" data-i18n="pkg4_detail">GPT-Verified 9+</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#127909;</div>
-          <div><span class="item-text" data-i18n="pkg5_title">Video Explainer</span></div>
-        </li>
+        <li><div class="item-icon">&#127912;</div><div><span class="item-text" data-i18n="pkg1_title">Logo Design</span><span class="item-detail" data-i18n="pkg1_detail">4 professional variants</span></div></li>
+        <li><div class="item-icon">&#128196;</div><div><span class="item-text" data-i18n="pkg2_title">Business Cards</span><span class="item-detail" data-i18n="pkg2_detail">Print-ready design</span></div></li>
+        <li><div class="item-icon">&#128221;</div><div><span class="item-text" data-i18n="pkg3_title">Executive Summary</span></div></li>
+        <li><div class="item-icon">&#128200;</div><div><span class="item-text" data-i18n="pkg4_title">Pitch Deck</span><span class="item-detail" data-i18n="pkg4_detail">GPT-Verified 9+</span></div></li>
+        <li><div class="item-icon">&#127909;</div><div><span class="item-text" data-i18n="pkg5_title">Video Explainer</span></div></li>
+        <li><div class="item-icon">&#127760;</div><div><span class="item-text" data-i18n="pkg6_title">Website</span><span class="item-detail" data-i18n="pkg6_detail">3 sections</span></div></li>
+        <li><div class="item-icon">&#128722;</div><div><span class="item-text" data-i18n="pkg7_title">Set up on MyPlopPlop</span></div></li>
       </ul>
       <a href="#contact" class="btn btn-pkg" style="width:100%;justify-content:center" data-i18n="pkg_cta">Get Started</a>
       <a href="https://buy.stripe.com/5kQbIU2y44pW8VqcfjgYU05" target="_blank" class="btn btn-stripe" style="width:100%;justify-content:center;margin-top:8px" data-i18n="pkg_stripe">Pay with Card</a>
+      <div class="pkg-payment-note" data-i18n="pkg_payment_note">We accept MonCash, NatCash &amp; Credit Card</div>
     </div>
     <!-- $129 PACKAGE -->
     <div class="package-card featured">
@@ -414,33 +406,18 @@ footer a{color:#fff;font-weight:600}
       <div class="package-price"><span>$</span>129</div>
       <div class="package-name" data-i18n="pkg2_name">2 Languages Package</div>
       <ul class="package-items">
-        <li>
-          <div class="item-icon">&#127912;</div>
-          <div><span class="item-text" data-i18n="pkg2a_title">Logo Design</span><span class="item-detail" data-i18n="pkg2a_detail">4 professional variants</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#128196;</div>
-          <div><span class="item-text" data-i18n="pkg2b_title">Business Cards</span><span class="item-detail" data-i18n="pkg2b_detail">Print-ready design</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#128221;</div>
-          <div><span class="item-text" data-i18n="pkg2c_title">Executive Summary</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#128200;</div>
-          <div><span class="item-text" data-i18n="pkg2d_title">Pitch Deck</span><span class="item-detail" data-i18n="pkg2d_detail">GPT-Verified 9+</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#127909;</div>
-          <div><span class="item-text" data-i18n="pkg2e_title">Video Explainer</span></div>
-        </li>
-        <li>
-          <div class="item-icon">&#127463;&#127462;</div>
-          <div><span class="item-text" data-i18n="pkg2h_title">Full Creole Translation</span><span class="item-detail" data-i18n="pkg2h_detail">All materials in 2 languages</span></div>
-        </li>
+        <li><div class="item-icon">&#127912;</div><div><span class="item-text" data-i18n="pkg2a_title">Logo Design</span><span class="item-detail" data-i18n="pkg2a_detail">4 professional variants</span></div></li>
+        <li><div class="item-icon">&#128196;</div><div><span class="item-text" data-i18n="pkg2b_title">Business Cards</span><span class="item-detail" data-i18n="pkg2b_detail">Print-ready design</span></div></li>
+        <li><div class="item-icon">&#128221;</div><div><span class="item-text" data-i18n="pkg2c_title">Executive Summary</span></div></li>
+        <li><div class="item-icon">&#128200;</div><div><span class="item-text" data-i18n="pkg2d_title">Pitch Deck</span><span class="item-detail" data-i18n="pkg2d_detail">GPT-Verified 9+</span></div></li>
+        <li><div class="item-icon">&#127909;</div><div><span class="item-text" data-i18n="pkg2e_title">Video Explainer</span></div></li>
+        <li><div class="item-icon">&#127760;</div><div><span class="item-text" data-i18n="pkg2f_title">Website</span><span class="item-detail" data-i18n="pkg2f_detail">3 sections</span></div></li>
+        <li><div class="item-icon">&#128722;</div><div><span class="item-text" data-i18n="pkg2g_title">Set up on MyPlopPlop</span></div></li>
+        <li><div class="item-icon">&#127463;&#127462;</div><div><span class="item-text" data-i18n="pkg2h_title">Full Creole Translation</span><span class="item-detail" data-i18n="pkg2h_detail">All materials in 2 languages</span></div></li>
       </ul>
       <a href="#contact" class="btn btn-pkg-red" style="width:100%;justify-content:center" data-i18n="pkg2_cta">Get Started</a>
       <a href="https://buy.stripe.com/5kQbIU2y44pW8VqcfjgYU05" target="_blank" class="btn btn-stripe" style="width:100%;justify-content:center;margin-top:8px" data-i18n="pkg2_stripe">Pay with Card</a>
+      <div class="pkg-payment-note" data-i18n="pkg_payment_note">We accept MonCash, NatCash &amp; Credit Card</div>
     </div>
   </div>
 </section>
@@ -734,14 +711,14 @@ const T = {
     pkg1_title:"Design de Logo", pkg1_detail:"4 variantes professionnelles",
     pkg2_title:"Cartes de Visite", pkg2_detail:"Design pret a imprimer",
     pkg3_title:"Resume Executif", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verifie 9+",
-    pkg5_title:"Video Explicative",
+    pkg5_title:"Video Explicative", pkg6_title:"Site Web", pkg6_detail:"3 sections", pkg7_title:"Configuration MyPlopPlop",
     pkg_cta:"Commencer", pkg_stripe:"Payer par Carte",
-    pkgs_badge:"Special Etudiants", pkgs_name:"Forfait Etudiant", pkgs1_title:"Design de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resume Executif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifie", pkgs4_title:"Site Web", pkgs4_detail:"1 page", pkgs5_title:"Configuration MyPlopPlop", pkgs_cta:"Commencer", pkgs_stripe:"Payer par Carte",
+    pkgs_badge:"Special Etudiants", pkgs_name:"Forfait Etudiant", pkgs1_title:"Design de Logo", pkgs1_detail:"4 variantes professionnelles", pkgs2_title:"Cartes de Visite", pkgs2_detail:"Pret a imprimer", pkgs3_title:"Resume Executif", pkgs4_title:"Pitch Deck", pkgs4_detail:"GPT-Verifie 9+", pkgs5_title:"Video Explicative", pkgs6_title:"Site Web", pkgs6_detail:"3 sections", pkgs7_title:"Configuration MyPlopPlop", pkgs_cta:"Commencer", pkgs_stripe:"Payer par Carte", pkg_payment_note:"Nous acceptons MonCash, NatCash &amp; Carte de Credit",
     pkg2_badge:"Meilleure Valeur", pkg2_name:"Forfait 2 Langues",
     pkg2a_title:"Design de Logo", pkg2a_detail:"4 variantes professionnelles",
     pkg2b_title:"Cartes de Visite", pkg2b_detail:"Design pret a imprimer",
     pkg2c_title:"Resume Executif", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verifie 9+",
-    pkg2e_title:"Video Explicative",
+    pkg2e_title:"Video Explicative", pkg2f_title:"Site Web", pkg2f_detail:"3 sections", pkg2g_title:"Configuration MyPlopPlop",
     pkg2h_title:"Traduction Creole Complete", pkg2h_detail:"Tous les materiaux en 2 langues",
     pkg2_cta:"Commencer", pkg2_stripe:"Payer par Carte",
     fund_title:"&#128176; Explorer le Financement", fund_sub:"Dernieres opportunites de financement des organisations internationales de developpement pour Haiti.", fund_loading:"Chargement des opportunites...",
@@ -798,14 +775,14 @@ const T = {
     pkg1_title:"Logo Design", pkg1_detail:"4 professional variants",
     pkg2_title:"Business Cards", pkg2_detail:"Print-ready design",
     pkg3_title:"Executive Summary", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verified 9+",
-    pkg5_title:"Video Explainer",
+    pkg5_title:"Video Explainer", pkg6_title:"Website", pkg6_detail:"3 sections", pkg7_title:"Set up on MyPlopPlop",
     pkg_cta:"Get Started", pkg_stripe:"Pay with Card",
-    pkgs_badge:"Student Special", pkgs_name:"Student Package", pkgs1_title:"Logo Design", pkgs1_detail:"2 variants", pkgs2_title:"Executive Summary", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verified", pkgs4_title:"Website", pkgs4_detail:"1 page", pkgs5_title:"MyPlopPlop Setup", pkgs_cta:"Get Started", pkgs_stripe:"Pay with Card",
+    pkgs_badge:"Student Special", pkgs_name:"Student Package", pkgs1_title:"Logo Design", pkgs1_detail:"4 professional variants", pkgs2_title:"Business Cards", pkgs2_detail:"Print-ready design", pkgs3_title:"Executive Summary", pkgs4_title:"Pitch Deck", pkgs4_detail:"GPT-Verified 9+", pkgs5_title:"Video Explainer", pkgs6_title:"Website", pkgs6_detail:"3 sections", pkgs7_title:"Set up on MyPlopPlop", pkgs_cta:"Get Started", pkgs_stripe:"Pay with Card", pkg_payment_note:"We accept MonCash, NatCash &amp; Credit Card",
     pkg2_badge:"Best Value", pkg2_name:"2 Languages Package",
     pkg2a_title:"Logo Design", pkg2a_detail:"4 professional variants",
     pkg2b_title:"Business Cards", pkg2b_detail:"Print-ready design",
     pkg2c_title:"Executive Summary", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verified 9+",
-    pkg2e_title:"Video Explainer",
+    pkg2e_title:"Video Explainer", pkg2f_title:"Website", pkg2f_detail:"3 sections", pkg2g_title:"Set up on MyPlopPlop",
     pkg2h_title:"Full Creole Translation", pkg2h_detail:"All materials in 2 languages",
     pkg2_cta:"Get Started", pkg2_stripe:"Pay with Card",
     fund_title:"&#128176; Explore Funding", fund_sub:"Latest funding opportunities from international development organizations for Haiti.", fund_loading:"Loading latest opportunities...",
@@ -862,14 +839,14 @@ const T = {
     pkg1_title:"Desen Logo", pkg1_detail:"4 varyant pwofesyonèl",
     pkg2_title:"Kat Biznis", pkg2_detail:"Desen pare pou enprime",
     pkg3_title:"Rezime Egzekitif", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verifye 9+",
-    pkg5_title:"Videyo Eksplikatif",
+    pkg5_title:"Videyo Eksplikatif", pkg6_title:"Sit Web", pkg6_detail:"3 seksyon", pkg7_title:"Konfigirasyon sou MyPlopPlop",
     pkg_cta:"Komanse", pkg_stripe:"Peye ak Kat",
-    pkgs_badge:"Espesyal Etidyan", pkgs_name:"Pake Etidyan", pkgs1_title:"Desen Logo", pkgs1_detail:"2 varyant", pkgs2_title:"Rezime Egzekitif", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verifye", pkgs4_title:"Sit Web", pkgs4_detail:"1 paj", pkgs5_title:"Konfigirasyon MyPlopPlop", pkgs_cta:"Komanse", pkgs_stripe:"Peye ak Kat",
+    pkgs_badge:"Espesyal Etidyan", pkgs_name:"Pake Etidyan", pkgs1_title:"Desen Logo", pkgs1_detail:"4 varyant pwofesyonèl", pkgs2_title:"Kat Vizit", pkgs2_detail:"Pare pou enprime", pkgs3_title:"Rezime Egzekitif", pkgs4_title:"Pitch Deck", pkgs4_detail:"GPT-Verifye 9+", pkgs5_title:"Videyo Eksplikatif", pkgs6_title:"Sit Web", pkgs6_detail:"3 seksyon", pkgs7_title:"Konfigirasyon sou MyPlopPlop", pkgs_cta:"Komanse", pkgs_stripe:"Peye ak Kat", pkg_payment_note:"Nou aksepte MonCash, NatCash &amp; Kat Kredi",
     pkg2_badge:"Pi Bon Vale", pkg2_name:"Pake 2 Lang",
     pkg2a_title:"Desen Logo", pkg2a_detail:"4 varyant pwofesyonèl",
     pkg2b_title:"Kat Biznis", pkg2b_detail:"Desen pare pou enprime",
     pkg2c_title:"Rezime Egzekitif", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verifye 9+",
-    pkg2e_title:"Videyo Eksplikatif",
+    pkg2e_title:"Videyo Eksplikatif", pkg2f_title:"Sit Web", pkg2f_detail:"3 seksyon", pkg2g_title:"Konfigirasyon sou MyPlopPlop",
     pkg2h_title:"Tradiksyon Kreyol Konplè", pkg2h_detail:"Tout materyèl nan 2 lang",
     pkg2_cta:"Komanse", pkg2_stripe:"Peye ak Kat",
     fund_title:"&#128176; Eksplore Finansman", fund_sub:"Denyè oportunite finansman nan oganizasyon entènasyonal devlopman pou Ayiti.", fund_loading:"Chajman oportunite yo...",
@@ -926,14 +903,14 @@ const T = {
     pkg1_title:"Diseno de Logo", pkg1_detail:"4 variantes profesionales",
     pkg2_title:"Tarjetas de Presentacion", pkg2_detail:"Listo para imprimir",
     pkg3_title:"Resumen Ejecutivo", pkg4_title:"Pitch Deck", pkg4_detail:"GPT-Verificado 9+",
-    pkg5_title:"Video Explicativo",
+    pkg5_title:"Video Explicativo", pkg6_title:"Sitio Web", pkg6_detail:"3 secciones", pkg7_title:"Configuracion en MyPlopPlop",
     pkg_cta:"Comenzar", pkg_stripe:"Pagar con Tarjeta",
-    pkgs_badge:"Especial Estudiantes", pkgs_name:"Paquete Estudiante", pkgs1_title:"Diseno de Logo", pkgs1_detail:"2 variantes", pkgs2_title:"Resumen Ejecutivo", pkgs3_title:"Pitch Deck", pkgs3_detail:"GPT-Verificado", pkgs4_title:"Sitio Web", pkgs4_detail:"1 pagina", pkgs5_title:"Configuracion MyPlopPlop", pkgs_cta:"Comenzar", pkgs_stripe:"Pagar con Tarjeta",
+    pkgs_badge:"Especial Estudiantes", pkgs_name:"Paquete Estudiante", pkgs1_title:"Diseno de Logo", pkgs1_detail:"4 variantes profesionales", pkgs2_title:"Tarjetas de Presentacion", pkgs2_detail:"Listas para imprimir", pkgs3_title:"Resumen Ejecutivo", pkgs4_title:"Pitch Deck", pkgs4_detail:"GPT-Verificado 9+", pkgs5_title:"Video Explicativo", pkgs6_title:"Sitio Web", pkgs6_detail:"3 secciones", pkgs7_title:"Configuracion en MyPlopPlop", pkgs_cta:"Comenzar", pkgs_stripe:"Pagar con Tarjeta", pkg_payment_note:"Aceptamos MonCash, NatCash &amp; Tarjeta de Credito",
     pkg2_badge:"Mejor Valor", pkg2_name:"Paquete 2 Idiomas",
     pkg2a_title:"Diseno de Logo", pkg2a_detail:"4 variantes profesionales",
     pkg2b_title:"Tarjetas de Presentacion", pkg2b_detail:"Listo para imprimir",
     pkg2c_title:"Resumen Ejecutivo", pkg2d_title:"Pitch Deck", pkg2d_detail:"GPT-Verificado 9+",
-    pkg2e_title:"Video Explicativo",
+    pkg2e_title:"Video Explicativo", pkg2f_title:"Sitio Web", pkg2f_detail:"3 secciones", pkg2g_title:"Configuracion en MyPlopPlop",
     pkg2h_title:"Traduccion Creole Completa", pkg2h_detail:"Todos los materiales en 2 idiomas",
     pkg2_cta:"Comenzar", pkg2_stripe:"Pagar con Tarjeta",
     fund_title:"&#128176; Explorar Financiamiento", fund_sub:"Ultimas oportunidades de financiamiento de organizaciones internacionales de desarrollo para Haiti.", fund_loading:"Cargando oportunidades...",
