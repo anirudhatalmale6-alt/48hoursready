@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>48HoursReady - Ambassador Program</title>
+<meta name="description" content="Become a 48HoursReady Ambassador. Share your referral link, recruit entrepreneurs, and earn 10% commission on every package sold.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D21034;--red-dark:#B00D2C;--red-light:#E8243F;
+  --blue:#00209F;--blue-dark:#001566;--blue-light:#0033CC;
+  --gold:#D4A017;--gold-light:#E8B82E;
+  --white:#FFFFFF;--off-white:#F5F7FA;--light-gray:#E2E8F0;
+  --dark:#0C1B3A;--text:#1A2A4A;--text-light:#5A6B8A;
+  --green:#22C55E;--green-dark:#16A34A;
+  --body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --display:'DM Serif Display',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--off-white);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+
+.flag-stripe{height:4px;background:linear-gradient(90deg,var(--blue) 50%,var(--red) 50%)}
+
+.top-lang-bar{
+  background:var(--red);color:#fff;font-size:.7rem;
+  padding:5px 20px;display:flex;align-items:center;justify-content:center;gap:4px;
+  position:fixed;top:0;left:0;right:0;z-index:1001;height:32px;
+}
+.top-lang-bar a{
+  color:#fff;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:100px;
+  font-size:.68rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.top-lang-bar a:hover{background:rgba(255,255,255,.3)}
+.top-lang-bar a.active{background:#fff;color:var(--red)}
+
+nav{position:sticky;top:32px;z-index:100;background:var(--blue);border-bottom:3px solid var(--red);box-shadow:0 2px 16px rgba(0,0,0,.15)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:1.3rem;color:#fff}
+.nav-logo img{width:44px;height:44px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,.3)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{color:rgba(255,255,255,.85);font-size:.8rem;font-weight:600;padding:8px 12px;border-radius:8px;transition:all .3s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.12)}
+.nav-cta{background:var(--red)!important;color:#fff!important;padding:10px 20px!important;border-radius:100px!important;border:2px solid rgba(255,255,255,.2)!important}
+.nav-cta:hover{background:var(--red-dark)!important}
+.mobile-menu{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:8px}
+
+.screen{display:none}
+.screen.active{display:block;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.amb-hero{
+  padding:100px 20px 70px;text-align:center;
+  background:linear-gradient(160deg,var(--blue-dark) 0%,var(--blue) 45%,#002ab5 100%);
+  color:#fff;position:relative;overflow:hidden;
+}
+.amb-hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(212,160,23,.12) 0%,transparent 45%),
+    radial-gradient(circle at 80% 70%,rgba(210,16,52,.08) 0%,transparent 40%);
+  pointer-events:none;
+}
+.amb-hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:50px;background:var(--off-white);clip-path:ellipse(55% 100% at 50% 100%)}
+.amb-hero .inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.amb-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,rgba(212,160,23,.2),rgba(212,160,23,.08));
+  border:1px solid rgba(212,160,23,.35);
+  padding:8px 20px;border-radius:100px;
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold-light);margin-bottom:24px;
+}
+.amb-hero h1{font-family:var(--display);font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.1;margin-bottom:18px}
+.amb-hero h1 span{color:var(--gold-light)}
+.amb-hero p{font-size:clamp(.92rem,1.5vw,1.1rem);max-width:520px;margin:0 auto 32px;line-height:1.7;opacity:.88}
+
+/* HOW IT WORKS STRIP */
+.how-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:600px;margin:0 auto 32px;position:relative}
+.how-strip::before{content:'';position:absolute;top:28px;left:15%;right:15%;height:2px;background:rgba(255,255,255,.15)}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-num{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:1.4rem;font-weight:800;border:2px solid rgba(255,255,255,.2)}
+.how-step:nth-child(1) .how-num{background:var(--red);border-color:var(--red)}
+.how-step:nth-child(2) .how-num{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+.how-step:nth-child(3) .how-num{background:var(--green);border-color:var(--green)}
+.how-step h4{font-size:.82rem;font-weight:700;margin-bottom:4px}
+.how-step p{font-size:.72rem;opacity:.65}
+
+/* COMMISSION CARDS */
+.comm-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:550px;margin:0 auto 36px}
+.comm-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px 12px;
+  text-align:center;transition:transform .2s;
+}
+.comm-card:hover{transform:translateY(-3px)}
+.comm-pkg{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.7;margin-bottom:6px}
+.comm-amt{font-family:var(--display);font-size:1.6rem;color:var(--gold-light)}
+.comm-per{font-size:.68rem;opacity:.5;margin-top:2px}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-size:.88rem;font-weight:700;transition:all .3s;border:2px solid transparent;cursor:pointer;font-family:var(--body)}
+.btn-gold{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,160,23,.35)}
+.btn-white{background:#fff;color:var(--blue);border-color:#fff}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn-red{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-red:hover{background:var(--red-dark);transform:translateY(-2px)}
+.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-blue:hover{background:var(--blue-dark);transform:translateY(-2px)}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* FORM SECTIONS */
+.form-section{padding:60px 20px;max-width:480px;margin:0 auto}
+.form-section h2{font-family:var(--display);font-size:1.8rem;color:var(--dark);margin-bottom:6px;text-align:center}
+.form-section .sub{color:var(--text-light);font-size:.88rem;text-align:center;margin-bottom:28px}
+.form-card{background:var(--white);border-radius:20px;padding:32px 28px;border:1px solid rgba(0,0,0,.06);box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.form-card label{display:block;font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.form-card input,.form-card textarea{
+  width:100%;padding:13px 16px;border:2px solid var(--light-gray);border-radius:12px;
+  font-family:var(--body);font-size:.88rem;margin-bottom:16px;transition:border-color .2s;
+  background:var(--off-white);
+}
+.form-card input:focus,.form-card textarea:focus{outline:none;border-color:var(--blue);background:#fff}
+.form-card textarea{resize:vertical;min-height:80px}
+.form-card .btn{width:100%;justify-content:center;margin-top:4px}
+.form-switch{text-align:center;margin-top:20px;font-size:.85rem;color:var(--text-light)}
+.form-switch a{color:var(--blue);font-weight:700;cursor:pointer}
+.form-switch a:hover{color:var(--red)}
+.form-error{background:rgba(210,16,52,.08);color:var(--red);padding:12px 16px;border-radius:10px;font-size:.82rem;margin-bottom:16px;display:none;border:1px solid rgba(210,16,52,.15)}
+.form-success{background:rgba(34,197,94,.08);color:var(--green-dark);padding:12px 16px;border-radius:10px;font-size:.82rem;margin-bottom:16px;display:none;border:1px solid rgba(34,197,94,.15)}
+
+/* DASHBOARD */
+.dash{padding:50px 20px 80px;max-width:900px;margin:0 auto}
+.dash-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+.dash-welcome h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,2rem);color:var(--dark)}
+.dash-welcome .status{
+  display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;padding:5px 14px;border-radius:100px;margin-top:6px;
+}
+.status-pending{background:rgba(212,160,23,.12);color:var(--gold)}
+.status-approved{background:rgba(34,197,94,.1);color:var(--green-dark)}
+.status-suspended{background:rgba(210,16,52,.1);color:var(--red)}
+.btn-logout{background:transparent;color:var(--text-light);border:1px solid var(--light-gray);padding:8px 18px;border-radius:100px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--body)}
+.btn-logout:hover{background:var(--red);color:#fff;border-color:var(--red)}
+
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.stat-card{
+  background:var(--white);border-radius:16px;padding:22px 20px;
+  border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 12px rgba(0,0,0,.04);
+  position:relative;overflow:hidden;
+}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.stat-card:nth-child(1)::before{background:var(--blue)}
+.stat-card:nth-child(2)::before{background:var(--green)}
+.stat-card:nth-child(3)::before{background:var(--gold)}
+.stat-card:nth-child(4)::before{background:var(--red)}
+.stat-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);margin-bottom:8px}
+.stat-value{font-family:var(--display);font-size:1.8rem;color:var(--dark)}
+
+.ref-box{
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;
+  border-radius:18px;padding:24px;margin-bottom:28px;position:relative;overflow:hidden;
+}
+.ref-box::before{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,.06)}
+.ref-box h3{font-size:.85rem;font-weight:700;margin-bottom:12px;opacity:.9}
+.ref-link-row{display:flex;gap:8px;margin-bottom:14px}
+.ref-input{
+  flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;
+  padding:12px 14px;color:#fff;font-family:var(--body);font-size:.82rem;font-weight:600;
+}
+.ref-input:focus{outline:none}
+.btn-copy{
+  background:var(--gold);color:var(--dark);border:none;padding:12px 18px;border-radius:10px;
+  font-size:.78rem;font-weight:800;cursor:pointer;transition:all .2s;font-family:var(--body);
+  white-space:nowrap;
+}
+.btn-copy:hover{background:var(--gold-light)}
+.btn-copy.copied{background:var(--green);color:#fff}
+.share-row{display:flex;gap:10px}
+.btn-share{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;
+  font-size:.75rem;font-weight:700;cursor:pointer;border:none;transition:all .2s;font-family:var(--body);
+}
+.btn-wa{background:#25D366;color:#fff}
+.btn-wa:hover{background:#1fad54}
+.btn-sms{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.btn-sms:hover{background:rgba(255,255,255,.2)}
+
+.dash-section{margin-bottom:28px}
+.dash-section h3{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.table-wrap{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,.05);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+table{width:100%;border-collapse:collapse}
+th{background:var(--off-white);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);padding:12px 16px;text-align:left}
+td{padding:14px 16px;font-size:.84rem;border-top:1px solid rgba(0,0,0,.04)}
+.badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.badge-pending{background:rgba(212,160,23,.1);color:var(--gold)}
+.badge-confirmed{background:rgba(34,197,94,.1);color:var(--green-dark)}
+.badge-paid{background:rgba(0,32,159,.1);color:var(--blue)}
+.badge-completed{background:rgba(34,197,94,.1);color:var(--green-dark)}
+.badge-processing{background:rgba(212,160,23,.1);color:var(--gold)}
+.badge-cancelled,.badge-failed{background:rgba(210,16,52,.1);color:var(--red)}
+.empty-state{padding:40px;text-align:center;color:var(--text-light);font-size:.88rem}
+
+.payout-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.btn-payout{
+  background:var(--green);color:#fff;border:none;padding:10px 22px;border-radius:10px;
+  font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:var(--body);
+}
+.btn-payout:hover{background:var(--green-dark)}
+.btn-payout:disabled{opacity:.5;cursor:not-allowed}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--dark);color:#fff;padding:14px 24px;border-radius:12px;
+  font-size:.84rem;font-weight:600;z-index:9999;opacity:0;transition:all .3s;
+  box-shadow:0 8px 30px rgba(0,0,0,.25);pointer-events:none;max-width:90%;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* FOOTER */
+.eco-bar{
+  background:var(--blue);padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;
+  font-size:.72rem;color:rgba(255,255,255,.7);font-weight:600;
+}
+.eco-bar span{color:var(--gold);font-size:.65rem;text-transform:uppercase;letter-spacing:1.2px}
+.eco-bar a{color:rgba(255,255,255,.7);transition:color .2s}
+.eco-bar a:hover{color:#fff}
+
+.whatsapp-float{position:fixed;bottom:20px;right:20px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:transform .3s}
+.whatsapp-float:hover{transform:scale(1.1)}
+.whatsapp-float svg{width:30px;height:30px;fill:#fff}
+
+.loading-spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .mobile-menu{display:block}
+  .comm-cards{grid-template-columns:1fr;max-width:260px}
+  .how-strip{grid-template-columns:1fr;gap:20px;max-width:260px}
+  .how-strip::before{display:none}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .ref-link-row{flex-direction:column}
+  .table-wrap{overflow-x:auto}
+  table{min-width:480px}
+  .dash-header{flex-direction:column;align-items:flex-start}
+  .form-card{padding:24px 20px}
+}
+@media(max-width:380px){
+  .stat-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="flag-stripe"></div>
+
+<div class="top-lang-bar">
+  <a onclick="setLang('fr')" class="active" id="lang-fr">&#127467;&#127479; Fran&ccedil;ais</a>
+  <a onclick="setLang('en')" id="lang-en">&#127468;&#127463; English</a>
+  <a onclick="setLang('ht')" id="lang-ht">&#127469;&#127481; Krey&ograve;l</a>
+  <a onclick="setLang('es')" id="lang-es">&#127466;&#127480; Espa&ntilde;ol</a>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://48hoursready.com" class="nav-logo">
+      <img src="assets/icon-192.png" alt="48HoursReady">
+      <span>48Hours <b>Ready</b></span>
+    </a>
+    <div class="nav-links">
+      <a href="https://48hoursready.com" data-i18n="nav_home">Accueil</a>
+      <a href="https://48hoursready.com#package" data-i18n="nav_packages">Forfaits</a>
+      <a href="https://48hoursready.com#contact" data-i18n="nav_contact">Contact</a>
+      <a href="#" class="nav-cta" id="navCta" onclick="showScreen('signup')" data-i18n="nav_cta">Devenir Ambassadeur</a>
+    </div>
+    <button class="mobile-menu" onclick="document.getElementById('mobileNav').classList.add('open')">&#9776;</button>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="mobileNav" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:linear-gradient(135deg,var(--blue-dark),var(--blue));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .3s">
+  <button class="close-menu" style="position:absolute;top:18px;right:22px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="https://48hoursready.com" style="color:#fff;font-size:1.1rem;font-weight:600;padding:12px 24px" data-i18n="nav_home">Accueil</a>
+  <a href="https://48hoursready.com#package" style="color:#fff;font-size:1.1rem;font-weight:600;padding:12px 24px" onclick="this.parentElement.classList.remove('open')" data-i18n="nav_packages">Forfaits</a>
+  <a href="#" style="color:var(--gold);font-size:1.1rem;font-weight:600;padding:12px 24px" onclick="this.parentElement.classList.remove('open');showScreen('signup')" data-i18n="nav_cta">Devenir Ambassadeur</a>
+</div>
+
+<!-- ══════════ SCREEN 1: SIGNUP ══════════ -->
+<div class="screen active" id="screen-signup">
+
+  <div class="amb-hero">
+    <div class="inner">
+      <div class="amb-badge">&#127941; <span data-i18n="hero_badge">Programme Ambassadeur</span></div>
+      <h1 data-i18n="hero_title">Devenez Ambassadeur<br>&amp; <span>Gagnez</span></h1>
+      <p data-i18n="hero_sub">Partagez votre lien unique. Quand quelqu'un s'inscrit et achete un forfait, vous gagnez 10% de commission. Simple.</p>
+
+      <div class="how-strip">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <h4 data-i18n="step1">Partagez</h4>
+          <p data-i18n="step1_d">Votre lien unique</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <h4 data-i18n="step2">Ils s'inscrivent</h4>
+          <p data-i18n="step2_d">Via votre lien</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <h4 data-i18n="step3">Vous gagnez</h4>
+          <p data-i18n="step3_d">10% de commission</p>
+        </div>
+      </div>
+
+      <div class="comm-cards">
+        <div class="comm-card">
+          <div class="comm-pkg" data-i18n="pkg_student">Etudiant</div>
+          <div class="comm-amt">$7.90</div>
+          <div class="comm-per" data-i18n="per_sale">par vente de $79</div>
+        </div>
+        <div class="comm-card">
+          <div class="comm-pkg" data-i18n="pkg_biz">Business</div>
+          <div class="comm-amt">$9.90</div>
+          <div class="comm-per" data-i18n="per_sale2">par vente de $99</div>
+        </div>
+        <div class="comm-card">
+          <div class="comm-pkg" data-i18n="pkg_lang">2 Langues</div>
+          <div class="comm-amt">$12.90</div>
+          <div class="comm-per" data-i18n="per_sale3">par vente de $129</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#signup-form" class="btn btn-gold" data-i18n="cta_signup">S'inscrire Maintenant</a>
+        <a href="#" class="btn btn-ghost" onclick="showScreen('login');return false" data-i18n="cta_login">Se Connecter</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" id="signup-form">
+    <h2 data-i18n="form_title">Inscription Ambassadeur</h2>
+    <p class="sub" data-i18n="form_sub">Remplissez le formulaire pour rejoindre le programme.</p>
+    <div class="form-card">
+      <div class="form-error" id="signupError"></div>
+      <div class="form-success" id="signupSuccess"></div>
+      <form onsubmit="handleSignup(event)">
+        <label data-i18n="lbl_name">Nom Complet</label>
+        <input type="text" id="regName" required placeholder="Jean-Baptiste Duval">
+        <label data-i18n="lbl_email">Email</label>
+        <input type="email" id="regEmail" required placeholder="jean@email.com">
+        <label data-i18n="lbl_phone">Telephone / WhatsApp</label>
+        <input type="tel" id="regPhone" required placeholder="+509 4190 2005">
+        <label data-i18n="lbl_pass">Mot de passe</label>
+        <input type="password" id="regPass" required minlength="6" placeholder="6 caracteres minimum">
+        <label data-i18n="lbl_city">Ville</label>
+        <input type="text" id="regCity" placeholder="Port-au-Prince">
+        <label data-i18n="lbl_bio">Courte bio (optionnel)</label>
+        <textarea id="regBio" placeholder="Parlez-nous de vous..." data-i18n-placeholder="bio_ph"></textarea>
+        <button type="submit" class="btn btn-red" id="signupBtn" data-i18n="btn_signup">S'inscrire comme Ambassadeur</button>
+      </form>
+      <div class="form-switch">
+        <span data-i18n="already_amb">Deja ambassadeur?</span> <a onclick="showScreen('login')" data-i18n="login_link">Se connecter</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ SCREEN 2: LOGIN ══════════ -->
+<div class="screen" id="screen-login">
+  <div class="amb-hero" style="padding:100px 20px 50px">
+    <div class="inner">
+      <div class="amb-badge">&#128274; <span data-i18n="login_badge">Espace Ambassadeur</span></div>
+      <h1 style="font-size:clamp(1.6rem,4vw,2.6rem)" data-i18n="login_title">Connexion</h1>
+    </div>
+  </div>
+  <div class="form-section">
+    <div class="form-card">
+      <div class="form-error" id="loginError"></div>
+      <form onsubmit="handleLogin(event)">
+        <label data-i18n="lbl_email">Email</label>
+        <input type="email" id="loginEmail" required placeholder="jean@email.com">
+        <label data-i18n="lbl_pass">Mot de passe</label>
+        <input type="password" id="loginPass" required placeholder="Votre mot de passe">
+        <button type="submit" class="btn btn-blue" id="loginBtn" style="width:100%;justify-content:center" data-i18n="btn_login">Se Connecter</button>
+      </form>
+      <div class="form-switch">
+        <span data-i18n="no_account">Pas encore ambassadeur?</span> <a onclick="showScreen('signup')" data-i18n="signup_link">S'inscrire</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 3: DASHBOARD ══════════ -->
+<div class="screen" id="screen-dashboard">
+  <div style="background:linear-gradient(135deg,var(--blue-dark),var(--blue));padding:80px 20px 30px;margin-bottom:20px">
+    <div style="max-width:900px;margin:0 auto">
+      <div class="dash-header">
+        <div class="dash-welcome">
+          <h2 style="color:#fff" data-i18n="dash_welcome">Bienvenue,</h2>
+          <span id="dashName" style="color:var(--gold-light);font-family:var(--display);font-size:1.3rem"></span>
+          <div><span class="status" id="dashStatus"></span></div>
+        </div>
+        <button class="btn-logout" onclick="handleLogout()" data-i18n="btn_logout">Deconnexion</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="stat_refs">Referrals Total</div>
+        <div class="stat-value" id="statRefs">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="stat_confirmed">Confirmes</div>
+        <div class="stat-value" id="statConfirmed">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="stat_earned">Total Gagne</div>
+        <div class="stat-value" id="statEarned">$0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="stat_balance">Solde Disponible</div>
+        <div class="stat-value" id="statBalance">$0</div>
+      </div>
+    </div>
+
+    <div class="ref-box">
+      <h3>&#128279; <span data-i18n="your_link">Votre lien de referral</span></h3>
+      <div class="ref-link-row">
+        <input type="text" class="ref-input" id="refLink" readonly>
+        <button class="btn-copy" id="copyBtn" onclick="copyLink()" data-i18n="btn_copy">Copier</button>
+      </div>
+      <div class="share-row">
+        <button class="btn-share btn-wa" onclick="shareWhatsApp()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+          WhatsApp
+        </button>
+        <button class="btn-share btn-sms" onclick="copyLink()" data-i18n="btn_copy_link">&#128203; Copier le lien</button>
+      </div>
+    </div>
+
+    <div class="dash-section">
+      <h3>&#128200; <span data-i18n="ref_history">Historique des Referrals</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th data-i18n="th_name">Nom</th>
+            <th data-i18n="th_package">Forfait</th>
+            <th data-i18n="th_commission">Commission</th>
+            <th data-i18n="th_status">Statut</th>
+            <th data-i18n="th_date">Date</th>
+          </tr></thead>
+          <tbody id="refTableBody">
+            <tr><td colspan="5" class="empty-state" data-i18n="no_refs">Aucun referral encore. Partagez votre lien!</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="dash-section">
+      <div class="payout-header">
+        <h3>&#128176; <span data-i18n="payout_title">Paiements</span></h3>
+        <button class="btn-payout" id="payoutBtn" onclick="requestPayout()" data-i18n="btn_payout">Demander un paiement</button>
+      </div>
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead><tr>
+            <th data-i18n="th_amount">Montant</th>
+            <th data-i18n="th_method">Methode</th>
+            <th data-i18n="th_status">Statut</th>
+            <th data-i18n="th_ref">Reference</th>
+            <th data-i18n="th_date">Date</th>
+          </tr></thead>
+          <tbody id="payoutTableBody">
+            <tr><td colspan="5" class="empty-state" data-i18n="no_payouts">Aucun paiement encore.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="eco-bar">
+  <span data-i18n="eco_label">Fait partie de</span>
+  <a href="https://haitibiznis.com">HaitiBiznis</a>
+  <a href="https://myplopplop.com">MyPlopPlop</a>
+  <a href="https://msouwout.com">MsouWout</a>
+  <a href="https://prolakay.haitibiznis.com">ProLakay</a>
+  <a href="https://boxetoboxe.com">BoxeToBoxe</a>
+</div>
+
+<a href="https://wa.me/50941902005" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_BASE = 'https://48hoursready-api.onrender.com';
+
+const T = {
+  fr:{
+    nav_home:"Accueil",nav_packages:"Forfaits",nav_contact:"Contact",nav_cta:"Devenir Ambassadeur",
+    hero_badge:"Programme Ambassadeur",hero_title:"Devenez Ambassadeur<br>&amp; <span>Gagnez</span>",
+    hero_sub:"Partagez votre lien unique. Quand quelqu'un s'inscrit et achete un forfait, vous gagnez 10% de commission. Simple.",
+    step1:"Partagez",step1_d:"Votre lien unique",step2:"Ils s'inscrivent",step2_d:"Via votre lien",step3:"Vous gagnez",step3_d:"10% de commission",
+    pkg_student:"Etudiant",pkg_biz:"Business",pkg_lang:"2 Langues",
+    per_sale:"par vente de $79",per_sale2:"par vente de $99",per_sale3:"par vente de $129",
+    cta_signup:"S'inscrire Maintenant",cta_login:"Se Connecter",
+    form_title:"Inscription Ambassadeur",form_sub:"Remplissez le formulaire pour rejoindre le programme.",
+    lbl_name:"Nom Complet",lbl_email:"Email",lbl_phone:"Telephone / WhatsApp",lbl_pass:"Mot de passe",lbl_city:"Ville",lbl_bio:"Courte bio (optionnel)",
+    bio_ph:"Parlez-nous de vous...",btn_signup:"S'inscrire comme Ambassadeur",
+    already_amb:"Deja ambassadeur?",login_link:"Se connecter",no_account:"Pas encore ambassadeur?",signup_link:"S'inscrire",
+    login_badge:"Espace Ambassadeur",login_title:"Connexion",btn_login:"Se Connecter",
+    dash_welcome:"Bienvenue,",btn_logout:"Deconnexion",
+    stat_refs:"Referrals Total",stat_confirmed:"Confirmes",stat_earned:"Total Gagne",stat_balance:"Solde Disponible",
+    your_link:"Votre lien de referral",btn_copy:"Copier",btn_copy_link:"Copier le lien",copied:"Copie!",
+    ref_history:"Historique des Referrals",th_name:"Nom",th_package:"Forfait",th_commission:"Commission",th_status:"Statut",th_date:"Date",th_amount:"Montant",th_method:"Methode",th_ref:"Reference",
+    no_refs:"Aucun referral encore. Partagez votre lien!",no_payouts:"Aucun paiement encore.",
+    payout_title:"Paiements",btn_payout:"Demander un paiement",
+    eco_label:"Fait partie de",
+    success_signup:"Inscription reussie! Votre compte est en attente d'approbation.",
+    err_generic:"Une erreur est survenue. Veuillez reessayer.",
+    payout_success:"Demande de paiement envoyee!",payout_min:"Solde minimum de $10 requis.",
+    status_pending:"En attente",status_approved:"Approuve",status_suspended:"Suspendu"
+  },
+  en:{
+    nav_home:"Home",nav_packages:"Packages",nav_contact:"Contact",nav_cta:"Become Ambassador",
+    hero_badge:"Ambassador Program",hero_title:"Become an Ambassador<br>&amp; <span>Earn</span>",
+    hero_sub:"Share your unique link. When someone signs up and buys a package, you earn 10% commission. Simple.",
+    step1:"Share",step1_d:"Your unique link",step2:"They sign up",step2_d:"Through your link",step3:"You earn",step3_d:"10% commission",
+    pkg_student:"Student",pkg_biz:"Business",pkg_lang:"2 Languages",
+    per_sale:"per $79 sale",per_sale2:"per $99 sale",per_sale3:"per $129 sale",
+    cta_signup:"Sign Up Now",cta_login:"Log In",
+    form_title:"Ambassador Registration",form_sub:"Fill out the form to join the program.",
+    lbl_name:"Full Name",lbl_email:"Email",lbl_phone:"Phone / WhatsApp",lbl_pass:"Password",lbl_city:"City",lbl_bio:"Short bio (optional)",
+    bio_ph:"Tell us about yourself...",btn_signup:"Sign Up as Ambassador",
+    already_amb:"Already an ambassador?",login_link:"Log in",no_account:"Not an ambassador yet?",signup_link:"Sign up",
+    login_badge:"Ambassador Portal",login_title:"Log In",btn_login:"Log In",
+    dash_welcome:"Welcome,",btn_logout:"Log Out",
+    stat_refs:"Total Referrals",stat_confirmed:"Confirmed",stat_earned:"Total Earned",stat_balance:"Available Balance",
+    your_link:"Your referral link",btn_copy:"Copy",btn_copy_link:"Copy link",copied:"Copied!",
+    ref_history:"Referral History",th_name:"Name",th_package:"Package",th_commission:"Commission",th_status:"Status",th_date:"Date",th_amount:"Amount",th_method:"Method",th_ref:"Reference",
+    no_refs:"No referrals yet. Share your link!",no_payouts:"No payouts yet.",
+    payout_title:"Payouts",btn_payout:"Request Payout",
+    eco_label:"Part of",
+    success_signup:"Registration successful! Your account is pending approval.",
+    err_generic:"An error occurred. Please try again.",
+    payout_success:"Payout request submitted!",payout_min:"Minimum $10 balance required.",
+    status_pending:"Pending",status_approved:"Approved",status_suspended:"Suspended"
+  },
+  ht:{
+    nav_home:"Akèy",nav_packages:"Pake",nav_contact:"Kontak",nav_cta:"Vin Anbasadè",
+    hero_badge:"Pwogram Anbasadè",hero_title:"Vin Anbasadè<br>epi <span>Touche</span>",
+    hero_sub:"Pataje lyen inik ou. Le yon moun enskri epi achte yon pake, ou touche 10% komisyon. Senp.",
+    step1:"Pataje",step1_d:"Lyen inik ou",step2:"Yo enskri",step2_d:"Atravè lyen ou",step3:"Ou touche",step3_d:"10% komisyon",
+    pkg_student:"Etidyan",pkg_biz:"Biznis",pkg_lang:"2 Lang",
+    per_sale:"pa vant $79",per_sale2:"pa vant $99",per_sale3:"pa vant $129",
+    cta_signup:"Enskri Kounye a",cta_login:"Konekte",
+    form_title:"Enskripsyon Anbasadè",form_sub:"Ranpli fom nan pou rejwenn pwogram nan.",
+    lbl_name:"Non Konplè",lbl_email:"Imel",lbl_phone:"Telefon / WhatsApp",lbl_pass:"Modpas",lbl_city:"Vil",lbl_bio:"Ti byografi (opsyonèl)",
+    bio_ph:"Pale nou de ou...",btn_signup:"Enskri kòm Anbasadè",
+    already_amb:"Deja anbasadè?",login_link:"Konekte",no_account:"Poko anbasadè?",signup_link:"Enskri",
+    login_badge:"Espas Anbasadè",login_title:"Koneksyon",btn_login:"Konekte",
+    dash_welcome:"Byenveni,",btn_logout:"Dekonekte",
+    stat_refs:"Total Referral",stat_confirmed:"Konfime",stat_earned:"Total Touche",stat_balance:"Balans Disponib",
+    your_link:"Lyen referral ou",btn_copy:"Kopye",btn_copy_link:"Kopye lyen",copied:"Kopye!",
+    ref_history:"Istwa Referral Yo",th_name:"Non",th_package:"Pake",th_commission:"Komisyon",th_status:"Estati",th_date:"Dat",th_amount:"Montan",th_method:"Metod",th_ref:"Referans",
+    no_refs:"Pa gen referral ankò. Pataje lyen ou!",no_payouts:"Pa gen peman ankò.",
+    payout_title:"Peman Yo",btn_payout:"Mande yon peman",
+    eco_label:"Fe pati de",
+    success_signup:"Enskripsyon reyisi! Kont ou ap tann apwobasyon.",
+    err_generic:"Yon erè pase. Tanpri eseye ankò.",
+    payout_success:"Demann peman soumèt!",payout_min:"Balans minimòm $10 obligatwa.",
+    status_pending:"An atant",status_approved:"Apwouve",status_suspended:"Sispann"
+  },
+  es:{
+    nav_home:"Inicio",nav_packages:"Paquetes",nav_contact:"Contacto",nav_cta:"Ser Embajador",
+    hero_badge:"Programa Embajador",hero_title:"Conviertete en Embajador<br>y <span>Gana</span>",
+    hero_sub:"Comparte tu enlace unico. Cuando alguien se inscribe y compra un paquete, ganas 10% de comision. Simple.",
+    step1:"Comparte",step1_d:"Tu enlace unico",step2:"Se inscriben",step2_d:"Por tu enlace",step3:"Tu ganas",step3_d:"10% de comision",
+    pkg_student:"Estudiante",pkg_biz:"Business",pkg_lang:"2 Idiomas",
+    per_sale:"por venta de $79",per_sale2:"por venta de $99",per_sale3:"por venta de $129",
+    cta_signup:"Inscribirse Ahora",cta_login:"Iniciar Sesion",
+    form_title:"Registro de Embajador",form_sub:"Completa el formulario para unirte al programa.",
+    lbl_name:"Nombre Completo",lbl_email:"Email",lbl_phone:"Telefono / WhatsApp",lbl_pass:"Contrasena",lbl_city:"Ciudad",lbl_bio:"Bio corta (opcional)",
+    bio_ph:"Cuentanos sobre ti...",btn_signup:"Registrarse como Embajador",
+    already_amb:"Ya eres embajador?",login_link:"Iniciar sesion",no_account:"Aun no eres embajador?",signup_link:"Registrarse",
+    login_badge:"Portal Embajador",login_title:"Iniciar Sesion",btn_login:"Iniciar Sesion",
+    dash_welcome:"Bienvenido,",btn_logout:"Cerrar Sesion",
+    stat_refs:"Referidos Total",stat_confirmed:"Confirmados",stat_earned:"Total Ganado",stat_balance:"Saldo Disponible",
+    your_link:"Tu enlace de referido",btn_copy:"Copiar",btn_copy_link:"Copiar enlace",copied:"Copiado!",
+    ref_history:"Historial de Referidos",th_name:"Nombre",th_package:"Paquete",th_commission:"Comision",th_status:"Estado",th_date:"Fecha",th_amount:"Monto",th_method:"Metodo",th_ref:"Referencia",
+    no_refs:"Sin referidos aun. Comparte tu enlace!",no_payouts:"Sin pagos aun.",
+    payout_title:"Pagos",btn_payout:"Solicitar pago",
+    eco_label:"Parte de",
+    success_signup:"Registro exitoso! Tu cuenta esta pendiente de aprobacion.",
+    err_generic:"Ocurrio un error. Intentalo de nuevo.",
+    payout_success:"Solicitud de pago enviada!",payout_min:"Saldo minimo de $10 requerido.",
+    status_pending:"Pendiente",status_approved:"Aprobado",status_suspended:"Suspendido"
+  }
+};
+
+let currentLang = 'fr';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.top-lang-bar a').forEach(a => a.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  const t = T[lang] || T.fr;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key]) el.placeholder = t[key];
+  });
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + name);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showToast(msg, duration) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration || 3000);
+}
+
+function tr(key) {
+  return (T[currentLang] || T.fr)[key] || key;
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  const btn = document.getElementById('signupBtn');
+  const errEl = document.getElementById('signupError');
+  const okEl = document.getElementById('signupSuccess');
+  errEl.style.display = 'none';
+  okEl.style.display = 'none';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>';
+
+  try {
+    const resp = await fetch(API_BASE + '/api/ambassadors/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: document.getElementById('regName').value,
+        email: document.getElementById('regEmail').value,
+        phone: document.getElementById('regPhone').value,
+        password: document.getElementById('regPass').value,
+        city: document.getElementById('regCity').value,
+        bio: document.getElementById('regBio').value
+      })
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      errEl.textContent = data.error || tr('err_generic');
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = tr('btn_signup');
+      return;
+    }
+    sessionStorage.setItem('amb_token', data.token);
+    sessionStorage.setItem('amb_name', data.full_name);
+    okEl.textContent = tr('success_signup');
+    okEl.style.display = 'block';
+    setTimeout(() => loadDashboard(), 1500);
+  } catch (err) {
+    errEl.textContent = tr('err_generic');
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = tr('btn_signup');
+  }
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>';
+
+  try {
+    const resp = await fetch(API_BASE + '/api/ambassadors/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: document.getElementById('loginEmail').value,
+        password: document.getElementById('loginPass').value
+      })
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      errEl.textContent = data.error || tr('err_generic');
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = tr('btn_login');
+      return;
+    }
+    sessionStorage.setItem('amb_token', data.token);
+    sessionStorage.setItem('amb_name', data.full_name);
+    loadDashboard();
+  } catch (err) {
+    errEl.textContent = tr('err_generic');
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = tr('btn_login');
+  }
+}
+
+async function loadDashboard() {
+  const token = sessionStorage.getItem('amb_token');
+  if (!token) { showScreen('signup'); return; }
+
+  showScreen('dashboard');
+  try {
+    const resp = await fetch(API_BASE + '/api/ambassadors/dashboard', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!resp.ok) {
+      sessionStorage.removeItem('amb_token');
+      showScreen('login');
+      return;
+    }
+    const data = await resp.json();
+    const amb = data.ambassador;
+    const stats = data.stats;
+
+    document.getElementById('dashName').textContent = amb.full_name;
+    const statusEl = document.getElementById('dashStatus');
+    statusEl.textContent = tr('status_' + amb.status);
+    statusEl.className = 'status status-' + amb.status;
+
+    document.getElementById('statRefs').textContent = stats.total_referrals;
+    document.getElementById('statConfirmed').textContent = stats.confirmed_referrals;
+    document.getElementById('statEarned').textContent = '$' + stats.total_earned;
+    document.getElementById('statBalance').textContent = '$' + stats.balance;
+
+    document.getElementById('refLink').value = amb.referral_link;
+
+    const refBody = document.getElementById('refTableBody');
+    if (data.referrals.length === 0) {
+      refBody.innerHTML = '<tr><td colspan="5" class="empty-state">' + tr('no_refs') + '</td></tr>';
+    } else {
+      refBody.innerHTML = data.referrals.map(r => `<tr>
+        <td>${r.referred_name}</td>
+        <td>${r.package_type || '-'}</td>
+        <td>$${r.commission}</td>
+        <td><span class="badge badge-${r.status}">${r.status}</span></td>
+        <td>${new Date(r.date).toLocaleDateString()}</td>
+      </tr>`).join('');
+    }
+
+    const payBody = document.getElementById('payoutTableBody');
+    if (data.payouts.length === 0) {
+      payBody.innerHTML = '<tr><td colspan="5" class="empty-state">' + tr('no_payouts') + '</td></tr>';
+    } else {
+      payBody.innerHTML = data.payouts.map(p => `<tr>
+        <td>$${p.amount}</td>
+        <td>${p.method}</td>
+        <td><span class="badge badge-${p.status}">${p.status}</span></td>
+        <td>${p.reference || '-'}</td>
+        <td>${new Date(p.date).toLocaleDateString()}</td>
+      </tr>`).join('');
+    }
+
+    document.getElementById('payoutBtn').disabled = parseFloat(stats.balance) < 10;
+  } catch (err) {
+    showToast(tr('err_generic'));
+  }
+}
+
+function handleLogout() {
+  sessionStorage.removeItem('amb_token');
+  sessionStorage.removeItem('amb_name');
+  showScreen('signup');
+}
+
+function copyLink() {
+  const link = document.getElementById('refLink').value;
+  navigator.clipboard.writeText(link).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = tr('copied');
+    btn.classList.add('copied');
+    showToast(tr('copied'));
+    setTimeout(() => { btn.textContent = tr('btn_copy'); btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function shareWhatsApp() {
+  const link = document.getElementById('refLink').value;
+  const msg = encodeURIComponent('48HoursReady - ' + tr('hero_sub').replace(/<[^>]*>/g, '') + '\n\n' + link);
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
+async function requestPayout() {
+  const token = sessionStorage.getItem('amb_token');
+  if (!token) return;
+  try {
+    const resp = await fetch(API_BASE + '/api/ambassadors/payout/request', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ method: 'moncash' })
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      showToast(data.error || tr('payout_min'));
+      return;
+    }
+    showToast(tr('payout_success'));
+    loadDashboard();
+  } catch (err) {
+    showToast(tr('err_generic'));
+  }
+}
+
+// Init
+setLang('fr');
+if (sessionStorage.getItem('amb_token')) {
+  loadDashboard();
+}
+</script>
+</body>
+</html>
