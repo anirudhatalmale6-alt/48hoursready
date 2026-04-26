@@ -33,7 +33,7 @@
   --display:'DM Serif Display',Georgia,serif;
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--body);background:var(--off-white);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:var(--body);background:var(--off-white);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:52px}
 a{text-decoration:none;color:inherit}
 
 /* ═══ TOP LANG BAR ═══ */
@@ -444,6 +444,13 @@ footer a{color:#fff;font-weight:600}
   </div>
 </section>
 
+<!-- KOUTYE BIZNIS BANNER -->
+<div style="max-width:600px;margin:20px auto 40px;background:linear-gradient(135deg,#00209F,#D21034);border-radius:16px;padding:28px 24px;text-align:center;color:#fff;">
+  <div style="font-size:1.4rem;font-weight:900;margin-bottom:8px;" data-i18n="koutye_banner_title">Touche 10% sou chak pake ou vann</div>
+  <div style="font-size:.9rem;opacity:.85;margin-bottom:16px;" data-i18n="koutye_banner_desc">Vin yon Koutye HaitiBiznis — pataje lyen ou, touche komisyon.</div>
+  <a href="https://haitibiznis.com/koutye.html" style="display:inline-block;background:#fff;color:#D21034;font-weight:800;padding:12px 28px;border-radius:10px;text-decoration:none;font-size:.9rem;" data-i18n="koutye_banner_cta">Vin yon Koutye &#8594;</a>
+</div>
+
 <!-- FEATURES -->
 <section id="features">
   <div class="section-inner">
@@ -787,7 +794,11 @@ const T = {
     form_send:"Soumettre la Candidature",
     footer_desc:"Aider les entrepreneurs haitiens a construire et lancer leurs entreprises plus vite.",
     footer_ecosystem:"Ecosysteme", footer_links:"Liens Rapides", eco_label:"Fait partie de",
-    install_text:"Installer 48HoursReady<small>Ajouter à votre écran d'accueil</small>", install_btn:"Installer"
+    install_text:"Installer 48HoursReady<small>Ajouter à votre écran d'accueil</small>", install_btn:"Installer",
+    sticky_koutye:"&#128176; Vendez des packs — gagnez 10% de commission",
+    koutye_banner_title:"Gagnez 10% sur chaque pack vendu",
+    koutye_banner_desc:"Devenez Ambassadeur HaitiBiznis — partagez votre lien, gagnez des commissions.",
+    koutye_banner_cta:"Devenir Ambassadeur &#8594;"
   },
   en: {
     nav_programs:"Programs", nav_features:"Features", nav_how:"How It Works", nav_contact:"Contact", nav_cta:"Get Started",
@@ -854,7 +865,11 @@ const T = {
     form_send:"Submit Application",
     footer_desc:"Helping Haitian entrepreneurs build and launch businesses faster.",
     footer_ecosystem:"Ecosystem", footer_links:"Quick Links", eco_label:"Part of",
-    install_text:"Install 48HoursReady<small>Add to your home screen for quick access</small>", install_btn:"Install"
+    install_text:"Install 48HoursReady<small>Add to your home screen for quick access</small>", install_btn:"Install",
+    sticky_koutye:"&#128176; Sell packages — earn 10% commission",
+    koutye_banner_title:"Earn 10% on every package you sell",
+    koutye_banner_desc:"Become a HaitiBiznis Ambassador — share your link, earn commissions.",
+    koutye_banner_cta:"Become Ambassador &#8594;"
   },
   ht: {
     nav_programs:"Pwogram", nav_features:"Fonksyon", nav_how:"Koman li mache", nav_contact:"Kontak", nav_cta:"Komanse",
@@ -921,7 +936,11 @@ const T = {
     form_send:"Soumèt Aplikasyon",
     footer_desc:"Ede antreprene ayisyen bati epi lanse biznis yo pi vit.",
     footer_ecosystem:"Ekosistem", footer_links:"Lyen Rapid", eco_label:"Fe pati de",
-    install_text:"Enstale 48HoursReady<small>Mete sou ekran lakay ou</small>", install_btn:"Enstale"
+    install_text:"Enstale 48HoursReady<small>Mete sou ekran lakay ou</small>", install_btn:"Enstale",
+    sticky_koutye:"&#128176; Vann pake yo — touche 10% komisyon",
+    koutye_banner_title:"Touche 10% sou chak pake ou vann",
+    koutye_banner_desc:"Vin yon Koutye HaitiBiznis — pataje lyen ou, touche komisyon.",
+    koutye_banner_cta:"Vin yon Koutye &#8594;"
   },
   es: {
     nav_programs:"Programas", nav_features:"Funciones", nav_how:"Como funciona", nav_contact:"Contacto", nav_cta:"Comenzar",
@@ -988,7 +1007,11 @@ const T = {
     form_send:"Enviar Solicitud",
     footer_desc:"Ayudando a emprendedores haitianos a construir y lanzar negocios mas rapido.",
     footer_ecosystem:"Ecosistema", footer_links:"Enlaces Rapidos", eco_label:"Parte de",
-    install_text:"Instalar 48HoursReady<small>Añadir a tu pantalla de inicio</small>", install_btn:"Instalar"
+    install_text:"Instalar 48HoursReady<small>Añadir a tu pantalla de inicio</small>", install_btn:"Instalar",
+    sticky_koutye:"&#128176; Vende paquetes — gana 10% de comision",
+    koutye_banner_title:"Gana 10% por cada paquete vendido",
+    koutye_banner_desc:"Se un Embajador HaitiBiznis — comparte tu enlace, gana comisiones.",
+    koutye_banner_cta:"Ser Embajador &#8594;"
   }
 };
 
@@ -1164,5 +1187,11 @@ setTimeout(function(){
   }
 },3000);
 </script>
+
+<!-- KOUTYE BIZNIS STICKY BAR -->
+<div class="koutye-sticky" style="position:fixed;bottom:0;left:0;right:0;background:#D21034;color:#fff;text-align:center;padding:13px 20px;z-index:999;font-weight:800;font-size:.9rem;">
+  <a href="https://haitibiznis.com/koutye.html" style="color:#fff;text-decoration:none;" data-i18n="sticky_koutye">&#128176; Vann pake yo — touche 10% komisyon</a>
+</div>
+
 </body>
 </html>
