@@ -581,11 +581,11 @@ async function processVideo(file) {
   const videoCanvas = document.getElementById('videoCanvas');
   const ctx = videoCanvas.getContext('2d');
 
-  /* Load video — unmuted so audio track is decoded, but routed away from speakers via Web Audio API */
+  /* Load video — muted for autoplay compatibility, audio captured separately */
   const videoURL = URL.createObjectURL(file);
   sourceVideo.src = videoURL;
-  sourceVideo.muted = false;
-  sourceVideo.volume = 1;
+  sourceVideo.muted = true;
+  sourceVideo.volume = 0;
 
   await new Promise((resolve, reject) => {
     sourceVideo.onloadedmetadata = resolve;
@@ -631,29 +631,32 @@ async function processVideo(file) {
 
   setProgress(15, 'Recording cleaned video with audio...');
 
-  /* ── AUDIO: Route audio to recorder only, silence speakers ── */
+  /* ── AUDIO: Decode audio from a separate hidden element, capture via Web Audio API ── */
   const canvasStream = videoCanvas.captureStream(30);
   let audioCtx = null;
-  let audioRouted = false;
 
   try {
+    /* Create a separate audio element to decode audio independently */
+    const audioEl = new Audio();
+    audioEl.src = videoURL;
+    audioEl.crossOrigin = sourceVideo.crossOrigin;
+    audioEl.preload = 'auto';
+    await new Promise((res, rej) => { audioEl.oncanplay = res; audioEl.onerror = rej; setTimeout(res, 3000); });
+
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const audioSource = audioCtx.createMediaElementSource(sourceVideo);
+    const audioSource = audioCtx.createMediaElementSource(audioEl);
     const audioDest = audioCtx.createMediaStreamDestination();
-    const gainNode = audioCtx.createGain();
-    gainNode.gain.value = 1;
-    audioSource.connect(gainNode);
-    gainNode.connect(audioDest);
-    /* createMediaElementSource disconnects from speakers automatically — audio goes to recorder only */
+    audioSource.connect(audioDest);
     audioDest.stream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
-    audioRouted = true;
+
+    /* Sync audio element with video playback */
+    sourceVideo._audioEl = audioEl;
   } catch(e) {
-    console.log('Web Audio API failed, trying captureStream fallback:', e);
+    console.log('Audio via separate element failed:', e);
+    /* Fallback: captureStream on source video */
     try {
-      sourceVideo.muted = true;
       var srcStream = sourceVideo.captureStream ? sourceVideo.captureStream() : sourceVideo.mozCaptureStream();
       srcStream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
-      audioRouted = true;
     } catch(e2) { console.log('No audio capture available:', e2); }
   }
 
@@ -672,16 +675,16 @@ async function processVideo(file) {
     recorder.onstop = resolve;
   });
 
-  /* Audio routed through Web Audio API to recorder — speakers are silent because createMediaElementSource detaches output */
   recorder.start(100);
   sourceVideo.currentTime = 0;
   sourceVideo.playbackRate = 1;
-  /* Keep unmuted so audio track is decoded and captured */
-  if (audioRouted && audioCtx) {
-    sourceVideo.muted = false;
-    sourceVideo.volume = 1;
-  }
+  sourceVideo.muted = true;
   await sourceVideo.play();
+  /* Start audio element in sync if available */
+  if (sourceVideo._audioEl) {
+    sourceVideo._audioEl.currentTime = 0;
+    try { await sourceVideo._audioEl.play(); } catch(e) { console.log('Audio sync play failed:', e); }
+  }
 
   /* Helper: draw branding text with semi-transparent background pill */
   function drawBranding() {
@@ -731,15 +734,31 @@ async function processVideo(file) {
   }
   drawFrame();
 
-  /* Wait for video to finish playing */
+  /* Wait for video to finish playing — with timeout fallback in case onended doesn't fire */
   await new Promise(resolve => {
-    sourceVideo.onended = () => {
-      ctx.drawImage(sourceVideo, 0, 0, vw, vh);
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(logoX, logoY, logoW, logoH);
-      drawBranding();
-      setTimeout(() => { recorder.stop(); resolve(); }, 300);
-    };
+    let resolved = false;
+    function finish() {
+      if (resolved) return;
+      resolved = true;
+      try {
+        ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(logoX, logoY, logoW, logoH);
+        drawBranding();
+      } catch(e) {}
+      if (sourceVideo._audioEl) { try { sourceVideo._audioEl.pause(); } catch(e) {} }
+      setTimeout(() => { try { recorder.stop(); } catch(e) {} resolve(); }, 300);
+    }
+    sourceVideo.onended = finish;
+    /* Fallback: poll for video end in case onended doesn't fire (mobile browsers) */
+    var endCheck = setInterval(() => {
+      if (sourceVideo.ended || sourceVideo.currentTime >= duration - 0.1) {
+        clearInterval(endCheck);
+        finish();
+      }
+    }, 200);
+    /* Safety timeout: force finish after duration + 5s */
+    setTimeout(() => { clearInterval(endCheck); finish(); }, (duration + 5) * 1000);
   });
 
   await recordPromise;
