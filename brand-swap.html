@@ -351,9 +351,11 @@ body{
 </footer>
 
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-const { jsPDF } = window.jspdf;
+/* Guard PDF libs — if CDN fails to load, video processing still works */
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+const jsPDF = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : null;
 
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -431,6 +433,8 @@ function resetAll() {
   completeMsg.classList.remove('visible');
   actions.classList.remove('visible');
   progressFill.style.width = '0%';
+  progressStatus.style.color = '';
+  progressPct.style.color = '';
   fileInput.value = '';
   resultBlob = null;
   var vp = document.getElementById('videoPreview');
@@ -445,8 +449,22 @@ function setProgress(pct, status) {
   if (status) progressStatus.textContent = status;
 }
 
+function showError(msg) {
+  progressSection.classList.add('visible');
+  setProgress(0, '');
+  progressStatus.textContent = msg;
+  progressStatus.style.color = '#D21034';
+  progressFill.style.width = '0%';
+  progressPct.textContent = 'Error';
+  progressPct.style.color = '#D21034';
+}
+
 /* ── Core Processing ── */
 async function processFile(file) {
+  if (typeof pdfjsLib === 'undefined' || !jsPDF) {
+    showError('PDF processing libraries failed to load. Please refresh the page and try again.');
+    return;
+  }
   progressSection.classList.add('visible', 'fade-in');
   setProgress(5, 'Loading PDF...');
 
@@ -559,10 +577,14 @@ async function processFile(file) {
 
 function downloadResult() {
   if (!resultBlob) return;
+  var ext = 'pdf';
+  if (fileType === 'video') {
+    ext = (resultBlob.type && resultBlob.type.indexOf('mp4') >= 0) ? 'mp4' : 'webm';
+  }
   const url = URL.createObjectURL(resultBlob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = originalFileName + '_Branded.' + (fileType === 'video' ? 'webm' : 'pdf');
+  a.download = originalFileName + '_Branded.' + ext;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -571,215 +593,239 @@ function downloadResult() {
 
 /* ══════════════════════════════════════════════════════
    VIDEO PROCESSING — Canvas + MediaRecorder
-   Covers watermark, adds "Powered by 48HoursReady.com", keeps audio
    ══════════════════════════════════════════════════════ */
 async function processVideo(file) {
   progressSection.classList.add('visible', 'fade-in');
   setProgress(5, 'Loading video...');
 
+  /* Check browser support upfront */
+  var testCanvas = document.createElement('canvas');
+  if (!testCanvas.captureStream) {
+    showError('Your browser does not support video processing. Please use Chrome or Firefox on a computer.');
+    return;
+  }
+  if (typeof MediaRecorder === 'undefined') {
+    showError('Your browser does not support video recording. Please use Chrome or Firefox.');
+    return;
+  }
+
   const sourceVideo = document.getElementById('sourceVideo');
   const videoCanvas = document.getElementById('videoCanvas');
   const ctx = videoCanvas.getContext('2d');
 
-  /* Load video — muted for autoplay compatibility, audio captured separately */
-  const videoURL = URL.createObjectURL(file);
-  sourceVideo.src = videoURL;
-  sourceVideo.muted = true;
-  sourceVideo.volume = 0;
-
-  await new Promise((resolve, reject) => {
-    sourceVideo.onloadedmetadata = resolve;
-    sourceVideo.onerror = () => reject(new Error('Failed to load video'));
-  });
-
-  /* Brief play to initialize tracks */
-  await sourceVideo.play();
-  sourceVideo.pause();
-  sourceVideo.currentTime = 0;
-  await new Promise(r => { sourceVideo.onseeked = r; });
-
-  const vw = sourceVideo.videoWidth;
-  const vh = sourceVideo.videoHeight;
-  videoCanvas.width = vw;
-  videoCanvas.height = vh;
-
-  setProgress(10, 'Video loaded (' + vw + 'x' + vh + '). Preparing...');
-
-  /* Define watermark region (bottom-right ~18% x 9%) */
-  const logoX = Math.floor(vw * 0.82);
-  const logoY = Math.floor(vh * 0.91);
-  const logoW = vw - logoX;
-  const logoH = vh - logoY;
-
-  /* Sample background color from first frame */
-  ctx.drawImage(sourceVideo, 0, 0, vw, vh);
-  const sampleX = Math.max(0, logoX - 40);
-  const sampleY = Math.max(0, logoY - 15);
-  const sampleData = ctx.getImageData(sampleX, sampleY, 30, 10).data;
-  let rSum = 0, gSum = 0, bSum = 0;
-  const pxCount = 30 * 10;
-  for (let p = 0; p < pxCount; p++) {
-    rSum += sampleData[p * 4];
-    gSum += sampleData[p * 4 + 1];
-    bSum += sampleData[p * 4 + 2];
-  }
-  const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
-
-  /* Branding text settings — small and subtle */
-  const brandFontSize = Math.max(10, Math.floor(vh * 0.014));
-  const brandText = 'Powered by 48HoursReady.com';
-
-  setProgress(15, 'Recording cleaned video with audio...');
-
-  /* ── AUDIO: Decode audio from a separate hidden element, capture via Web Audio API ── */
-  const canvasStream = videoCanvas.captureStream(30);
-  let audioCtx = null;
+  let videoURL = null;
 
   try {
-    /* Create a separate audio element to decode audio independently */
-    const audioEl = new Audio();
-    audioEl.src = videoURL;
-    audioEl.crossOrigin = sourceVideo.crossOrigin;
-    audioEl.preload = 'auto';
-    await new Promise((res, rej) => { audioEl.oncanplay = res; audioEl.onerror = rej; setTimeout(res, 3000); });
+    videoURL = URL.createObjectURL(file);
+    sourceVideo.src = videoURL;
+    sourceVideo.muted = true;
+    sourceVideo.volume = 0;
 
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const audioSource = audioCtx.createMediaElementSource(audioEl);
-    const audioDest = audioCtx.createMediaStreamDestination();
-    audioSource.connect(audioDest);
-    audioDest.stream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
+    /* Load metadata with timeout */
+    await new Promise((resolve, reject) => {
+      var timeout = setTimeout(() => reject(new Error('Video took too long to load')), 30000);
+      sourceVideo.onloadedmetadata = () => { clearTimeout(timeout); resolve(); };
+      sourceVideo.onerror = () => { clearTimeout(timeout); reject(new Error('Failed to load video. The file may be corrupted or unsupported.')); };
+    });
 
-    /* Sync audio element with video playback */
-    sourceVideo._audioEl = audioEl;
-  } catch(e) {
-    console.log('Audio via separate element failed:', e);
-    /* Fallback: captureStream on source video */
+    /* Brief play to initialize decoder, with timeout on seek */
     try {
-      var srcStream = sourceVideo.captureStream ? sourceVideo.captureStream() : sourceVideo.mozCaptureStream();
-      srcStream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
-    } catch(e2) { console.log('No audio capture available:', e2); }
-  }
-
-  const chunks = [];
-  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')
-    ? 'video/webm;codecs=vp9,opus'
-    : MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')
-      ? 'video/webm;codecs=vp8,opus'
-      : 'video/webm';
-  const recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 5000000, audioBitsPerSecond: 128000 });
-  recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-
-  const duration = sourceVideo.duration;
-
-  const recordPromise = new Promise(resolve => {
-    recorder.onstop = resolve;
-  });
-
-  recorder.start(100);
-  sourceVideo.currentTime = 0;
-  sourceVideo.playbackRate = 1;
-  sourceVideo.muted = true;
-  await sourceVideo.play();
-  /* Start audio element in sync if available */
-  if (sourceVideo._audioEl) {
-    sourceVideo._audioEl.currentTime = 0;
-    try { await sourceVideo._audioEl.play(); } catch(e) { console.log('Audio sync play failed:', e); }
-  }
-
-  /* Helper: draw branding text with semi-transparent background pill */
-  function drawBranding() {
-    ctx.font = 'bold ' + brandFontSize + 'px Arial, Helvetica, sans-serif';
-    var textWidth = ctx.measureText(brandText).width;
-    var pillPadX = 10;
-    var pillPadY = 6;
-    var pillW = textWidth + pillPadX * 2;
-    var pillH = brandFontSize + pillPadY * 2;
-    var pillX = vw - pillW - 10;
-    var pillY = vh - pillH - 8;
-
-    /* Semi-transparent dark background — subtle */
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
-    ctx.beginPath();
-    var r = 6;
-    ctx.moveTo(pillX + r, pillY);
-    ctx.lineTo(pillX + pillW - r, pillY);
-    ctx.quadraticCurveTo(pillX + pillW, pillY, pillX + pillW, pillY + r);
-    ctx.lineTo(pillX + pillW, pillY + pillH - r);
-    ctx.quadraticCurveTo(pillX + pillW, pillY + pillH, pillX + pillW - r, pillY + pillH);
-    ctx.lineTo(pillX + r, pillY + pillH);
-    ctx.quadraticCurveTo(pillX, pillY + pillH, pillX, pillY + pillH - r);
-    ctx.lineTo(pillX, pillY + r);
-    ctx.quadraticCurveTo(pillX, pillY, pillX + r, pillY);
-    ctx.closePath();
-    ctx.fill();
-
-    /* White text — subtle */
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'bottom';
-    ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
-  }
-
-  /* Draw frames: cover watermark + add branding */
-  function drawFrame() {
-    if (sourceVideo.paused || sourceVideo.ended) return;
-    ctx.drawImage(sourceVideo, 0, 0, vw, vh);
-    ctx.fillStyle = bgColor;
-    ctx.fillRect(logoX, logoY, logoW, logoH);
-    drawBranding();
-
-    var pct = 15 + (sourceVideo.currentTime / duration) * 80;
-    setProgress(pct, 'Processing... ' + Math.round(sourceVideo.currentTime) + 's / ' + Math.round(duration) + 's');
-    requestAnimationFrame(drawFrame);
-  }
-  drawFrame();
-
-  /* Wait for video to finish playing — with timeout fallback in case onended doesn't fire */
-  await new Promise(resolve => {
-    let resolved = false;
-    function finish() {
-      if (resolved) return;
-      resolved = true;
-      try {
-        ctx.drawImage(sourceVideo, 0, 0, vw, vh);
-        ctx.fillStyle = bgColor;
-        ctx.fillRect(logoX, logoY, logoW, logoH);
-        drawBranding();
-      } catch(e) {}
-      if (sourceVideo._audioEl) { try { sourceVideo._audioEl.pause(); } catch(e) {} }
-      setTimeout(() => { try { recorder.stop(); } catch(e) {} resolve(); }, 300);
+      await sourceVideo.play();
+    } catch(playErr) {
+      throw new Error('Could not play the video. Try a different file or browser.');
     }
-    sourceVideo.onended = finish;
-    /* Fallback: poll for video end in case onended doesn't fire (mobile browsers) */
-    var endCheck = setInterval(() => {
-      if (sourceVideo.ended || sourceVideo.currentTime >= duration - 0.1) {
-        clearInterval(endCheck);
-        finish();
+    sourceVideo.pause();
+    sourceVideo.currentTime = 0;
+    await new Promise(r => {
+      var seekTimeout = setTimeout(r, 2000);
+      sourceVideo.onseeked = () => { clearTimeout(seekTimeout); r(); };
+    });
+
+    const vw = sourceVideo.videoWidth;
+    const vh = sourceVideo.videoHeight;
+    if (!vw || !vh) throw new Error('Could not read video dimensions. The file may be corrupted.');
+    videoCanvas.width = vw;
+    videoCanvas.height = vh;
+
+    setProgress(10, 'Video loaded (' + vw + 'x' + vh + '). Preparing...');
+
+    /* Define watermark region (bottom-right ~18% x 9%) */
+    const logoX = Math.floor(vw * 0.82);
+    const logoY = Math.floor(vh * 0.91);
+    const logoW = vw - logoX;
+    const logoH = vh - logoY;
+
+    /* Sample background color from first frame */
+    ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+    const sampleX = Math.max(0, logoX - 40);
+    const sampleY = Math.max(0, logoY - 15);
+    const sampleData = ctx.getImageData(sampleX, sampleY, 30, 10).data;
+    let rSum = 0, gSum = 0, bSum = 0;
+    const pxCount = 30 * 10;
+    for (let p = 0; p < pxCount; p++) {
+      rSum += sampleData[p * 4];
+      gSum += sampleData[p * 4 + 1];
+      bSum += sampleData[p * 4 + 2];
+    }
+    const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
+
+    const brandFontSize = Math.max(10, Math.floor(vh * 0.014));
+    const brandText = 'Powered by 48HoursReady.com';
+
+    setProgress(15, 'Recording cleaned video with audio...');
+
+    /* ── AUDIO + CANVAS STREAM ── */
+    const canvasStream = videoCanvas.captureStream(30);
+    let audioCtx = null;
+
+    try {
+      const audioEl = new Audio();
+      audioEl.src = videoURL;
+      audioEl.crossOrigin = sourceVideo.crossOrigin;
+      audioEl.preload = 'auto';
+      await new Promise((res, rej) => { audioEl.oncanplay = res; audioEl.onerror = rej; setTimeout(res, 3000); });
+
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const audioSource = audioCtx.createMediaElementSource(audioEl);
+      const audioDest = audioCtx.createMediaStreamDestination();
+      audioSource.connect(audioDest);
+      audioDest.stream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
+      sourceVideo._audioEl = audioEl;
+    } catch(e) {
+      console.log('Audio via separate element failed:', e);
+      try {
+        var srcStream = sourceVideo.captureStream ? sourceVideo.captureStream() : sourceVideo.mozCaptureStream();
+        srcStream.getAudioTracks().forEach(function(t) { canvasStream.addTrack(t); });
+      } catch(e2) { console.log('No audio capture available:', e2); }
+    }
+
+    const chunks = [];
+    let mimeType = 'video/webm';
+    try {
+      if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) mimeType = 'video/webm;codecs=vp9,opus';
+      else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) mimeType = 'video/webm;codecs=vp8,opus';
+      else if (MediaRecorder.isTypeSupported('video/mp4')) mimeType = 'video/mp4';
+    } catch(e) {}
+
+    let recorder;
+    try {
+      recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 5000000, audioBitsPerSecond: 128000 });
+    } catch(e) {
+      try {
+        recorder = new MediaRecorder(canvasStream);
+        mimeType = recorder.mimeType || 'video/webm';
+      } catch(e2) {
+        throw new Error('Could not start video recorder. Your browser may not support this feature.');
       }
-    }, 200);
-    /* Safety timeout: force finish after duration + 5s */
-    setTimeout(() => { clearInterval(endCheck); finish(); }, (duration + 5) * 1000);
-  });
+    }
+    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
 
-  await recordPromise;
+    const duration = sourceVideo.duration;
+    if (!duration || !isFinite(duration)) throw new Error('Could not determine video duration. Try a different file.');
 
-  setProgress(98, 'Generating video file...');
+    const recordPromise = new Promise(resolve => { recorder.onstop = resolve; });
 
-  resultBlob = new Blob(chunks, { type: mimeType });
+    recorder.start(100);
+    sourceVideo.currentTime = 0;
+    sourceVideo.playbackRate = 1;
+    sourceVideo.muted = true;
+    await sourceVideo.play();
 
-  /* Show preview */
-  const previewVideo = document.getElementById('videoPreview');
-  previewVideo.src = URL.createObjectURL(resultBlob);
-  document.getElementById('videoPreviewSection').classList.add('visible', 'fade-in');
+    if (sourceVideo._audioEl) {
+      sourceVideo._audioEl.currentTime = 0;
+      try { await sourceVideo._audioEl.play(); } catch(e) { console.log('Audio sync play failed:', e); }
+    }
 
-  /* Update UI */
-  setProgress(100, 'Complete!');
-  completeText.textContent = 'Done! Video cleaned successfully (' + Math.round(duration) + 's).';
-  completeMsg.classList.add('visible', 'fade-in');
-  btnDownload.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Branded Video';
-  actions.classList.add('visible', 'fade-in');
+    function drawBranding() {
+      ctx.font = 'bold ' + brandFontSize + 'px Arial, Helvetica, sans-serif';
+      var textWidth = ctx.measureText(brandText).width;
+      var pillPadX = 10, pillPadY = 6;
+      var pillW = textWidth + pillPadX * 2;
+      var pillH = brandFontSize + pillPadY * 2;
+      var pillX = vw - pillW - 10;
+      var pillY = vh - pillH - 8;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+      ctx.beginPath();
+      var r = 6;
+      ctx.moveTo(pillX + r, pillY);
+      ctx.lineTo(pillX + pillW - r, pillY);
+      ctx.quadraticCurveTo(pillX + pillW, pillY, pillX + pillW, pillY + r);
+      ctx.lineTo(pillX + pillW, pillY + pillH - r);
+      ctx.quadraticCurveTo(pillX + pillW, pillY + pillH, pillX + pillW - r, pillY + pillH);
+      ctx.lineTo(pillX + r, pillY + pillH);
+      ctx.quadraticCurveTo(pillX, pillY + pillH, pillX, pillY + pillH - r);
+      ctx.lineTo(pillX, pillY + r);
+      ctx.quadraticCurveTo(pillX, pillY, pillX + r, pillY);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
+    }
 
-  URL.revokeObjectURL(videoURL);
+    function drawFrame() {
+      if (sourceVideo.paused || sourceVideo.ended) return;
+      ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(logoX, logoY, logoW, logoH);
+      drawBranding();
+      var pct = 15 + (sourceVideo.currentTime / duration) * 80;
+      setProgress(pct, 'Processing... ' + Math.round(sourceVideo.currentTime) + 's / ' + Math.round(duration) + 's');
+      requestAnimationFrame(drawFrame);
+    }
+    drawFrame();
+
+    /* Wait for video to finish */
+    await new Promise(resolve => {
+      let resolved = false;
+      function finish() {
+        if (resolved) return;
+        resolved = true;
+        try {
+          ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+          ctx.fillStyle = bgColor;
+          ctx.fillRect(logoX, logoY, logoW, logoH);
+          drawBranding();
+        } catch(e) {}
+        if (sourceVideo._audioEl) { try { sourceVideo._audioEl.pause(); } catch(e) {} }
+        setTimeout(() => { try { recorder.stop(); } catch(e) {} resolve(); }, 300);
+      }
+      sourceVideo.onended = finish;
+      var endCheck = setInterval(() => {
+        if (sourceVideo.ended || sourceVideo.currentTime >= duration - 0.1) {
+          clearInterval(endCheck);
+          finish();
+        }
+      }, 200);
+      setTimeout(() => { clearInterval(endCheck); finish(); }, (duration + 5) * 1000);
+    });
+
+    await recordPromise;
+
+    setProgress(98, 'Generating video file...');
+
+    if (chunks.length === 0) throw new Error('No video data was recorded. Please try again or use a different browser.');
+
+    resultBlob = new Blob(chunks, { type: mimeType });
+
+    var previewVideo = document.getElementById('videoPreview');
+    previewVideo.src = URL.createObjectURL(resultBlob);
+    document.getElementById('videoPreviewSection').classList.add('visible', 'fade-in');
+
+    setProgress(100, 'Complete!');
+    completeText.textContent = 'Done! Video cleaned successfully (' + Math.round(duration) + 's).';
+    completeMsg.classList.add('visible', 'fade-in');
+    var ext = mimeType.indexOf('mp4') >= 0 ? 'mp4' : 'webm';
+    btnDownload.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Branded Video';
+    actions.classList.add('visible', 'fade-in');
+
+  } catch(err) {
+    console.error('Video processing error:', err);
+    showError(err.message || 'Video processing failed. Please try again or use a different browser.');
+  } finally {
+    if (videoURL) try { URL.revokeObjectURL(videoURL); } catch(e) {}
+  }
 }
 </script>
 </body>
