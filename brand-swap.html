@@ -437,6 +437,8 @@ function resetAll() {
   progressPct.style.color = '';
   fileInput.value = '';
   resultBlob = null;
+  var tipNote = actions.querySelector('div[style]');
+  if (tipNote && tipNote.tagName === 'DIV') actions.removeChild(tipNote);
   var vp = document.getElementById('videoPreview');
   if (vp.src) { vp.pause(); vp.removeAttribute('src'); vp.load(); }
   var sv = document.getElementById('sourceVideo');
@@ -702,14 +704,19 @@ async function processVideo(file) {
     const chunks = [];
     let mimeType = 'video/webm';
     try {
-      if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) mimeType = 'video/webm;codecs=vp9,opus';
-      else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) mimeType = 'video/webm;codecs=vp8,opus';
+      if (MediaRecorder.isTypeSupported('video/mp4;codecs=avc1,mp4a.40.2')) mimeType = 'video/mp4;codecs=avc1,mp4a.40.2';
       else if (MediaRecorder.isTypeSupported('video/mp4')) mimeType = 'video/mp4';
+      else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) mimeType = 'video/webm;codecs=vp9,opus';
+      else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) mimeType = 'video/webm;codecs=vp8,opus';
     } catch(e) {}
+
+    var targetBitrate = 1500000;
+    if (duration > 120) targetBitrate = 800000;
+    else if (duration > 60) targetBitrate = 1200000;
 
     let recorder;
     try {
-      recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 5000000, audioBitsPerSecond: 128000 });
+      recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: targetBitrate, audioBitsPerSecond: 64000 });
     } catch(e) {
       try {
         recorder = new MediaRecorder(canvasStream);
@@ -814,10 +821,23 @@ async function processVideo(file) {
     document.getElementById('videoPreviewSection').classList.add('visible', 'fade-in');
 
     setProgress(100, 'Complete!');
-    completeText.textContent = 'Done! Video cleaned successfully (' + Math.round(duration) + 's).';
+    var fileSizeMB = (resultBlob.size / 1048576).toFixed(1);
+    var isMP4 = mimeType.indexOf('mp4') >= 0;
+    var ext = isMP4 ? 'mp4' : 'webm';
+    var sizeNote = fileSizeMB + ' MB';
+    if (fileSizeMB > 16) sizeNote += ' (too large for WhatsApp — try a shorter video)';
+    completeText.textContent = 'Done! Video cleaned (' + Math.round(duration) + 's, ' + sizeNote + ', ' + ext.toUpperCase() + ')';
     completeMsg.classList.add('visible', 'fade-in');
-    var ext = mimeType.indexOf('mp4') >= 0 ? 'mp4' : 'webm';
-    btnDownload.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Branded Video';
+
+    if (!isMP4) {
+      btnDownload.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Video (WebM)';
+      var noteDiv = document.createElement('div');
+      noteDiv.style.cssText = 'font-size:.78rem;color:#6A5A5A;text-align:center;margin-top:8px;line-height:1.5';
+      noteDiv.textContent = 'WhatsApp tip: If WhatsApp won\'t accept WebM, open the downloaded file in your phone Gallery app, then share from there — your phone will auto-convert it to MP4.';
+      actions.appendChild(noteDiv);
+    } else {
+      btnDownload.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Video (MP4)';
+    }
     actions.classList.add('visible', 'fade-in');
 
   } catch(err) {
