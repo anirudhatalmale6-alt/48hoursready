@@ -710,6 +710,9 @@ async function processVideo(file) {
       else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) mimeType = 'video/webm;codecs=vp8,opus';
     } catch(e) {}
 
+    const duration = sourceVideo.duration;
+    if (!duration || !isFinite(duration)) throw new Error('Could not determine video duration. Try a different file.');
+
     var targetBitrate = 1500000;
     if (duration > 120) targetBitrate = 800000;
     else if (duration > 60) targetBitrate = 1200000;
@@ -726,9 +729,6 @@ async function processVideo(file) {
       }
     }
     recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-
-    const duration = sourceVideo.duration;
-    if (!duration || !isFinite(duration)) throw new Error('Could not determine video duration. Try a different file.');
 
     const recordPromise = new Promise(resolve => { recorder.onstop = resolve; });
 
