@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peye - 48HoursReady</title>
+<meta name="description" content="Secure payment page for 48HoursReady services.">
+<meta name="theme-color" content="#00209F">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D21034;--red-dark:#B00D2C;--red-light:#E8243F;
+  --blue:#00209F;--blue-dark:#001566;
+  --gold:#D4A017;--gold-light:#E8B82E;
+  --white:#FFFFFF;--off-white:#FFF8F8;--light-gray:#F0E8E8;
+  --dark:#1A0C0C;--text:#2A1A1A;--text-light:#6A5A5A;
+  --body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --display:'DM Serif Display',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--off-white);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+
+/* Flag stripe */
+.flag-stripe{height:4px;background:linear-gradient(90deg,var(--blue) 50%,var(--red) 50%);position:fixed;top:0;left:0;right:0;z-index:100}
+
+/* Lang bar */
+.lang-bar{
+  background:var(--blue-dark);padding:6px 16px;display:flex;justify-content:center;gap:4px;
+  position:fixed;top:4px;left:0;right:0;z-index:99;
+}
+.lang-bar a{
+  color:rgba(255,255,255,.7);font-size:.68rem;font-weight:600;padding:3px 10px;
+  border-radius:100px;cursor:pointer;transition:all .15s;
+}
+.lang-bar a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.lang-bar a.active{background:#fff;color:var(--blue)}
+
+/* Header */
+.pay-header{
+  text-align:center;padding:56px 20px 20px;
+  background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);
+}
+.pay-header img{width:56px;height:56px;border-radius:12px;border:2px solid rgba(255,255,255,.2);margin-bottom:8px}
+.pay-header h2{font-family:var(--display);color:#fff;font-size:1.2rem;margin-bottom:2px}
+.pay-header .tagline{color:rgba(255,255,255,.6);font-size:.72rem;font-weight:500}
+
+/* Main content */
+.pay-main{flex:1;display:flex;justify-content:center;padding:24px 16px 40px;position:relative}
+
+/* Payment card */
+.pay-card{
+  background:#fff;border-radius:16px;width:100%;max-width:440px;
+  box-shadow:0 4px 24px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  overflow:hidden;position:relative;
+}
+.pay-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--red),var(--gold));
+}
+
+/* Secure badge */
+.secure-badge{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:10px 16px;background:rgba(0,128,0,.04);border-bottom:1px solid rgba(0,128,0,.08);
+  font-size:.75rem;font-weight:600;color:#1a7a1a;
+}
+.secure-badge svg{width:14px;height:14px;fill:#1a7a1a;flex-shrink:0}
+
+/* Amount display */
+.amount-section{text-align:center;padding:28px 20px 20px}
+.amount-label{font-size:.78rem;color:var(--text-light);margin-bottom:6px;font-weight:500}
+.amount-value{font-family:var(--display);font-size:2.8rem;color:var(--text);line-height:1}
+.amount-value .currency{font-size:1.4rem;vertical-align:super;margin-right:2px;color:var(--text-light)}
+.amount-desc{margin-top:10px;font-size:.85rem;color:var(--text-light);line-height:1.5;max-width:320px;margin-left:auto;margin-right:auto}
+
+/* Divider */
+.divider{height:1px;background:var(--light-gray);margin:0 20px}
+
+/* Form */
+.pay-form{padding:20px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.form-group input{
+  width:100%;padding:12px 14px;border:1.5px solid #e0d8d8;border-radius:10px;
+  font-size:.9rem;font-family:var(--body);color:var(--text);background:#fff;
+  transition:border-color .2s,box-shadow .2s;outline:none;
+}
+.form-group input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,32,159,.08)}
+.form-group input::placeholder{color:#b8a8a8}
+.form-group .optional{font-weight:400;color:var(--text-light);text-transform:none;font-size:.7rem;margin-left:4px}
+
+/* Payment methods */
+.methods-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text);margin-bottom:10px}
+.method-options{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.method-option{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  border:1.5px solid #e0d8d8;border-radius:12px;cursor:pointer;
+  transition:all .2s;position:relative;
+}
+.method-option:hover{border-color:var(--blue);background:rgba(0,32,159,.02)}
+.method-option.selected{border-color:var(--blue);background:rgba(0,32,159,.04);box-shadow:0 0 0 3px rgba(0,32,159,.08)}
+.method-radio{
+  width:20px;height:20px;border-radius:50%;border:2px solid #c8b8b8;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all .2s;
+}
+.method-option.selected .method-radio{border-color:var(--blue);background:var(--blue)}
+.method-option.selected .method-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
+.method-icon{font-size:1.4rem;flex-shrink:0}
+.method-info{flex:1}
+.method-name{font-weight:700;font-size:.88rem;color:var(--text)}
+.method-sub{font-size:.72rem;color:var(--text-light);margin-top:1px}
+
+/* Submit button */
+.pay-btn{
+  width:100%;padding:16px;border:none;border-radius:12px;
+  background:var(--red);color:#fff;font-size:1rem;font-weight:800;
+  font-family:var(--body);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.pay-btn:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(210,16,52,.3)}
+.pay-btn:active{transform:translateY(0)}
+.pay-btn:disabled{background:#c8b8b8;cursor:not-allowed;transform:none;box-shadow:none}
+.pay-btn svg{width:18px;height:18px;fill:#fff}
+
+/* Loading spinner */
+.pay-btn .spinner{
+  width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin .6s linear infinite;display:none;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pay-btn.loading .spinner{display:block}
+.pay-btn.loading .btn-text{display:none}
+
+/* Trust footer */
+.trust-footer{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:14px 20px;background:rgba(0,0,0,.015);border-top:1px solid var(--light-gray);
+  font-size:.72rem;color:var(--text-light);
+}
+.trust-footer svg{width:12px;height:12px;fill:var(--text-light);flex-shrink:0}
+
+/* Footer */
+.pay-page-footer{
+  text-align:center;padding:16px;font-size:.72rem;color:var(--text-light);
+}
+.pay-page-footer a{color:var(--blue);font-weight:600}
+
+/* Error */
+.error-msg{
+  display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;
+  padding:12px 14px;margin-bottom:14px;font-size:.82rem;color:#991b1b;line-height:1.4;
+}
+.error-msg.show{display:block}
+
+/* ═══ SUCCESS SCREEN ═══ */
+.success-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;
+  background:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 20px;text-align:center;
+}
+.success-overlay.show{display:flex}
+.success-check{
+  width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  animation:popIn .5s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+.success-check svg{width:40px;height:40px;fill:#fff}
+.success-title{font-family:var(--display);font-size:1.8rem;color:var(--text);margin-bottom:6px}
+.success-sub{color:var(--text-light);font-size:.9rem;margin-bottom:24px;max-width:320px;line-height:1.5}
+.success-details{
+  background:var(--off-white);border-radius:12px;padding:18px 24px;
+  width:100%;max-width:360px;text-align:left;margin-bottom:24px;
+}
+.success-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--light-gray);font-size:.85rem}
+.success-row:last-child{border-bottom:none}
+.success-row .label{color:var(--text-light)}
+.success-row .value{font-weight:700;color:var(--text)}
+.success-actions{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px}
+.success-btn{
+  padding:14px;border-radius:12px;font-size:.9rem;font-weight:700;font-family:var(--body);
+  cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s;
+}
+.success-btn.whatsapp{background:#25d366;color:#fff}
+.success-btn.whatsapp:hover{background:#1da851}
+.success-btn.back{background:var(--blue);color:#fff}
+.success-btn.back:hover{background:var(--blue-dark)}
+
+/* Confetti canvas */
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1001}
+
+/* ═══ VERIFYING SCREEN ═══ */
+.verifying-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;
+  background:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 20px;text-align:center;
+}
+.verifying-overlay.show{display:flex}
+.verifying-spinner{
+  width:48px;height:48px;border:4px solid var(--light-gray);
+  border-top-color:var(--blue);border-radius:50%;
+  animation:spin 1s linear infinite;margin-bottom:20px;
+}
+.verifying-text{font-size:1rem;font-weight:600;color:var(--text)}
+.verifying-sub{font-size:.82rem;color:var(--text-light);margin-top:6px}
+
+@media(max-width:480px){
+  .amount-value{font-size:2.2rem}
+  .pay-form{padding:16px}
+  .method-option{padding:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="flag-stripe"></div>
+<div class="lang-bar">
+  <a onclick="setLang('ht')" class="active" id="lang-ht">&#127469;&#127481; Kreyol</a>
+  <a onclick="setLang('fr')" id="lang-fr">&#127467;&#127479; Francais</a>
+  <a onclick="setLang('en')" id="lang-en">&#127468;&#127463; English</a>
+  <a onclick="setLang('es')" id="lang-es">&#127466;&#127480; Espanol</a>
+</div>
+
+<div class="pay-header">
+  <img src="assets/icon-512.png" alt="48HoursReady">
+  <h2>48HoursReady</h2>
+  <div class="tagline" data-i18n="header_tagline">Peman Sekirize</div>
+</div>
+
+<div class="pay-main">
+  <div class="pay-card">
+    <div class="secure-badge">
+      <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+      <span data-i18n="secure_badge">Peman Sekirize</span>
+    </div>
+
+    <div class="amount-section">
+      <div class="amount-label" data-i18n="amount_label">Montan total</div>
+      <div class="amount-value"><span class="currency" id="currencySymbol">$</span><span id="amountDisplay">499</span></div>
+      <div class="amount-desc" id="descDisplay"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pay-form">
+      <div class="error-msg" id="errorMsg"></div>
+
+      <div class="form-group">
+        <label data-i18n="label_name">Non konple</label>
+        <input type="text" id="buyerName" placeholder="" data-i18n-placeholder="ph_name">
+      </div>
+      <div class="form-group">
+        <label data-i18n="label_phone">Telefon</label>
+        <input type="tel" id="buyerPhone" placeholder="+509 ..." data-i18n-placeholder="ph_phone">
+      </div>
+      <div class="form-group">
+        <label>Email <span class="optional" data-i18n="optional">(opsyonel)</span></label>
+        <input type="email" id="buyerEmail" placeholder="" data-i18n-placeholder="ph_email">
+      </div>
+
+      <div class="methods-title" data-i18n="methods_title">Metod peman</div>
+      <div class="method-options">
+        <div class="method-option" data-method="moncash" onclick="selectMethod(this)">
+          <div class="method-radio"></div>
+          <div class="method-icon">&#128241;</div>
+          <div class="method-info">
+            <div class="method-name">MonCash</div>
+            <div class="method-sub" data-i18n="method_moncash_sub">Peye ak MonCash</div>
+          </div>
+        </div>
+        <div class="method-option" data-method="natcash" onclick="selectMethod(this)">
+          <div class="method-radio"></div>
+          <div class="method-icon">&#128242;</div>
+          <div class="method-info">
+            <div class="method-name">NatCash</div>
+            <div class="method-sub" data-i18n="method_natcash_sub">Peye ak NatCash</div>
+          </div>
+        </div>
+        <div class="method-option selected" data-method="card" onclick="selectMethod(this)">
+          <div class="method-radio"></div>
+          <div class="method-icon">&#128179;</div>
+          <div class="method-info">
+            <div class="method-name" data-i18n="method_card_name">Kat Kredi</div>
+            <div class="method-sub" data-i18n="method_card_sub">Visa, Mastercard</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="pay-btn" id="payBtn" onclick="submitPayment()">
+        <div class="spinner"></div>
+        <span class="btn-text" data-i18n="pay_btn">Peye Kounye a</span>
+        <svg class="btn-text" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+      </button>
+    </div>
+
+    <div class="trust-footer">
+      <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+      <span data-i18n="trust_text">Peman ou an sekirite</span>
+    </div>
+  </div>
+</div>
+
+<div class="pay-page-footer">
+  Powered by <a href="https://48hoursready.com">48HoursReady</a> x <a href="https://haitibiznis.com">HaitiBiznis</a>
+</div>
+
+<!-- Verifying overlay -->
+<div class="verifying-overlay" id="verifyingOverlay">
+  <div class="verifying-spinner"></div>
+  <div class="verifying-text" data-i18n="verifying_title">N ap verifye peman ou...</div>
+  <div class="verifying-sub" data-i18n="verifying_sub">Tanpri tann yon moman</div>
+</div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="successOverlay">
+  <canvas id="confetti"></canvas>
+  <div class="success-check">
+    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  </div>
+  <div class="success-title" data-i18n="success_title">Peman Reyisi!</div>
+  <div class="success-sub" data-i18n="success_sub">Mesi pou peman ou. Nou pral kontakte ou byento.</div>
+  <div class="success-details" id="successDetails">
+    <div class="success-row">
+      <span class="label" data-i18n="success_ref">Referans</span>
+      <span class="value" id="successRef">-</span>
+    </div>
+    <div class="success-row">
+      <span class="label" data-i18n="success_amount">Montan</span>
+      <span class="value" id="successAmount">-</span>
+    </div>
+    <div class="success-row">
+      <span class="label" data-i18n="success_date">Dat</span>
+      <span class="value" id="successDate">-</span>
+    </div>
+  </div>
+  <div class="success-actions">
+    <button class="success-btn whatsapp" id="whatsappBtn" onclick="sendWhatsApp()">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span data-i18n="success_whatsapp">Voye notifikasyon WhatsApp</span>
+    </button>
+    <button class="success-btn back" onclick="window.location.href='index.html'">
+      <span data-i18n="success_back">Retounen nan 48HoursReady</span>
+    </button>
+  </div>
+</div>
+
+<script>
+// ═══ i18n ═══
+const T = {
+  ht: {
+    header_tagline:"Peman Sekirize",
+    secure_badge:"Peman Sekirize",
+    amount_label:"Montan total",
+    label_name:"Non konple",
+    label_phone:"Telefon",
+    optional:"(opsyonel)",
+    ph_name:"Antre non ou",
+    ph_phone:"+509 ...",
+    ph_email:"adresimel@egzanp.com",
+    methods_title:"Metod peman",
+    method_moncash_sub:"Peye ak MonCash",
+    method_natcash_sub:"Peye ak NatCash",
+    method_card_name:"Kat Kredi",
+    method_card_sub:"Visa, Mastercard",
+    pay_btn:"Peye Kounye a",
+    trust_text:"Peman ou an sekirite",
+    verifying_title:"N ap verifye peman ou...",
+    verifying_sub:"Tanpri tann yon moman",
+    success_title:"Peman Reyisi!",
+    success_sub:"Mesi pou peman ou. Nou pral kontakte ou byento.",
+    success_ref:"Referans",
+    success_amount:"Montan",
+    success_date:"Dat",
+    success_whatsapp:"Voye notifikasyon WhatsApp",
+    success_back:"Retounen nan 48HoursReady",
+    err_name:"Tanpri antre non ou",
+    err_phone:"Tanpri antre nimewo telefon ou",
+    err_method:"Tanpri chwazi yon metod peman",
+    err_generic:"Gen yon erè. Tanpri eseye ankò.",
+    err_verify:"Nou pa ka verifye peman an. Tanpri kontakte nou.",
+    loading:"Chajman..."
+  },
+  fr: {
+    header_tagline:"Paiement Securise",
+    secure_badge:"Paiement Securise",
+    amount_label:"Montant total",
+    label_name:"Nom complet",
+    label_phone:"Telephone",
+    optional:"(optionnel)",
+    ph_name:"Entrez votre nom",
+    ph_phone:"+509 ...",
+    ph_email:"email@exemple.com",
+    methods_title:"Mode de paiement",
+    method_moncash_sub:"Payer avec MonCash",
+    method_natcash_sub:"Payer avec NatCash",
+    method_card_name:"Carte de Credit",
+    method_card_sub:"Visa, Mastercard",
+    pay_btn:"Payer Maintenant",
+    trust_text:"Votre paiement est securise",
+    verifying_title:"Verification de votre paiement...",
+    verifying_sub:"Veuillez patienter un instant",
+    success_title:"Paiement Reussi!",
+    success_sub:"Merci pour votre paiement. Nous vous contacterons bientot.",
+    success_ref:"Reference",
+    success_amount:"Montant",
+    success_date:"Date",
+    success_whatsapp:"Envoyer notification WhatsApp",
+    success_back:"Retour a 48HoursReady",
+    err_name:"Veuillez entrer votre nom",
+    err_phone:"Veuillez entrer votre numero de telephone",
+    err_method:"Veuillez choisir un mode de paiement",
+    err_generic:"Une erreur est survenue. Veuillez reessayer.",
+    err_verify:"Impossible de verifier le paiement. Veuillez nous contacter.",
+    loading:"Chargement..."
+  },
+  en: {
+    header_tagline:"Secure Payment",
+    secure_badge:"Secure Payment",
+    amount_label:"Total amount",
+    label_name:"Full name",
+    label_phone:"Phone",
+    optional:"(optional)",
+    ph_name:"Enter your name",
+    ph_phone:"+509 ...",
+    ph_email:"email@example.com",
+    methods_title:"Payment method",
+    method_moncash_sub:"Pay with MonCash",
+    method_natcash_sub:"Pay with NatCash",
+    method_card_name:"Credit Card",
+    method_card_sub:"Visa, Mastercard",
+    pay_btn:"Pay Now",
+    trust_text:"Your payment is secure",
+    verifying_title:"Verifying your payment...",
+    verifying_sub:"Please wait a moment",
+    success_title:"Payment Successful!",
+    success_sub:"Thank you for your payment. We will contact you shortly.",
+    success_ref:"Reference",
+    success_amount:"Amount",
+    success_date:"Date",
+    success_whatsapp:"Send WhatsApp notification",
+    success_back:"Back to 48HoursReady",
+    err_name:"Please enter your name",
+    err_phone:"Please enter your phone number",
+    err_method:"Please choose a payment method",
+    err_generic:"An error occurred. Please try again.",
+    err_verify:"Unable to verify payment. Please contact us.",
+    loading:"Loading..."
+  },
+  es: {
+    header_tagline:"Pago Seguro",
+    secure_badge:"Pago Seguro",
+    amount_label:"Monto total",
+    label_name:"Nombre completo",
+    label_phone:"Telefono",
+    optional:"(opcional)",
+    ph_name:"Ingrese su nombre",
+    ph_phone:"+509 ...",
+    ph_email:"correo@ejemplo.com",
+    methods_title:"Metodo de pago",
+    method_moncash_sub:"Pagar con MonCash",
+    method_natcash_sub:"Pagar con NatCash",
+    method_card_name:"Tarjeta de Credito",
+    method_card_sub:"Visa, Mastercard",
+    pay_btn:"Pagar Ahora",
+    trust_text:"Su pago esta seguro",
+    verifying_title:"Verificando su pago...",
+    verifying_sub:"Por favor espere un momento",
+    success_title:"Pago Exitoso!",
+    success_sub:"Gracias por su pago. Nos comunicaremos con usted pronto.",
+    success_ref:"Referencia",
+    success_amount:"Monto",
+    success_date:"Fecha",
+    success_whatsapp:"Enviar notificacion WhatsApp",
+    success_back:"Volver a 48HoursReady",
+    err_name:"Por favor ingrese su nombre",
+    err_phone:"Por favor ingrese su numero de telefono",
+    err_method:"Por favor elija un metodo de pago",
+    err_generic:"Ocurrio un error. Por favor intente de nuevo.",
+    err_verify:"No se pudo verificar el pago. Por favor contactenos.",
+    loading:"Cargando..."
+  }
+};
+
+let currentLang = 'ht';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-bar a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('lang-' + lang);
+  if (el) el.classList.add('active');
+  const tr = T[lang] || T.ht;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (tr[key]) el.innerHTML = tr[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (tr[key]) el.placeholder = tr[key];
+  });
+}
+
+// ═══ URL PARAMS ═══
+const params = new URLSearchParams(window.location.search);
+const amount = parseFloat(params.get('amount')) || 499;
+const currency = params.get('currency') || 'USD';
+const desc = params.get('desc') || '48HoursReady Services';
+const buyerNameParam = params.get('name') || '';
+
+document.getElementById('amountDisplay').textContent = amount.toLocaleString('en-US', {minimumFractionDigits: 0});
+document.getElementById('currencySymbol').textContent = currency === 'HTG' ? 'G' : '$';
+document.getElementById('descDisplay').textContent = desc.replace(/\+/g, ' ');
+if (buyerNameParam) document.getElementById('buyerName').value = buyerNameParam.replace(/\+/g, ' ');
+
+// ═══ PAYMENT METHOD ═══
+let selectedMethod = 'card';
+
+function selectMethod(el) {
+  document.querySelectorAll('.method-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMethod = el.dataset.method;
+}
+
+// ═══ API CONFIG ═══
+const API_URL = 'https://plopplop.solutionip.app';
+const CLIENT_ID = 'pp_1ohu5zz2tcx';
+const WHATSAPP_NUM = '50946859702';
+
+const METHOD_MAP = {
+  moncash: 'moncash',
+  natcash: 'natcash',
+  card: 'kashpaw'
+};
+
+function generateRefId() {
+  const ts = Date.now();
+  const r = Math.floor(1000 + Math.random() * 9000);
+  return '48HR-' + ts + '-' + r;
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 6000);
+}
+
+function t(key) {
+  return (T[currentLang] || T.ht)[key] || key;
+}
+
+// ═══ SUBMIT PAYMENT ═══
+async function submitPayment() {
+  const nameVal = document.getElementById('buyerName').value.trim();
+  const phoneVal = document.getElementById('buyerPhone').value.trim();
+  const emailVal = document.getElementById('buyerEmail').value.trim();
+
+  if (!nameVal) return showError(t('err_name'));
+  if (!phoneVal) return showError(t('err_phone'));
+  if (!selectedMethod) return showError(t('err_method'));
+
+  const btn = document.getElementById('payBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  const refId = generateRefId();
+  const paymentMethod = METHOD_MAP[selectedMethod];
+
+  try {
+    const res = await fetch(API_URL + '/api/paiement-marchand', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: CLIENT_ID,
+        refference_id: refId,
+        montant: Math.ceil(amount),
+        payment_method: paymentMethod
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.status === true && data.url) {
+      localStorage.setItem('48hr_pending', JSON.stringify({
+        refId: refId,
+        amount: amount,
+        currency: currency,
+        desc: desc,
+        name: nameVal,
+        phone: phoneVal,
+        email: emailVal,
+        method: selectedMethod,
+        created: new Date().toISOString()
+      }));
+      window.location.href = data.url;
+    } else {
+      showError(data.message || t('err_generic'));
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  } catch (err) {
+    showError(t('err_generic'));
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+// ═══ VERIFY ON RETURN ═══
+async function checkPending() {
+  const raw = localStorage.getItem('48hr_pending');
+  if (!raw) return;
+
+  let order;
+  try { order = JSON.parse(raw); } catch(e) { return; }
+
+  document.getElementById('verifyingOverlay').classList.add('show');
+
+  try {
+    const res = await fetch(API_URL + '/api/paiement-verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: CLIENT_ID,
+        refference_id: order.refId
+      })
+    });
+
+    const data = await res.json();
+    document.getElementById('verifyingOverlay').classList.remove('show');
+
+    if (data.trans_status === 'ok') {
+      localStorage.removeItem('48hr_pending');
+      showSuccess(order);
+    } else if (data.trans_status === 'pending') {
+      setTimeout(checkPending, 3000);
+    } else {
+      localStorage.removeItem('48hr_pending');
+      showError(t('err_verify'));
+    }
+  } catch (err) {
+    document.getElementById('verifyingOverlay').classList.remove('show');
+    localStorage.removeItem('48hr_pending');
+    showError(t('err_verify'));
+  }
+}
+
+// ═══ SUCCESS SCREEN ═══
+function showSuccess(order) {
+  document.getElementById('successRef').textContent = order.refId;
+  const sym = order.currency === 'HTG' ? 'G' : '$';
+  document.getElementById('successAmount').textContent = sym + order.amount.toLocaleString('en-US');
+  const now = new Date();
+  document.getElementById('successDate').textContent = now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+
+  window._successOrder = order;
+  document.getElementById('successOverlay').classList.add('show');
+  launchConfetti();
+}
+
+// ═══ WHATSAPP NOTIFICATION ═══
+function sendWhatsApp() {
+  const o = window._successOrder;
+  if (!o) return;
+  const sym = o.currency === 'HTG' ? 'HTG ' : '$';
+  const msg = 'Nouvo peman 48HoursReady! Ref: ' + o.refId + ' - ' + sym + o.amount + ' ' + o.currency + ' - ' + o.name + ' - ' + o.phone;
+  window.open('https://wa.me/' + WHATSAPP_NUM + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ═══ CONFETTI ═══
+function launchConfetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#D21034','#00209F','#D4A017','#22c55e','#fff','#E8243F'];
+  const pieces = [];
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      rv: (Math.random() - 0.5) * 8
+    });
+  }
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rv;
+      p.vy += 0.04;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 180) requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ═══ INIT ═══
+setLang('ht');
+checkPending();
+</script>
+</body>
+</html>
