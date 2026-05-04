@@ -3,7 +3,7 @@
   "short_name": "48HoursReady",
   "description": "Learn. Structure. Earn. - Haiti's Business Accelerator",
   "start_url": "/",
-  "display": "standalone",
+  "display": "minimal-ui",
   "background_color": "#00209F",
   "theme_color": "#00209F",
   "orientation": "portrait",
