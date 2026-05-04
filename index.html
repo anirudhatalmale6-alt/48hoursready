@@ -286,6 +286,27 @@ footer a{color:#fff;font-weight:600}
   .contact-grid{grid-template-columns:1fr!important}
   .footer-inner{flex-direction:column;text-align:center}
 }
+
+/* ═══ TABLET LANDSCAPE ═══ */
+@media(min-width:700px){
+  .hero{
+    display:grid;grid-template-columns:1fr 1fr;align-items:center;
+    text-align:left;padding:48px 40px 40px;gap:0 32px;
+  }
+  .hero-logo,.hero-badge,.hero h1,.hero-sub,.hero-actions{grid-column:1}
+  .hero-moto{
+    grid-column:2;grid-row:1/-1;justify-self:center;align-self:center;
+    margin-top:0;max-width:100%;
+  }
+  .hero-sub{margin:0 0 30px}
+  .hero-actions{justify-content:flex-start}
+  .hero-logo{justify-self:start}
+}
+@media(min-width:1024px){
+  .hero{padding:56px 48px 48px;gap:0 48px}
+  .hero h1{font-size:3rem}
+}
+
 .install-banner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,#00209F 0%,#D21034 100%);color:#fff;padding:14px 20px;box-shadow:0 -4px 20px rgba(0,0,0,.15);align-items:center;gap:12px}
 .install-banner.show{display:flex}
 .install-banner-text{flex:1;font-size:.82rem;font-weight:600}
