@@ -26,13 +26,18 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--body);background:var(--off-white);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 
+/* Back bar */
+.back-bar{position:fixed;top:0;left:0;right:0;z-index:101;background:var(--blue-dark);padding:8px 16px;display:flex;align-items:center}
+.back-bar a{color:#fff;font-size:.85rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:6px}
+.back-bar a svg{width:18px;height:18px;fill:#fff}
+
 /* Flag stripe */
-.flag-stripe{height:4px;background:linear-gradient(90deg,var(--blue) 50%,var(--red) 50%);position:fixed;top:0;left:0;right:0;z-index:100}
+.flag-stripe{height:4px;background:linear-gradient(90deg,var(--blue) 50%,var(--red) 50%);position:fixed;top:36px;left:0;right:0;z-index:100}
 
 /* Lang bar */
 .lang-bar{
   background:var(--blue-dark);padding:6px 16px;display:flex;justify-content:center;gap:4px;
-  position:fixed;top:4px;left:0;right:0;z-index:99;
+  position:fixed;top:40px;left:0;right:0;z-index:99;
 }
 .lang-bar a{
   color:rgba(255,255,255,.7);font-size:.68rem;font-weight:600;padding:3px 10px;
@@ -43,7 +48,7 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
 
 /* Header */
 .pay-header{
-  text-align:center;padding:56px 20px 20px;
+  text-align:center;padding:76px 20px 20px;
   background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);
 }
 .pay-header img{width:56px;height:56px;border-radius:12px;border:2px solid rgba(255,255,255,.2);margin-bottom:8px}
@@ -223,6 +228,9 @@ body{font-family:var(--body);background:var(--off-white);color:var(--text);min-h
 </head>
 <body>
 
+<div class="back-bar">
+  <a href="index.html"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> 48HoursReady</a>
+</div>
 <div class="flag-stripe"></div>
 <div class="lang-bar">
   <a onclick="setLang('ht')" class="active" id="lang-ht">&#127469;&#127481; Kreyol</a>
