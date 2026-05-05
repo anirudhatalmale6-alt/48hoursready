@@ -522,7 +522,14 @@ document.getElementById('descDisplay').textContent = desc.replace(/\+/g, ' ');
 if (buyerNameParam) document.getElementById('buyerName').value = buyerNameParam.replace(/\+/g, ' ');
 
 // ═══ PAYMENT METHOD ═══
-let selectedMethod = 'card';
+let selectedMethod = params.get('method') || 'card';
+
+// Preselect method from URL param
+if (selectedMethod && ['moncash','natcash','card'].includes(selectedMethod)) {
+  document.querySelectorAll('.method-option').forEach(o => {
+    o.classList.toggle('selected', o.dataset.method === selectedMethod);
+  });
+}
 
 function selectMethod(el) {
   document.querySelectorAll('.method-option').forEach(o => o.classList.remove('selected'));

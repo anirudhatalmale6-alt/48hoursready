@@ -225,10 +225,10 @@ fetch('https://open.er-api.com/v6/latest/USD').then(function(r){return r.json()}
   }
 }).catch(function(){});
 
-var waMsg = encodeURIComponent('I want to pay $' + pkg.price + ' for 48HoursReady ' + pkg.name_en + ' via ');
-document.getElementById('moncashLink').href = 'https://wa.me/50941902005?text=' + waMsg + 'MonCash';
-document.getElementById('natcashLink').href = 'https://wa.me/50941902005?text=' + waMsg + 'NatCash';
-document.getElementById('creditLink').href = 'https://wa.me/50941902005?text=' + waMsg + 'Credit%20Card';
+var payBase = 'pay.html?amount=' + pkg.price + '&currency=USD&desc=' + encodeURIComponent(pkg.name_en);
+document.getElementById('moncashLink').href = payBase + '&method=moncash';
+document.getElementById('natcashLink').href = payBase + '&method=natcash';
+document.getElementById('creditLink').href = payBase + '&method=card';
 
 if (pkg.student) {
   document.getElementById('studentSection').style.display = 'block';
