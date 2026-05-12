@@ -611,6 +611,17 @@ async function processVideo(file) {
     return;
   }
 
+  /* Detect mobile — scale down to prevent "Aw, Snap!" crash */
+  var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  var maxDim = isMobile ? 640 : 1920;
+  var targetFPS = isMobile ? 15 : 30;
+
+  /* Warn on large files on mobile */
+  if (isMobile && file.size > 80 * 1048576) {
+    showError('This video is too large for mobile (' + (file.size / 1048576).toFixed(0) + ' MB). Please try a shorter video or use a computer.');
+    return;
+  }
+
   const sourceVideo = document.getElementById('sourceVideo');
   const videoCanvas = document.getElementById('videoCanvas');
   const ctx = videoCanvas.getContext('2d');
@@ -643,13 +654,22 @@ async function processVideo(file) {
       sourceVideo.onseeked = () => { clearTimeout(seekTimeout); r(); };
     });
 
-    const vw = sourceVideo.videoWidth;
-    const vh = sourceVideo.videoHeight;
-    if (!vw || !vh) throw new Error('Could not read video dimensions. The file may be corrupted.');
+    const origW = sourceVideo.videoWidth;
+    const origH = sourceVideo.videoHeight;
+    if (!origW || !origH) throw new Error('Could not read video dimensions. The file may be corrupted.');
+
+    /* Scale down for mobile to prevent memory crash */
+    var scale = 1;
+    if (Math.max(origW, origH) > maxDim) {
+      scale = maxDim / Math.max(origW, origH);
+    }
+    const vw = Math.round(origW * scale);
+    const vh = Math.round(origH * scale);
     videoCanvas.width = vw;
     videoCanvas.height = vh;
 
-    setProgress(10, 'Video loaded (' + vw + 'x' + vh + '). Preparing...');
+    var scaleNote = scale < 1 ? ' (scaled to ' + vw + 'x' + vh + ' for mobile)' : '';
+    setProgress(10, 'Video loaded (' + origW + 'x' + origH + ')' + scaleNote + '. Preparing...');
 
     /* Define watermark region (bottom-right ~18% x 9%) */
     const logoX = Math.floor(vw * 0.82);
@@ -677,7 +697,7 @@ async function processVideo(file) {
     setProgress(15, 'Recording cleaned video with audio...');
 
     /* ── AUDIO + CANVAS STREAM ── */
-    const canvasStream = videoCanvas.captureStream(30);
+    const canvasStream = videoCanvas.captureStream(targetFPS);
     let audioCtx = null;
 
     try {
@@ -713,13 +733,13 @@ async function processVideo(file) {
     const duration = sourceVideo.duration;
     if (!duration || !isFinite(duration)) throw new Error('Could not determine video duration. Try a different file.');
 
-    var targetBitrate = 1500000;
-    if (duration > 120) targetBitrate = 800000;
-    else if (duration > 60) targetBitrate = 1200000;
+    var targetBitrate = isMobile ? 600000 : 1500000;
+    if (duration > 120) targetBitrate = isMobile ? 400000 : 800000;
+    else if (duration > 60) targetBitrate = isMobile ? 500000 : 1200000;
 
     let recorder;
     try {
-      recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: targetBitrate, audioBitsPerSecond: 64000 });
+      recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: targetBitrate, audioBitsPerSecond: isMobile ? 48000 : 64000 });
     } catch(e) {
       try {
         recorder = new MediaRecorder(canvasStream);
@@ -732,7 +752,7 @@ async function processVideo(file) {
 
     const recordPromise = new Promise(resolve => { recorder.onstop = resolve; });
 
-    recorder.start(100);
+    recorder.start(isMobile ? 500 : 100);
     sourceVideo.currentTime = 0;
     sourceVideo.playbackRate = 1;
     sourceVideo.muted = true;
@@ -771,8 +791,16 @@ async function processVideo(file) {
       ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
     }
 
-    function drawFrame() {
+    /* Throttle drawFrame on mobile to reduce memory pressure */
+    var lastFrameTime = 0;
+    var frameInterval = isMobile ? 66 : 0;
+    function drawFrame(timestamp) {
       if (sourceVideo.paused || sourceVideo.ended) return;
+      if (isMobile && timestamp - lastFrameTime < frameInterval) {
+        requestAnimationFrame(drawFrame);
+        return;
+      }
+      lastFrameTime = timestamp;
       ctx.drawImage(sourceVideo, 0, 0, vw, vh);
       ctx.fillStyle = bgColor;
       ctx.fillRect(logoX, logoY, logoW, logoH);
@@ -781,7 +809,7 @@ async function processVideo(file) {
       setProgress(pct, 'Processing... ' + Math.round(sourceVideo.currentTime) + 's / ' + Math.round(duration) + 's');
       requestAnimationFrame(drawFrame);
     }
-    drawFrame();
+    requestAnimationFrame(drawFrame);
 
     /* Wait for video to finish */
     await new Promise(resolve => {
@@ -796,6 +824,7 @@ async function processVideo(file) {
           drawBranding();
         } catch(e) {}
         if (sourceVideo._audioEl) { try { sourceVideo._audioEl.pause(); } catch(e) {} }
+        if (audioCtx) { try { audioCtx.close(); } catch(e) {} }
         setTimeout(() => { try { recorder.stop(); } catch(e) {} resolve(); }, 300);
       }
       sourceVideo.onended = finish;
@@ -845,6 +874,7 @@ async function processVideo(file) {
     showError(err.message || 'Video processing failed. Please try again or use a different browser.');
   } finally {
     if (videoURL) try { URL.revokeObjectURL(videoURL); } catch(e) {}
+    if (audioCtx) try { audioCtx.close(); } catch(e) {}
   }
 }
 </script>
