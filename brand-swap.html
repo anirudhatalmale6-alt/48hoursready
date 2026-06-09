@@ -811,9 +811,11 @@ async function processVideo(file) {
     }
     requestAnimationFrame(drawFrame);
 
-    /* Wait for video to finish */
+    /* Wait for video to finish — with stall recovery */
     await new Promise(resolve => {
       let resolved = false;
+      let lastTime = 0;
+      let stallCount = 0;
       function finish() {
         if (resolved) return;
         resolved = true;
@@ -828,13 +830,47 @@ async function processVideo(file) {
         setTimeout(() => { try { recorder.stop(); } catch(e) {} resolve(); }, 300);
       }
       sourceVideo.onended = finish;
+      /* Recover from stalls - if video stops progressing, resume it */
+      sourceVideo.onstalled = function() {
+        console.log('Video stalled at', sourceVideo.currentTime);
+        try { sourceVideo.play(); } catch(e) {}
+      };
+      sourceVideo.onwaiting = function() {
+        console.log('Video waiting at', sourceVideo.currentTime);
+      };
+      sourceVideo.onpause = function() {
+        if (!resolved && sourceVideo.currentTime < duration - 0.5) {
+          console.log('Video paused unexpectedly at', sourceVideo.currentTime, '- resuming');
+          try { sourceVideo.play(); } catch(e) {}
+        }
+      };
       var endCheck = setInterval(() => {
+        if (resolved) { clearInterval(endCheck); return; }
         if (sourceVideo.ended || sourceVideo.currentTime >= duration - 0.1) {
           clearInterval(endCheck);
           finish();
+          return;
         }
+        /* Detect stall: if currentTime hasn't changed in 2 checks (400ms) */
+        if (Math.abs(sourceVideo.currentTime - lastTime) < 0.01 && sourceVideo.currentTime > 0) {
+          stallCount++;
+          if (stallCount >= 3) {
+            console.log('Stall detected at', sourceVideo.currentTime, '- forcing resume');
+            stallCount = 0;
+            try {
+              sourceVideo.currentTime = sourceVideo.currentTime + 0.1;
+              sourceVideo.play();
+            } catch(e) {}
+            if (sourceVideo._audioEl) {
+              try { sourceVideo._audioEl.currentTime = sourceVideo.currentTime; sourceVideo._audioEl.play(); } catch(e) {}
+            }
+          }
+        } else {
+          stallCount = 0;
+        }
+        lastTime = sourceVideo.currentTime;
       }, 200);
-      setTimeout(() => { clearInterval(endCheck); finish(); }, (duration + 5) * 1000);
+      setTimeout(() => { clearInterval(endCheck); finish(); }, (duration + 10) * 1000);
     });
 
     await recordPromise;
