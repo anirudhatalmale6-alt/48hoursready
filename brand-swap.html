@@ -791,25 +791,27 @@ async function processVideo(file) {
       ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
     }
 
-    /* Throttle drawFrame on mobile to reduce memory pressure */
-    var lastFrameTime = 0;
-    var frameInterval = isMobile ? 66 : 0;
-    function drawFrame(timestamp) {
+    /* Use setInterval instead of requestAnimationFrame so it keeps running
+       even when screen dims or tab is backgrounded (fixes 30s cutoff on mobile) */
+    var frameMs = isMobile ? 66 : 33;
+    var drawInterval = setInterval(function() {
       if (sourceVideo.paused || sourceVideo.ended) return;
-      if (isMobile && timestamp - lastFrameTime < frameInterval) {
-        requestAnimationFrame(drawFrame);
-        return;
-      }
-      lastFrameTime = timestamp;
-      ctx.drawImage(sourceVideo, 0, 0, vw, vh);
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(logoX, logoY, logoW, logoH);
-      drawBranding();
+      try {
+        ctx.drawImage(sourceVideo, 0, 0, vw, vh);
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(logoX, logoY, logoW, logoH);
+        drawBranding();
+      } catch(e) {}
       var pct = 15 + (sourceVideo.currentTime / duration) * 80;
       setProgress(pct, 'Processing... ' + Math.round(sourceVideo.currentTime) + 's / ' + Math.round(duration) + 's');
-      requestAnimationFrame(drawFrame);
-    }
-    requestAnimationFrame(drawFrame);
+    }, frameMs);
+    /* Also keep screen awake if possible */
+    var wakeLock = null;
+    try {
+      if (navigator.wakeLock) {
+        navigator.wakeLock.request('screen').then(function(lock) { wakeLock = lock; }).catch(function(){});
+      }
+    } catch(e) {}
 
     /* Wait for video to finish — with stall recovery */
     await new Promise(resolve => {
@@ -819,6 +821,8 @@ async function processVideo(file) {
       function finish() {
         if (resolved) return;
         resolved = true;
+        clearInterval(drawInterval);
+        if (wakeLock) { try { wakeLock.release(); } catch(e) {} }
         try {
           ctx.drawImage(sourceVideo, 0, 0, vw, vh);
           ctx.fillStyle = bgColor;
