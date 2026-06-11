@@ -504,17 +504,17 @@ async function processFile(file) {
       previewBefore.getContext('2d').drawImage(canvas, 0, 0);
     }
 
-    /* ── Remove NotebookLM branding (bottom-right) ── */
+    /* ── Remove NotebookLM branding (very small bottom-right corner only) ── */
     const w = canvas.width;
     const h = canvas.height;
-    const logoLeft = Math.floor(w * 0.82);
-    const logoTop = Math.floor(h * 0.93);
+    const logoLeft = Math.floor(w * 0.88);
+    const logoTop = Math.floor(h * 0.96);
 
     /* Sample background color from area just above/left of logo */
-    const sampleX = Math.max(0, logoLeft - 60);
-    const sampleY = Math.max(0, logoTop - 20);
-    const sampleW = 40;
-    const sampleH = 15;
+    const sampleX = Math.max(0, logoLeft - 40);
+    const sampleY = Math.max(0, logoTop - 10);
+    const sampleW = 30;
+    const sampleH = 8;
     const sampleData = ctx.getImageData(sampleX, sampleY, sampleW, sampleH).data;
     let rSum = 0, gSum = 0, bSum = 0;
     const pixelCount = sampleW * sampleH;
@@ -529,25 +529,6 @@ async function processFile(file) {
 
     ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
     ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
-
-    /* ── Add "Powered by 48HoursReady.com" branding with background ── */
-    const brandSize = Math.max(12, Math.floor(h * 0.014));
-    const brandText = 'Powered by 48HoursReady.com';
-    ctx.font = '600 ' + brandSize + 'px "Plus Jakarta Sans", Arial, sans-serif';
-    const brandMetrics = ctx.measureText(brandText);
-    const brandPadX = 10, brandPadY = 6;
-    const brandW = brandMetrics.width + brandPadX * 2;
-    const brandH = brandSize + brandPadY * 2;
-    const brandX = w - brandW - 8;
-    const brandY = h - brandH - 8;
-    ctx.fillStyle = 'rgba(0,0,0,0.7)';
-    ctx.beginPath();
-    ctx.roundRect(brandX, brandY, brandW, brandH, 4);
-    ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'bottom';
-    ctx.fillText(brandText, w - 8 - brandPadX, h - 8 - brandPadY);
 
     /* ── Save "after" preview for page 1 ── */
     if (i === 1) {
@@ -671,9 +652,9 @@ async function processVideo(file) {
     var scaleNote = scale < 1 ? ' (scaled to ' + vw + 'x' + vh + ' for mobile)' : '';
     setProgress(10, 'Video loaded (' + origW + 'x' + origH + ')' + scaleNote + '. Preparing...');
 
-    /* Define watermark region (bottom-right ~18% x 9%) */
-    const logoX = Math.floor(vw * 0.82);
-    const logoY = Math.floor(vh * 0.91);
+    /* Define watermark region (small bottom-right corner only) */
+    const logoX = Math.floor(vw * 0.88);
+    const logoY = Math.floor(vh * 0.96);
     const logoW = vw - logoX;
     const logoH = vh - logoY;
 
@@ -691,8 +672,8 @@ async function processVideo(file) {
     }
     const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
 
-    const brandFontSize = Math.max(10, Math.floor(vh * 0.014));
-    const brandText = 'Powered by 48HoursReady.com';
+    const brandFontSize = Math.max(8, Math.floor(vh * 0.009));
+    const brandText = '48HoursReady.com';
 
     setProgress(15, 'Recording cleaned video with audio...');
 
@@ -771,7 +752,7 @@ async function processVideo(file) {
       var pillH = brandFontSize + pillPadY * 2;
       var pillX = vw - pillW - 10;
       var pillY = vh - pillH - 8;
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
       ctx.beginPath();
       var r = 6;
       ctx.moveTo(pillX + r, pillY);
@@ -785,7 +766,7 @@ async function processVideo(file) {
       ctx.quadraticCurveTo(pillX, pillY, pillX + r, pillY);
       ctx.closePath();
       ctx.fill();
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'bottom';
       ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
