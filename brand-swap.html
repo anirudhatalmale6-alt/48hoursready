@@ -384,19 +384,37 @@ const btnReset = document.getElementById('btnReset');
 let resultBlob = null;
 let originalFileName = '';
 
-/* Edit Deck — open deck editor with the processed PDF */
-btnEdit.addEventListener('click', function() {
+/* Edit Deck — store blob in IndexedDB then open editor */
+function openDeckDB() {
+  return new Promise(function(resolve, reject) {
+    var req = indexedDB.open('48hr_deck', 1);
+    req.onupgradeneeded = function() { req.result.createObjectStore('files'); };
+    req.onsuccess = function() { resolve(req.result); };
+    req.onerror = function() { reject(req.error); };
+  });
+}
+btnEdit.addEventListener('click', async function() {
   if (!resultBlob || fileType !== 'pdf') return;
+  btnEdit.textContent = 'Opening editor...';
+  btnEdit.disabled = true;
   try {
-    var reader = new FileReader();
-    reader.onload = function() {
-      sessionStorage.setItem('deckEditorPDF', reader.result);
-      sessionStorage.setItem('deckEditorName', originalFileName);
+    var db = await openDeckDB();
+    var tx = db.transaction('files', 'readwrite');
+    tx.objectStore('files').put(resultBlob, 'pendingPDF');
+    tx.oncomplete = function() {
+      db.close();
       window.location.href = 'deck-editor.html?from=brandswap';
     };
-    reader.readAsDataURL(resultBlob);
+    tx.onerror = function() {
+      db.close();
+      alert('Could not prepare the file. Please download the PDF first, then upload it in the Deck Editor.');
+      btnEdit.textContent = 'Edit Deck (Swap Logos, Add Images)';
+      btnEdit.disabled = false;
+    };
   } catch(e) {
-    window.open('deck-editor.html', '_blank');
+    alert('Could not open editor. Please download the PDF and upload it at 48hoursready.com/deck-editor.html');
+    btnEdit.textContent = 'Edit Deck (Swap Logos, Add Images)';
+    btnEdit.disabled = false;
   }
 });
 

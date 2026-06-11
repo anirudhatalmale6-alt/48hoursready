@@ -1177,22 +1177,27 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowRight' && !e.target.closest('.overlay-text')) goToPage(currentPage + 1);
 });
 
-/* Auto-load PDF from Brand Swap via sessionStorage */
+/* Auto-load PDF from Brand Swap via IndexedDB */
 (function() {
   if (window.location.search.indexOf('from=brandswap') === -1) return;
-  var dataURL = sessionStorage.getItem('deckEditorPDF');
-  if (!dataURL) return;
-  sessionStorage.removeItem('deckEditorPDF');
-  sessionStorage.removeItem('deckEditorName');
   try {
-    var byteString = atob(dataURL.split(',')[1]);
-    var mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
-    var ab = new ArrayBuffer(byteString.length);
-    var ia = new Uint8Array(ab);
-    for (var i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
-    var blob = new Blob([ab], { type: mimeString });
-    var file = new File([blob], 'branded_deck.pdf', { type: 'application/pdf' });
-    loadPDF(file);
+    var req = indexedDB.open('48hr_deck', 1);
+    req.onupgradeneeded = function() { req.result.createObjectStore('files'); };
+    req.onsuccess = function() {
+      var db = req.result;
+      var tx = db.transaction('files', 'readwrite');
+      var getReq = tx.objectStore('files').get('pendingPDF');
+      getReq.onsuccess = function() {
+        var blob = getReq.result;
+        if (blob) {
+          tx.objectStore('files').delete('pendingPDF');
+          var file = new File([blob], 'branded_deck.pdf', { type: 'application/pdf' });
+          loadPDF(file);
+        }
+        db.close();
+      };
+      getReq.onerror = function() { db.close(); };
+    };
   } catch(e) {
     console.error('Auto-load from Brand Swap failed:', e);
   }
