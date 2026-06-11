@@ -340,6 +340,10 @@ body{
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Branded PDF
     </button>
+    <button class="btn-download" id="btnEdit" style="background:linear-gradient(135deg, var(--blue), var(--blue-dark));box-shadow:0 4px 20px rgba(0,32,159,.3)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+      Edit Deck (Swap Logos, Add Images)
+    </button>
     <button class="btn-reset" id="btnReset">Upload another file</button>
   </div>
 
@@ -374,10 +378,27 @@ const completeMsg = document.getElementById('completeMsg');
 const completeText = document.getElementById('completeText');
 const actions = document.getElementById('actions');
 const btnDownload = document.getElementById('btnDownload');
+const btnEdit = document.getElementById('btnEdit');
 const btnReset = document.getElementById('btnReset');
 
 let resultBlob = null;
 let originalFileName = '';
+
+/* Edit Deck — open deck editor with the processed PDF */
+btnEdit.addEventListener('click', function() {
+  if (!resultBlob || fileType !== 'pdf') return;
+  try {
+    var reader = new FileReader();
+    reader.onload = function() {
+      sessionStorage.setItem('deckEditorPDF', reader.result);
+      sessionStorage.setItem('deckEditorName', originalFileName);
+      window.location.href = 'deck-editor.html?from=brandswap';
+    };
+    reader.readAsDataURL(resultBlob);
+  } catch(e) {
+    window.open('deck-editor.html', '_blank');
+  }
+});
 
 /* ── Upload Zone Events ── */
 uploadZone.addEventListener('click', () => fileInput.click());
@@ -413,10 +434,12 @@ function handleFile(file) {
   if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
     fileType = 'pdf';
     originalFileName = file.name.replace(/\.pdf$/i, '');
+    btnEdit.style.display = '';
     processFile(file);
   } else if (file.type.startsWith('video/') || /\.(mp4|mov|webm)$/i.test(file.name)) {
     fileType = 'video';
     originalFileName = file.name.replace(/\.(mp4|mov|webm)$/i, '');
+    btnEdit.style.display = 'none';
     processVideo(file);
   } else {
     alert('Please upload a PDF or video file (MP4, MOV, WebM).');

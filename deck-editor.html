@@ -1176,6 +1176,27 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowLeft' && !e.target.closest('.overlay-text')) goToPage(currentPage - 1);
   if (e.key === 'ArrowRight' && !e.target.closest('.overlay-text')) goToPage(currentPage + 1);
 });
+
+/* Auto-load PDF from Brand Swap via sessionStorage */
+(function() {
+  if (window.location.search.indexOf('from=brandswap') === -1) return;
+  var dataURL = sessionStorage.getItem('deckEditorPDF');
+  if (!dataURL) return;
+  sessionStorage.removeItem('deckEditorPDF');
+  sessionStorage.removeItem('deckEditorName');
+  try {
+    var byteString = atob(dataURL.split(',')[1]);
+    var mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+    var blob = new Blob([ab], { type: mimeString });
+    var file = new File([blob], 'branded_deck.pdf', { type: 'application/pdf' });
+    loadPDF(file);
+  } catch(e) {
+    console.error('Auto-load from Brand Swap failed:', e);
+  }
+})();
 </script>
 </body>
 </html>
