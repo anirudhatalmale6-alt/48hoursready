@@ -571,6 +571,35 @@ async function processFile(file) {
     ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
     ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
 
+    /* ── Add "Powered By HaitiBiznis.com" branding ── */
+    const bFontSize = Math.max(14, Math.floor(h * 0.012));
+    const bText = 'Powered By HaitiBiznis.com';
+    ctx.font = 'bold ' + bFontSize + 'px Arial, Helvetica, sans-serif';
+    const bTextW = ctx.measureText(bText).width;
+    const bPadX = 12, bPadY = 6;
+    const bPillW = bTextW + bPadX * 2;
+    const bPillH = bFontSize + bPadY * 2;
+    const bPillX = w - bPillW - 20;
+    const bPillY = h - bPillH - 16;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+    ctx.beginPath();
+    const bR = 8;
+    ctx.moveTo(bPillX + bR, bPillY);
+    ctx.lineTo(bPillX + bPillW - bR, bPillY);
+    ctx.quadraticCurveTo(bPillX + bPillW, bPillY, bPillX + bPillW, bPillY + bR);
+    ctx.lineTo(bPillX + bPillW, bPillY + bPillH - bR);
+    ctx.quadraticCurveTo(bPillX + bPillW, bPillY + bPillH, bPillX + bPillW - bR, bPillY + bPillH);
+    ctx.lineTo(bPillX + bR, bPillY + bPillH);
+    ctx.quadraticCurveTo(bPillX, bPillY + bPillH, bPillX, bPillY + bPillH - bR);
+    ctx.lineTo(bPillX, bPillY + bR);
+    ctx.quadraticCurveTo(bPillX, bPillY, bPillX + bR, bPillY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(bText, w - 20 - bPadX, h - 16 - bPadY + 1);
+
     /* ── Save "after" preview for page 1 ── */
     if (i === 1) {
       previewAfter.width = viewport.width;
@@ -713,8 +742,8 @@ async function processVideo(file) {
     }
     const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
 
-    const brandFontSize = Math.max(8, Math.floor(vh * 0.009));
-    const brandText = '48HoursReady.com';
+    const brandFontSize = Math.max(8, Math.floor(vh * 0.012));
+    const brandText = 'Powered By HaitiBiznis.com';
 
     setProgress(15, 'Recording cleaned video with audio...');
 
