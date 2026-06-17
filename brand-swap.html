@@ -572,16 +572,16 @@ async function processFile(file) {
     ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
 
     /* ── Add "Powered By HaitiBiznis.com" branding ── */
-    const bFontSize = Math.max(16, Math.floor(h * 0.016));
+    const bFontSize = Math.max(30, Math.floor(h * 0.028));
     const bText = 'Powered By HaitiBiznis.com';
     ctx.font = 'bold ' + bFontSize + 'px Arial, Helvetica, sans-serif';
     const bTextW = ctx.measureText(bText).width;
-    const bPadX = 14, bPadY = 8;
+    const bPadX = 20, bPadY = 12;
     const bPillW = bTextW + bPadX * 2;
     const bPillH = bFontSize + bPadY * 2;
-    const bPillX = w - bPillW - 24;
-    const bPillY = h - bPillH - 20;
-    ctx.fillStyle = 'rgba(0, 32, 159, 0.75)';
+    const bPillX = w - bPillW - 30;
+    const bPillY = h - bPillH - 30;
+    ctx.fillStyle = '#00209F';
     ctx.beginPath();
     const bR = 8;
     ctx.moveTo(bPillX + bR, bPillY);
@@ -742,7 +742,7 @@ async function processVideo(file) {
     }
     const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
 
-    const brandFontSize = Math.max(14, Math.floor(vh * 0.022));
+    const brandFontSize = Math.max(18, Math.floor(vh * 0.035));
     const brandText = 'Powered By HaitiBiznis.com';
 
     setProgress(15, 'Recording cleaned video with audio...');
@@ -817,12 +817,12 @@ async function processVideo(file) {
     function drawBranding() {
       ctx.font = 'bold ' + brandFontSize + 'px Arial, Helvetica, sans-serif';
       var textWidth = ctx.measureText(brandText).width;
-      var pillPadX = 12, pillPadY = 6;
+      var pillPadX = 16, pillPadY = 8;
       var pillW = textWidth + pillPadX * 2;
       var pillH = brandFontSize + pillPadY * 2;
-      var pillX = vw - pillW - 12;
-      var pillY = vh - pillH - 10;
-      ctx.fillStyle = 'rgba(0, 32, 159, 0.7)';
+      var pillX = vw - pillW - 14;
+      var pillY = vh - pillH - 14;
+      ctx.fillStyle = '#00209F';
       ctx.beginPath();
       var r = 6;
       ctx.moveTo(pillX + r, pillY);
