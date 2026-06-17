@@ -572,16 +572,16 @@ async function processFile(file) {
     ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
 
     /* ── Add "Powered By HaitiBiznis.com" branding ── */
-    const bFontSize = Math.max(14, Math.floor(h * 0.012));
+    const bFontSize = Math.max(16, Math.floor(h * 0.016));
     const bText = 'Powered By HaitiBiznis.com';
     ctx.font = 'bold ' + bFontSize + 'px Arial, Helvetica, sans-serif';
     const bTextW = ctx.measureText(bText).width;
-    const bPadX = 12, bPadY = 6;
+    const bPadX = 14, bPadY = 8;
     const bPillW = bTextW + bPadX * 2;
     const bPillH = bFontSize + bPadY * 2;
-    const bPillX = w - bPillW - 20;
-    const bPillY = h - bPillH - 16;
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+    const bPillX = w - bPillW - 24;
+    const bPillY = h - bPillH - 20;
+    ctx.fillStyle = 'rgba(0, 32, 159, 0.75)';
     ctx.beginPath();
     const bR = 8;
     ctx.moveTo(bPillX + bR, bPillY);
@@ -595,10 +595,10 @@ async function processFile(file) {
     ctx.quadraticCurveTo(bPillX, bPillY, bPillX + bR, bPillY);
     ctx.closePath();
     ctx.fill();
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.fillStyle = '#FFFFFF';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
-    ctx.fillText(bText, w - 20 - bPadX, h - 16 - bPadY + 1);
+    ctx.fillText(bText, w - 24 - bPadX, h - 20 - bPadY + 2);
 
     /* ── Save "after" preview for page 1 ── */
     if (i === 1) {
@@ -817,12 +817,12 @@ async function processVideo(file) {
     function drawBranding() {
       ctx.font = 'bold ' + brandFontSize + 'px Arial, Helvetica, sans-serif';
       var textWidth = ctx.measureText(brandText).width;
-      var pillPadX = 10, pillPadY = 6;
+      var pillPadX = 12, pillPadY = 6;
       var pillW = textWidth + pillPadX * 2;
       var pillH = brandFontSize + pillPadY * 2;
-      var pillX = vw - pillW - 10;
-      var pillY = vh - pillH - 8;
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+      var pillX = vw - pillW - 12;
+      var pillY = vh - pillH - 10;
+      ctx.fillStyle = 'rgba(0, 32, 159, 0.7)';
       ctx.beginPath();
       var r = 6;
       ctx.moveTo(pillX + r, pillY);
@@ -836,10 +836,10 @@ async function processVideo(file) {
       ctx.quadraticCurveTo(pillX, pillY, pillX + r, pillY);
       ctx.closePath();
       ctx.fill();
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'bottom';
-      ctx.fillText(brandText, vw - 10 - pillPadX, vh - 8 - pillPadY + 1);
+      ctx.fillText(brandText, vw - 12 - pillPadX, vh - 10 - pillPadY + 1);
     }
 
     /* Use setInterval instead of requestAnimationFrame so it keeps running
