@@ -545,11 +545,11 @@ async function processFile(file) {
       previewBefore.getContext('2d').drawImage(canvas, 0, 0);
     }
 
-    /* ── Remove NotebookLM branding (very small bottom-right corner only) ── */
+    /* ── Remove NotebookLM branding (bottom-right corner) ── */
     const w = canvas.width;
     const h = canvas.height;
-    const logoLeft = Math.floor(w * 0.88);
-    const logoTop = Math.floor(h * 0.96);
+    const logoLeft = Math.floor(w * 0.78);
+    const logoTop = Math.floor(h * 0.92);
 
     /* Sample background color from area just above/left of logo */
     const sampleX = Math.max(0, logoLeft - 40);
@@ -722,9 +722,9 @@ async function processVideo(file) {
     var scaleNote = scale < 1 ? ' (scaled to ' + vw + 'x' + vh + ' for mobile)' : '';
     setProgress(10, 'Video loaded (' + origW + 'x' + origH + ')' + scaleNote + '. Preparing...');
 
-    /* Define watermark region (small bottom-right corner only) */
-    const logoX = Math.floor(vw * 0.88);
-    const logoY = Math.floor(vh * 0.96);
+    /* Define watermark region — covers NotebookLM badge in bottom-right */
+    const logoX = Math.floor(vw * 0.78);
+    const logoY = Math.floor(vh * 0.92);
     const logoW = vw - logoX;
     const logoH = vh - logoY;
 
@@ -742,7 +742,7 @@ async function processVideo(file) {
     }
     const bgColor = 'rgb(' + Math.round(rSum/pxCount) + ',' + Math.round(gSum/pxCount) + ',' + Math.round(bSum/pxCount) + ')';
 
-    const brandFontSize = Math.max(8, Math.floor(vh * 0.012));
+    const brandFontSize = Math.max(14, Math.floor(vh * 0.022));
     const brandText = 'Powered By HaitiBiznis.com';
 
     setProgress(15, 'Recording cleaned video with audio...');
