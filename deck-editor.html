@@ -675,6 +675,8 @@ function createOverlayElement(ov, idx) {
   el.addEventListener('click', function(e) {
     e.stopPropagation();
     selectOverlay(parseInt(el.dataset.idx));
+    var ce = el.querySelector('[contenteditable]');
+    if (ce) { ce.focus(); }
   });
 
   if (selectedOverlay === idx) el.classList.add('selected');
@@ -723,7 +725,14 @@ canvasArea.addEventListener('click', function(e) {
 
 /* ═══ DRAG & RESIZE ═══ */
 function startDrag(e, el) {
-  e.preventDefault();
+  var tgt = e.target;
+  var isTextContent = tgt.contentEditable === 'true' || (tgt.closest && tgt.closest('[contenteditable]'));
+  var isHandle = tgt.dataset && tgt.dataset.handle;
+  if (!isHandle && isTextContent) {
+    setTimeout(function(){ var ce = el.querySelector('[contenteditable]'); if(ce) ce.focus(); }, 50);
+  } else {
+    e.preventDefault();
+  }
   var idx = parseInt(el.dataset.idx);
   selectOverlay(idx);
 
