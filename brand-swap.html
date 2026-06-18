@@ -572,16 +572,16 @@ async function processFile(file) {
     ctx.fillRect(logoLeft, logoTop, w - logoLeft, h - logoTop);
 
     /* ── Add "Powered By HaitiBiznis.com" branding ── */
-    const bFontSize = Math.max(30, Math.floor(h * 0.028));
+    const bFontSize = Math.max(32, Math.floor(h * 0.032));
     const bText = 'Powered By HaitiBiznis.com';
     ctx.font = 'bold ' + bFontSize + 'px Arial, Helvetica, sans-serif';
     const bTextW = ctx.measureText(bText).width;
-    const bPadX = 20, bPadY = 12;
+    const bPadX = 22, bPadY = 14;
     const bPillW = bTextW + bPadX * 2;
     const bPillH = bFontSize + bPadY * 2;
     const bPillX = w - bPillW - 30;
     const bPillY = h - bPillH - 30;
-    ctx.fillStyle = '#00209F';
+    ctx.fillStyle = '#000000';
     ctx.beginPath();
     const bR = 8;
     ctx.moveTo(bPillX + bR, bPillY);
@@ -599,6 +599,17 @@ async function processFile(file) {
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
     ctx.fillText(bText, w - 24 - bPadX, h - 20 - bPadY + 2);
+
+    /* ── Add "https://theedge.consulting" in red on last page footer ── */
+    if (i === totalPages) {
+      const edgeFontSize = Math.max(28, Math.floor(h * 0.026));
+      const edgeText = 'https://theedge.consulting';
+      ctx.font = 'bold ' + edgeFontSize + 'px Arial, Helvetica, sans-serif';
+      ctx.fillStyle = '#D21034';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(edgeText, w / 2, bPillY - 10);
+    }
 
     /* ── Save "after" preview for page 1 ── */
     if (i === 1) {
@@ -822,7 +833,7 @@ async function processVideo(file) {
       var pillH = brandFontSize + pillPadY * 2;
       var pillX = vw - pillW - 14;
       var pillY = vh - pillH - 14;
-      ctx.fillStyle = '#00209F';
+      ctx.fillStyle = '#000000';
       ctx.beginPath();
       var r = 6;
       ctx.moveTo(pillX + r, pillY);
