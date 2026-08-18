@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>48HoursReady — Everything Your Business Needs. Delivered in 48 Hours.</title>
+<meta name="description" content="Digital business marketplace: logos, websites, business cards, marketing, videos, business documents and a POS platform. Delivered in 48 hours.">
+<meta property="og:title" content="48HoursReady — Everything Your Business Needs, in 48 Hours">
+<meta property="og:description" content="Logos, websites, business cards, marketing, videos, documents and your own POS. Start a free 7-day trial.">
+<meta property="og:url" content="https://48hoursready.com/v2/">
+<meta property="og:image" content="https://48hoursready.com/assets/brand-en.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B4DBA">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   48HoursReady v2 — Digital Business Marketplace
+   Palette + radii + "max 3 taps to checkout" come from the
+   client's UI/UX Specification v2.0.
+   ============================================================ */
+:root{
+  --blue:#0B4DBA; --blue-d:#083A8E; --blue-l:#E8F0FF;
+  --red:#D91F26;  --red-l:#FDECEC;
+  --green:#1FA84A;--green-l:#E9F7EE;
+  --orange:#F7931E;--orange-l:#FFF3E2;
+  --ink:#111826; --ink-2:#4A5568; --ink-3:#8A94A6;
+  --bg:#FFFFFF; --bg-2:#F4F6FA; --line:#E4E9F2;
+  --r:18px; --r-s:12px; --r-l:24px;
+  --sh:0 2px 8px rgba(17,24,38,.05),0 12px 28px rgba(17,24,38,.07);
+  --sh-h:0 4px 12px rgba(17,24,38,.07),0 20px 44px rgba(17,24,38,.12);
+  --display:'Poppins',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --bar:64px;                 /* mobile bottom nav height */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);
+     -webkit-font-smoothing:antialiased;overflow-x:hidden;
+     padding-bottom:calc(var(--bar) + env(safe-area-inset-bottom))}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;letter-spacing:-.02em}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+section{padding:52px 0}
+.sec-alt{background:var(--bg-2)}
+.eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--blue);background:var(--blue-l);
+  padding:6px 14px;border-radius:999px;margin-bottom:12px}
+.h2{font-size:clamp(1.5rem,4.4vw,2.3rem);font-weight:800;margin-bottom:10px}
+.lede{color:var(--ink-2);font-size:.98rem;line-height:1.6;max-width:62ch}
+.center{text-align:center}
+.center .lede{margin-left:auto;margin-right:auto}
+
+/* ---------- buttons: large touch targets, consistent styling ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:54px;padding:15px 26px;border-radius:16px;font-family:var(--display);
+  font-weight:700;font-size:1rem;transition:transform .18s,box-shadow .18s,background .18s;
+  border:2px solid transparent;text-align:center}
+.btn:active{transform:translateY(1px)}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 8px 20px rgba(31,168,74,.28)}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 8px 20px rgba(11,77,186,.26)}
+.btn-orange{background:var(--orange);color:#fff;box-shadow:0 8px 20px rgba(247,147,30,.3)}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 8px 20px rgba(217,31,38,.26)}
+.btn-ghost{background:#fff;color:var(--blue);border-color:var(--line)}
+.btn-ghost-w{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.5)}
+.btn-full{width:100%}
+@media(hover:hover){.btn:hover{transform:translateY(-2px);box-shadow:var(--sh-h)}}
+
+/* ---------- top bar: brand + language menu (same idea as the POS) ---------- */
+.top{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;flex:0 0 auto;min-width:0}
+.brand img{width:42px;height:42px;border-radius:11px;flex:0 0 auto}
+.brand b{font-family:var(--display);font-weight:800;font-size:.98rem;line-height:1.1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-links{display:none;margin-left:auto;gap:22px;align-items:center}
+.top-links a{font-size:.87rem;font-weight:600;color:var(--ink-2)}
+.top-links a:hover{color:var(--blue)}
+/* The 5 pills sit next to the logo on a 360px phone, so they shrink with it. */
+.lang{display:flex;gap:2px;background:var(--bg-2);border-radius:999px;padding:3px;
+  margin-left:auto;flex:0 0 auto}
+.lang button{font-family:var(--display);font-size:11px;font-weight:700;color:var(--ink-3);
+  padding:6px 8px;border-radius:999px;line-height:1}
+.lang button.on{background:var(--blue);color:#fff}
+@media(max-width:430px){.lang button{font-size:10px;padding:6px 6px}.brand b{display:none}}
+@media(max-width:360px){.lang{gap:0;padding:2px}.lang button{padding:6px 5px;font-size:9.5px}}
+@media(min-width:900px){.top-links{display:flex}.lang{margin-left:22px}}
+
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(160deg,#06327D 0%,var(--blue) 48%,#1560D8 100%);
+  color:#fff;padding:44px 0 52px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 82% 8%,rgba(247,147,30,.30),transparent 46%),
+             radial-gradient(circle at 6% 92%,rgba(217,31,38,.28),transparent 44%);
+  pointer-events:none}
+.hero-in{position:relative;display:grid;gap:30px;align-items:center}
+@media(min-width:900px){.hero{padding:64px 0 72px}.hero-in{grid-template-columns:1.06fr .94fr;gap:44px}}
+.hero h1{font-size:clamp(2.05rem,6.6vw,3.5rem);font-weight:900;margin-bottom:14px}
+.hero h1 em{font-style:normal;color:#FFC46B;display:block}
+.hero-sub{font-size:.97rem;line-height:1.65;color:rgba(255,255,255,.9);
+  max-width:52ch;margin-bottom:24px}
+.hero-cta{display:grid;gap:11px;max-width:400px}
+@media(min-width:560px){.hero-cta{grid-template-columns:1fr 1fr;max-width:none}
+  .hero-cta .btn:first-child{grid-column:1/-1}}
+/* On a wide hero the three CTAs sit on one line; they must not wrap to three
+   lines each, so they lay out as a flex row and keep their label intact. */
+@media(min-width:900px){.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+  .hero-cta .btn{white-space:nowrap;padding:15px 22px;font-size:.94rem}}
+.hero-trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;
+  font-size:.78rem;font-weight:600;color:rgba(255,255,255,.82)}
+.hero-trust span{display:flex;align-items:center;gap:6px}
+
+/* the illustration: laptop + phone + POS terminal + card + a REAL qr */
+.scene{position:relative;aspect-ratio:1/.92;max-width:440px;margin:0 auto;width:100%}
+/* Every piece below is `.scene i.x` on purpose: a bare `.x` loses to the
+   `.scene i` base rule and the terminal/card silently render plain white. */
+.scene i{position:absolute;display:block;border-radius:14px;
+  box-shadow:0 18px 40px rgba(3,20,55,.34);font-style:normal}
+.scene i.sc-lap{left:0;top:20%;width:72%;aspect-ratio:16/10;
+  background:linear-gradient(150deg,#fff,#E3ECFC);padding:9px}
+.scene i.sc-lap div{height:100%;border-radius:8px;
+  background:linear-gradient(150deg,var(--blue),#2E7BE8);position:relative;overflow:hidden}
+.scene i.sc-lap div::before{content:'';position:absolute;left:8%;top:13%;width:44%;height:9%;
+  border-radius:4px;background:rgba(255,255,255,.92)}
+.scene i.sc-lap div::after{content:'';position:absolute;left:8%;top:31%;width:80%;height:50%;
+  border-radius:6px;background:rgba(255,255,255,.26)}
+.scene i.sc-lapfoot{left:-5%;top:64.5%;width:82%;height:11px;border-radius:0 0 11px 11px;
+  background:#CBD9F2}
+.scene i.sc-phone{right:2%;top:0;width:27%;aspect-ratio:1/2;padding:7px;
+  background:linear-gradient(160deg,#152342,#2A3E63)}
+.scene i.sc-phone div{height:100%;border-radius:10px;background:#fff;position:relative;overflow:hidden}
+.scene i.sc-phone div::before{content:'';position:absolute;inset:0 0 60% 0;
+  background:linear-gradient(150deg,var(--red),#FF5A5F)}
+.scene i.sc-phone div::after{content:'';position:absolute;left:12%;bottom:8%;width:76%;height:10%;
+  border-radius:5px;background:var(--green)}
+.scene i.sc-pos{left:16%;bottom:0;width:33%;aspect-ratio:1/1.3;padding:8px;
+  background:linear-gradient(160deg,#16264A,#334873)}
+.scene i.sc-pos div{height:42%;border-radius:7px;
+  background:linear-gradient(150deg,#fff,#DCE7FA);margin-bottom:8px}
+.scene i.sc-pos b{display:block;height:8px;border-radius:4px;
+  background:rgba(255,255,255,.5);margin-bottom:6px}
+.scene i.sc-pos b:nth-of-type(2){width:68%;background:var(--orange)}
+.scene i.sc-pos b:nth-of-type(3){width:84%}
+.scene i.sc-card{right:0;bottom:9%;width:37%;aspect-ratio:1.72/1;
+  background:linear-gradient(140deg,#fff,#EDF3FF);padding:11px;
+  display:flex;flex-direction:column;justify-content:space-between}
+.scene i.sc-card u{display:block;height:7px;width:54%;border-radius:4px;
+  background:var(--blue);text-decoration:none}
+.scene i.sc-card s{display:block;height:5px;width:76%;border-radius:3px;
+  background:#B9CBEA;text-decoration:none}
+.scene i.sc-qr{right:5%;top:38%;width:24%;aspect-ratio:1;padding:6px;background:#fff}
+.scene i.sc-qr img{width:100%;height:100%;border-radius:4px}
+@media(max-width:560px){.scene{max-width:320px}}
+
+/* ---------- cards ---------- */
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(148px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:20px;box-shadow:var(--sh);transition:transform .2s,box-shadow .2s}
+@media(hover:hover){.card:hover{transform:translateY(-3px);box-shadow:var(--sh-h)}}
+
+/* category cards — the four coloured shop entrances */
+.cat{position:relative;text-align:left;width:100%;border-radius:var(--r-l);
+  padding:22px 20px 20px;color:#fff;overflow:hidden;min-height:172px;
+  display:flex;flex-direction:column;box-shadow:var(--sh);transition:transform .2s,box-shadow .2s}
+@media(hover:hover){.cat:hover{transform:translateY(-4px);box-shadow:var(--sh-h)}}
+.cat-1{background:linear-gradient(145deg,#8B2FD6,#D91F26)}
+.cat-2{background:linear-gradient(145deg,#0B4DBA,#12A5E8)}
+.cat-3{background:linear-gradient(145deg,#0E7C4A,#1FA84A)}
+.cat-4{background:linear-gradient(145deg,#F7931E,#E2562C)}
+.cat .emo{font-size:1.9rem;line-height:1;margin-bottom:10px}
+.cat h3{font-size:1.16rem;font-weight:800;margin-bottom:7px}
+.cat p{font-size:.8rem;line-height:1.55;color:rgba(255,255,255,.9);flex:1}
+.cat .go{display:inline-flex;align-items:center;gap:6px;margin-top:13px;
+  font-family:var(--display);font-weight:700;font-size:.83rem}
+
+/* price cards */
+.pcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);transition:transform .2s,box-shadow .2s}
+@media(hover:hover){.pcard:hover{transform:translateY(-3px);box-shadow:var(--sh-h)}}
+.pcard.hot{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-l),var(--sh)}
+.pc-top{padding:18px 18px 14px;border-bottom:1px solid var(--line);position:relative}
+.pc-tag{position:absolute;right:14px;top:14px;background:var(--orange);color:#fff;
+  font-family:var(--display);font-size:.63rem;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;padding:5px 10px;border-radius:999px}
+.pc-price{font-family:var(--display);font-size:2rem;font-weight:900;color:var(--blue);line-height:1}
+.pc-price small{font-size:.9rem;font-weight:700;color:var(--ink-3);margin-left:4px}
+.pc-usd{font-size:.74rem;color:var(--ink-3);margin-top:3px}
+.pc-name{font-family:var(--display);font-weight:700;font-size:1.02rem;margin-top:9px}
+.pc-note{font-size:.76rem;color:var(--ink-2);margin-top:3px}
+.pc-body{padding:15px 18px;flex:1}
+.pc-body li{list-style:none;display:flex;gap:9px;align-items:flex-start;
+  font-size:.83rem;line-height:1.45;color:var(--ink-2);margin-bottom:8px}
+.pc-body li::before{content:'✓';color:var(--green);font-weight:800;flex:0 0 auto;font-size:.86rem}
+.pc-body li.bonus::before{content:'★';color:var(--orange)}
+.pc-foot{padding:0 18px 18px}
+.pc-deliv{display:flex;align-items:center;gap:7px;font-size:.75rem;font-weight:600;
+  color:var(--green);background:var(--green-l);border-radius:10px;padding:9px 12px;margin-bottom:11px}
+
+/* POS block */
+.pos{background:linear-gradient(155deg,#06327D,#0B4DBA 55%,#0A3E9C);color:#fff}
+.pos-in{display:grid;gap:28px;align-items:center}
+@media(min-width:900px){.pos-in{grid-template-columns:1.05fr .95fr;gap:44px}}
+.pos h2{font-size:clamp(1.55rem,4.6vw,2.4rem);font-weight:900;margin-bottom:12px}
+.pos .lede{color:rgba(255,255,255,.88)}
+.pos-feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  gap:9px;margin:22px 0 24px}
+.pos-feats div{display:flex;align-items:center;gap:9px;font-size:.85rem;font-weight:600;
+  background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16);
+  border-radius:12px;padding:11px 13px}
+.pos-feats i{font-style:normal;color:#7BE8A4;font-weight:800;flex:0 0 auto}
+.pos-cta{display:grid;gap:11px;max-width:400px}
+@media(min-width:560px){.pos-cta{grid-template-columns:1fr 1fr;max-width:520px}}
+.pos-shot{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--r-l);padding:20px;text-align:center}
+.pos-shot img{width:min(230px,68%);margin:0 auto 14px;border-radius:20px;
+  box-shadow:0 20px 44px rgba(3,20,55,.4)}
+.pos-shot p{font-size:.82rem;color:rgba(255,255,255,.85);line-height:1.55}
+
+/* who is this for */
+.who{background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:17px 12px;text-align:center;box-shadow:var(--sh)}
+.who .emo{font-size:1.65rem;margin-bottom:7px;line-height:1}
+.who span{font-family:var(--display);font-size:.81rem;font-weight:700;line-height:1.3;display:block}
+
+/* how it works */
+.steps{display:grid;gap:12px;counter-reset:s}
+@media(min-width:760px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:22px 18px 18px;box-shadow:var(--sh)}
+.step .n{position:absolute;top:-14px;left:18px;width:34px;height:34px;border-radius:11px;
+  background:var(--blue);color:#fff;font-family:var(--display);font-weight:800;
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;
+  box-shadow:0 6px 14px rgba(11,77,186,.32)}
+.step:nth-child(2) .n{background:var(--orange);box-shadow:0 6px 14px rgba(247,147,30,.32)}
+.step:nth-child(3) .n{background:var(--red);box-shadow:0 6px 14px rgba(217,31,38,.3)}
+.step:nth-child(4) .n{background:var(--green);box-shadow:0 6px 14px rgba(31,168,74,.32)}
+.step .emo{font-size:1.6rem;margin:6px 0 9px;line-height:1}
+.step h4{font-size:.98rem;font-weight:700;margin-bottom:6px}
+.step p{font-size:.81rem;line-height:1.55;color:var(--ink-2)}
+
+/* why choose us */
+.why{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);
+  border-radius:var(--r);padding:17px;box-shadow:var(--sh)}
+.why .emo{font-size:1.45rem;line-height:1;flex:0 0 auto}
+.why h4{font-size:.94rem;font-weight:700;margin-bottom:4px}
+.why p{font-size:.8rem;line-height:1.5;color:var(--ink-2)}
+
+/* footer */
+footer{background:#0A1526;color:#fff;padding:40px 0 26px}
+.f-grid{display:grid;gap:26px}
+@media(min-width:700px){.f-grid{grid-template-columns:1.4fr 1fr 1fr}}
+.f-grid h4{font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:#7C8AA3;margin-bottom:13px}
+.f-grid a{display:block;font-size:.87rem;color:#D3DBE8;padding:5px 0}
+.f-grid a:hover{color:#fff}
+.f-brand{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.f-brand img{width:48px;height:48px;border-radius:12px}
+.f-brand b{font-family:var(--display);font-weight:800;font-size:1.05rem}
+.f-about{font-size:.84rem;line-height:1.65;color:#94A2B8;max-width:40ch}
+.f-langs{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+.f-langs button{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;
+  color:#D3DBE8;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:8px 11px}
+.f-langs button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.f-contact{font-size:.85rem;color:#D3DBE8;line-height:1.9}
+.f-bot{border-top:1px solid rgba(255,255,255,.1);margin-top:26px;padding-top:18px;
+  text-align:center;font-size:.78rem;color:#7C8AA3}
+.eco{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-top:11px;font-size:.78rem}
+.eco a{color:#94A2B8}
+
+/* mobile bottom navigation */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(5,1fr);
+  padding-bottom:env(safe-area-inset-bottom)}
+.bnav a,.bnav button{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;height:var(--bar);font-family:var(--display);font-size:.63rem;font-weight:700;
+  color:var(--ink-3);letter-spacing:.01em}
+.bnav .ic{font-size:1.2rem;line-height:1}
+.bnav .on{color:var(--blue)}
+/* It is the MOBILE bottom bar. On desktop the top nav already carries these
+   links, so the bar goes away and takes its body padding with it. */
+@media(min-width:900px){.bnav{display:none}body{padding-bottom:0}}
+
+/* sheets (category catalog + account) */
+.sheet{position:fixed;inset:0;z-index:100;display:none}
+.sheet.open{display:block}
+.sheet-bg{position:absolute;inset:0;background:rgba(10,21,38,.55);backdrop-filter:blur(3px)}
+.sheet-in{position:absolute;left:0;right:0;bottom:0;max-height:88vh;overflow-y:auto;
+  background:#fff;border-radius:var(--r-l) var(--r-l) 0 0;padding:8px 18px 26px;
+  animation:up .26s cubic-bezier(.2,.8,.3,1)}
+@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@media(min-width:700px){.sheet-in{left:50%;right:auto;bottom:auto;top:50%;
+  transform:translate(-50%,-50%);width:min(620px,92vw);border-radius:var(--r-l);
+  animation:pop .22s cubic-bezier(.2,.8,.3,1)}
+  @keyframes pop{from{opacity:0;transform:translate(-50%,-46%) scale(.97)}
+                 to{opacity:1;transform:translate(-50%,-50%) scale(1)}}}
+.sheet-grip{width:42px;height:4px;border-radius:999px;background:var(--line);margin:6px auto 14px}
+@media(min-width:700px){.sheet-grip{display:none}}
+.sheet-in h3{font-size:1.25rem;font-weight:800;margin-bottom:5px}
+.sheet-in .lede{font-size:.87rem;margin-bottom:16px}
+.sheet-x{position:absolute;right:14px;top:12px;width:36px;height:36px;border-radius:11px;
+  background:var(--bg-2);font-size:1.2rem;color:var(--ink-2);display:flex;
+  align-items:center;justify-content:center}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-of-type{border-bottom:0}
+.item .emo{font-size:1.25rem;flex:0 0 auto}
+.item b{font-family:var(--display);font-size:.9rem;font-weight:700;display:block}
+.item small{font-size:.77rem;color:var(--ink-3)}
+.item .order{margin-left:auto;flex:0 0 auto;background:var(--green);color:#fff;
+  font-family:var(--display);font-weight:700;font-size:.78rem;padding:10px 14px;border-radius:11px}
+.sheet-note{background:var(--blue-l);border-radius:var(--r-s);padding:13px 14px;
+  font-size:.8rem;line-height:1.55;color:var(--ink-2);margin-top:16px}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR + LANGUAGE MENU ============ -->
+<header class="top" id="top">
+  <div class="top-in">
+    <a href="#top" class="brand">
+      <img src="../assets/brand-en.png" alt="48HoursReady" id="brandImg">
+      <b id="brandName">48HoursReady</b>
+    </a>
+    <nav class="top-links">
+      <a href="#categories" data-i18n="nav_shop">Shop</a>
+      <a href="#websites" data-i18n="nav_web">Websites</a>
+      <a href="#pos" data-i18n="nav_pos">POS</a>
+      <a href="../ambassador.html" data-i18n="nav_earn">Become a Partner</a>
+      <a href="#how" data-i18n="nav_how">How It Works</a>
+    </nav>
+    <div class="lang" id="langBar"></div>
+  </div>
+</header>
+
+<!-- ============ 1. HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <h1><span data-i18n="hero_1">Everything Your Business Needs.</span>
+          <em data-i18n="hero_2">Delivered in 48 Hours.</em></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Logos • Websites • Business Cards • Marketing • Videos • Business Documents • AI-Powered Solutions</p>
+      <div class="hero-cta">
+        <a href="#pos" class="btn btn-green" data-i18n="cta_trial">🟢 Start Free (7-Day Trial)</a>
+        <a href="#categories" class="btn btn-ghost-w" data-i18n="cta_browse">🔵 Browse Services</a>
+        <a href="../ambassador.html" class="btn btn-orange" data-i18n="cta_partner">🟠 Become a Partner</a>
+      </div>
+      <div class="hero-trust">
+        <span>⚡ <b data-i18n="tr_48">48-hour delivery</b></span>
+        <span>🌎 <b data-i18n="tr_lang">5 languages</b></span>
+        <span>💳 <b data-i18n="tr_pay">MonCash • NatCash • Card</b></span>
+      </div>
+    </div>
+    <!-- laptop, phone, POS terminal, business card and a real, scannable QR -->
+    <div class="scene" aria-hidden="true">
+      <i class="sc-lap"><div></div></i><i class="sc-lapfoot"></i>
+      <i class="sc-phone"><div></div></i>
+      <i class="sc-pos"><div></div><b></b><b></b><b></b></i>
+      <i class="sc-card"><u></u><s></s></i>
+      <i class="sc-qr"><img src="../assets/hero-qr.png" alt=""></i>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. SHOP BY CATEGORY ============ -->
+<section id="categories">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="cat_tag">Shop by category</span>
+      <h2 class="h2" data-i18n="cat_title">What do you need today?</h2>
+      <p class="lede" data-i18n="cat_sub">Pick a category and order in a couple of taps. Everything is delivered within 48 hours.</p>
+    </div>
+    <div class="grid g2" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 3. WEBSITE PACKAGES ============ -->
+<section id="websites" class="sec-alt">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="web_tag">Website packages</span>
+      <h2 class="h2" data-i18n="web_title">Get your business online</h2>
+      <p class="lede" data-i18n="web_sub">Choose the package that fits your business. Every site is mobile-first and ready in 48 hours.</p>
+    </div>
+    <div class="grid g3" id="webGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 4. DIGITAL PRODUCT PACKAGES ============ -->
+<section id="packages">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="pkg_tag">Digital packages</span>
+      <h2 class="h2" data-i18n="pkg_title">Everything, in one package</h2>
+      <p class="lede" data-i18n="pkg_sub">From a single service to a complete business identity in two languages.</p>
+    </div>
+    <div class="grid g3" id="pkgGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 5. POS PLATFORM ============ -->
+<section class="pos" id="pos">
+  <div class="wrap pos-in">
+    <div>
+      <span class="eyebrow" style="background:rgba(255,255,255,.16);color:#fff" data-i18n="pos_tag">POS Platform</span>
+      <h2 data-i18n="pos_title">Start Selling Digital Products Today</h2>
+      <p class="lede" data-i18n="pos_sub">Open your own digital shop. Sell our full catalogue under your name, manage your customers and earn a commission on everything you sell.</p>
+      <div class="pos-feats" id="posFeats"></div>
+      <div class="pos-cta">
+        <a href="https://haitibiznis.com/pos" target="_blank" rel="noopener" class="btn btn-green" data-i18n="pos_cta">Start Free 7-Day Trial</a>
+        <button class="btn btn-ghost-w" onclick="openDemo()" data-i18n="pos_demo">▶ Watch Demo</button>
+      </div>
+    </div>
+    <div class="pos-shot">
+      <img src="../assets/brand-en.png" alt="48HoursReady POS" id="posLogo">
+      <p data-i18n="pos_note">The POS works on any phone, in all 5 languages, and keeps working when the internet drops.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. WHO IS THIS FOR ============ -->
+<section id="who">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="who_tag">Who is this for</span>
+      <h2 class="h2" data-i18n="who_title">Built for people who sell</h2>
+    </div>
+    <div class="grid g4" id="whoGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 7. HOW IT WORKS ============ -->
+<section id="how" class="sec-alt">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:30px">
+      <span class="eyebrow" data-i18n="how_tag">How it works</span>
+      <h2 class="h2" data-i18n="how_title">From idea to delivery in 4 steps</h2>
+    </div>
+    <div class="steps" id="stepGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 8. WHY CHOOSE US ============ -->
+<section id="why">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="why_tag">Why choose us</span>
+      <h2 class="h2" data-i18n="why_title">Why businesses pick 48HoursReady</h2>
+    </div>
+    <div class="grid g3" id="whyGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 17. FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">
+          <img src="../assets/brand-en.png" alt="48HoursReady" id="footBrand">
+          <b id="footName">48HoursReady</b>
+        </div>
+        <p class="f-about" data-i18n="f_about">Helping entrepreneurs structure, launch and grow their businesses faster. A HaitiBiznis platform.</p>
+        <h4 style="margin-top:20px" data-i18n="f_langs">Languages</h4>
+        <div class="f-langs" id="footLangs"></div>
+      </div>
+      <div>
+        <h4 data-i18n="f_links">Quick Links</h4>
+        <a href="#packages" data-i18n="f_products">Products</a>
+        <a href="#websites" data-i18n="f_websites">Websites</a>
+        <a href="#pos" data-i18n="f_pos">POS</a>
+        <a href="../ambassador.html" data-i18n="f_partner">Become a Partner</a>
+        <a href="#" onclick="openAccount();return false" data-i18n="f_support">Support</a>
+      </div>
+      <div>
+        <h4 data-i18n="f_contact">Contact</h4>
+        <p class="f-contact">
+          🌐 48HoursReady.com<br>
+          📞 +509 46 85 9702<br>
+          ✉ info@48hoursready.com
+        </p>
+        <a href="#" onclick="waOrder('');return false" style="margin-top:10px;color:#7BE8A4;font-weight:700" data-i18n="f_wa">💬 Chat on WhatsApp</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      © 2026 48HoursReady. <span data-i18n="f_plat">A HaitiBiznis platform.</span>
+      <div class="eco">
+        <a href="https://haitibiznis.com" target="_blank" rel="noopener">HaitiBiznis</a>
+        <a href="https://myplopplop.com" target="_blank" rel="noopener">MyPlopPlop</a>
+        <a href="https://msouwout.com" target="_blank" rel="noopener">MsouWout</a>
+        <a href="https://prolakay.haitibiznis.com" target="_blank" rel="noopener">Pwofesyonèl Lakay</a>
+        <a href="https://boxetoboxe.com" target="_blank" rel="noopener">BoxeToBoxe</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ 13. MOBILE BOTTOM NAVIGATION ============ -->
+<nav class="bnav" id="bnav">
+  <a href="#top"        data-nav="top"        class="on"><span class="ic">🏠</span><span data-i18n="b_home">Home</span></a>
+  <a href="#categories" data-nav="categories"><span class="ic">🛍</span><span data-i18n="b_shop">Shop</span></a>
+  <a href="#pos"        data-nav="pos"><span class="ic">💻</span><span data-i18n="b_pos">POS</span></a>
+  <a href="../ambassador.html"><span class="ic">💰</span><span data-i18n="b_earn">Earn</span></a>
+  <button onclick="openAccount()"><span class="ic">👤</span><span data-i18n="b_acct">Account</span></button>
+</nav>
+
+<!-- ============ SHEETS ============ -->
+<div class="sheet" id="sheet">
+  <div class="sheet-bg" onclick="closeSheet()"></div>
+  <div class="sheet-in">
+    <button class="sheet-x" onclick="closeSheet()" aria-label="Close">✕</button>
+    <div class="sheet-grip"></div>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   48HoursReady v2 — one file, no build step, no external JS.
+   ================================================================ */
+
+/* The WhatsApp number printed on the client's own price boards. */
+const WA = '50946859702';
+/* GDES is the price the client publishes. The USD line underneath is a
+   convenience only — change this ONE number and every card follows. */
+const USD_RATE = 132;
+
+/* ---------------- languages ----------------
+   Adding a 6th language means adding it HERE and in T{} — nothing else
+   reads a hardcoded language list. */
+const LANGS = [
+  {c:'en', pill:'EN', flag:'🇺🇸', name:'English'},
+  {c:'fr', pill:'FR', flag:'🇫🇷', name:'Français'},
+  {c:'ht', pill:'HT', flag:'🇭🇹', name:'Kreyòl'},
+  {c:'es', pill:'ES', flag:'🇩🇴', name:'Español'},
+  {c:'pt', pill:'PT', flag:'🇧🇷', name:'Português'}
+];
+/* One brand lock-up per language — the client had each one drawn in its
+   own language, so the logo changes with the menu. */
+const BRAND = {
+  en:{img:'../assets/brand-en.png', name:'48 Hours Ready'},
+  fr:{img:'../assets/brand-fr.png', name:'48 Heures Prêt'},
+  ht:{img:'../assets/brand-ht.png', name:'48 Èdtan Pare'},
+  es:{img:'../assets/brand-es.png', name:'48 Horas Listo'},
+  pt:{img:'../assets/brand-pt.png', name:'48 Horas Pronto'}
+};
+
+const T = {
+en:{
+ nav_shop:'Shop',nav_web:'Websites',nav_pos:'POS',nav_earn:'Become a Partner',nav_how:'How It Works',
+ hero_1:'Everything Your Business Needs.',hero_2:'Delivered in 48 Hours.',
+ hero_sub:'Logos • Websites • Business Cards • Marketing • Videos • Business Documents • AI-Powered Solutions',
+ cta_trial:'🟢 Start Free (7-Day Trial)',cta_browse:'🔵 Browse Services',cta_partner:'🟠 Become a Partner',
+ tr_48:'48-hour delivery',tr_lang:'5 languages',tr_pay:'MonCash • NatCash • Card',
+ cat_tag:'Shop by category',cat_title:'What do you need today?',
+ cat_sub:'Pick a category and order in a couple of taps. Everything is delivered within 48 hours.',
+ web_tag:'Website packages',web_title:'Get your business online',
+ web_sub:'Choose the package that fits your business. Every site is mobile-first and ready in 48 hours.',
+ pkg_tag:'Digital packages',pkg_title:'Everything, in one package',
+ pkg_sub:'From a single service to a complete business identity in two languages.',
+ pos_tag:'POS Platform',pos_title:'Start Selling Digital Products Today',
+ pos_sub:'Open your own digital shop. Sell our full catalogue under your name, manage your customers and earn a commission on everything you sell.',
+ pos_cta:'Start Free 7-Day Trial',pos_demo:'▶ Watch Demo',
+ pos_note:'The POS works on any phone, in all 5 languages, and keeps working when the internet drops.',
+ who_tag:'Who is this for',who_title:'Built for people who sell',
+ how_tag:'How it works',how_title:'From idea to delivery in 4 steps',
+ why_tag:'Why choose us',why_title:'Why businesses pick 48HoursReady',
+ f_about:'Helping entrepreneurs structure, launch and grow their businesses faster. A HaitiBiznis platform.',
+ f_langs:'Languages',f_links:'Quick Links',f_products:'Products',f_websites:'Websites',f_pos:'POS',
+ f_partner:'Become a Partner',f_support:'Support',f_contact:'Contact',f_wa:'💬 Chat on WhatsApp',
+ f_plat:'A HaitiBiznis platform.',
+ b_home:'Home',b_shop:'Shop',b_pos:'POS',b_earn:'Earn',b_acct:'Account',
+ order:'Order',deliv:'Delivered in 48 hours',from:'from',
+ acct_t:'Your account',acct_s:'Order tracking and downloads arrive with the customer dashboard. Until then we look after everything on WhatsApp — send us your order number and we reply with the status.',
+ acct_track:'💬 Track my order',acct_help:'🎧 Talk to support',acct_partner:'💰 Partner sign-up',
+ demo_t:'Watch the demo',demo_s:'A short walk-through of how 48HoursReady works.',
+ cat_open:'View catalogue',pop:'Most popular',launch:'For launch'
+},
+fr:{
+ nav_shop:'Boutique',nav_web:'Sites Web',nav_pos:'POS',nav_earn:'Devenir Partenaire',nav_how:'Comment ça marche',
+ hero_1:'Tout ce dont votre entreprise a besoin.',hero_2:'Livré en 48 heures.',
+ hero_sub:'Logos • Sites Web • Cartes de visite • Marketing • Vidéos • Documents d\'entreprise • Solutions IA',
+ cta_trial:'🟢 Essai gratuit (7 jours)',cta_browse:'🔵 Voir les services',cta_partner:'🟠 Devenir partenaire',
+ tr_48:'Livraison en 48h',tr_lang:'5 langues',tr_pay:'MonCash • NatCash • Carte',
+ cat_tag:'Par catégorie',cat_title:'De quoi avez-vous besoin aujourd\'hui ?',
+ cat_sub:'Choisissez une catégorie et commandez en deux clics. Tout est livré en 48 heures.',
+ web_tag:'Forfaits site web',web_title:'Mettez votre entreprise en ligne',
+ web_sub:'Choisissez le forfait adapté à votre entreprise. Chaque site est pensé mobile et prêt en 48 heures.',
+ pkg_tag:'Forfaits numériques',pkg_title:'Tout, dans un seul forfait',
+ pkg_sub:'D\'un seul service à une identité d\'entreprise complète en deux langues.',
+ pos_tag:'Plateforme POS',pos_title:'Commencez à vendre dès aujourd\'hui',
+ pos_sub:'Ouvrez votre propre boutique numérique. Vendez tout notre catalogue à votre nom, gérez vos clients et gagnez une commission sur chaque vente.',
+ pos_cta:'Essai gratuit de 7 jours',pos_demo:'▶ Voir la démo',
+ pos_note:'Le POS fonctionne sur n\'importe quel téléphone, dans les 5 langues, et continue de marcher sans internet.',
+ who_tag:'Pour qui',who_title:'Conçu pour ceux qui vendent',
+ how_tag:'Comment ça marche',how_title:'De l\'idée à la livraison en 4 étapes',
+ why_tag:'Pourquoi nous',why_title:'Pourquoi les entreprises choisissent 48HoursReady',
+ f_about:'Nous aidons les entrepreneurs à structurer, lancer et développer leur entreprise plus vite. Une plateforme HaitiBiznis.',
+ f_langs:'Langues',f_links:'Liens rapides',f_products:'Produits',f_websites:'Sites Web',f_pos:'POS',
+ f_partner:'Devenir partenaire',f_support:'Support',f_contact:'Contact',f_wa:'💬 Discuter sur WhatsApp',
+ f_plat:'Une plateforme HaitiBiznis.',
+ b_home:'Accueil',b_shop:'Boutique',b_pos:'POS',b_earn:'Gagner',b_acct:'Compte',
+ order:'Commander',deliv:'Livré en 48 heures',from:'à partir de',
+ acct_t:'Votre compte',acct_s:'Le suivi des commandes et les téléchargements arriveront avec le tableau de bord client. En attendant, nous gérons tout sur WhatsApp — envoyez votre numéro de commande et nous répondons avec le statut.',
+ acct_track:'💬 Suivre ma commande',acct_help:'🎧 Parler au support',acct_partner:'💰 Devenir partenaire',
+ demo_t:'Voir la démo',demo_s:'Une courte présentation du fonctionnement de 48HoursReady.',
+ cat_open:'Voir le catalogue',pop:'Le plus populaire',launch:'Pour le lancement'
+},
+ht:{
+ nav_shop:'Boutik',nav_web:'Sit Entènèt',nav_pos:'POS',nav_earn:'Vin Patnè',nav_how:'Kijan sa mache',
+ hero_1:'Tout sa biznis ou bezwen.',hero_2:'Livre nan 48 èdtan.',
+ hero_sub:'Logo • Sit Entènèt • Kat Biznis • Maketing • Videyo • Dokiman Biznis • Solisyon AI',
+ cta_trial:'🟢 Kòmanse Gratis (7 Jou)',cta_browse:'🔵 Gade Sèvis yo',cta_partner:'🟠 Vin Patnè',
+ tr_48:'Livrezon an 48 èdtan',tr_lang:'5 lang',tr_pay:'MonCash • NatCash • Kat',
+ cat_tag:'Chwazi kategori',cat_title:'Kisa ou bezwen jodi a ?',
+ cat_sub:'Chwazi yon kategori epi kòmande nan de klik. Tout bagay livre nan 48 èdtan.',
+ web_tag:'Pakè Sit Entènèt',web_title:'Mete biznis ou sou entènèt',
+ web_sub:'Chwazi pakè ki adapte ak biznis ou. Chak sit fèt pou telefòn epi li pare nan 48 èdtan.',
+ pkg_tag:'Pakè Dijital',pkg_title:'Tout bagay, nan yon sèl pakè',
+ pkg_sub:'Depi yon sèl sèvis rive nan yon idantite biznis konplè nan de lang.',
+ pos_tag:'Platfòm POS',pos_title:'Kòmanse vann pwodwi dijital jodi a',
+ pos_sub:'Louvri pwòp boutik dijital ou. Vann tout katalòg nou an anba non ou, jere kliyan ou yo epi touche komisyon sou chak vant.',
+ pos_cta:'Kòmanse 7 Jou Gratis',pos_demo:'▶ Gade Demo a',
+ pos_note:'POS la mache sou nenpòt telefòn, nan tout 5 lang yo, epi li kontinye mache lè entènèt la koupe.',
+ who_tag:'Pou ki moun',who_title:'Fèt pou moun k ap vann',
+ how_tag:'Kijan sa mache',how_title:'Depi lide rive nan livrezon nan 4 etap',
+ why_tag:'Poukisa nou',why_title:'Poukisa biznis yo chwazi 48HoursReady',
+ f_about:'N ap ede antreprenè yo estriktire, lanse epi devlope biznis yo pi vit. Yon platfòm HaitiBiznis.',
+ f_langs:'Lang',f_links:'Lyen Rapid',f_products:'Pwodwi',f_websites:'Sit Entènèt',f_pos:'POS',
+ f_partner:'Vin Patnè',f_support:'Sipò',f_contact:'Kontak',f_wa:'💬 Pale sou WhatsApp',
+ f_plat:'Yon platfòm HaitiBiznis.',
+ b_home:'Akèy',b_shop:'Boutik',b_pos:'POS',b_earn:'Touche',b_acct:'Kont',
+ order:'Kòmande',deliv:'Livre nan 48 èdtan',from:'apati',
+ acct_t:'Kont ou',acct_s:'Swivi kòmand ak telechajman yo ap vini ak tablo kliyan an. Anvan sa, nou jere tout bagay sou WhatsApp — voye nimewo kòmand ou epi n ap reponn ak estati a.',
+ acct_track:'💬 Swiv kòmand mwen',acct_help:'🎧 Pale ak sipò',acct_partner:'💰 Enskri kòm patnè',
+ demo_t:'Gade demo a',demo_s:'Yon ti prezantasyon sou kijan 48HoursReady mache.',
+ cat_open:'Gade katalòg la',pop:'Pi popilè',launch:'Pou lansman'
+},
+es:{
+ nav_shop:'Tienda',nav_web:'Sitios Web',nav_pos:'POS',nav_earn:'Ser Socio',nav_how:'Cómo funciona',
+ hero_1:'Todo lo que tu negocio necesita.',hero_2:'Entregado en 48 horas.',
+ hero_sub:'Logos • Sitios Web • Tarjetas de presentación • Marketing • Videos • Documentos de negocio • Soluciones con IA',
+ cta_trial:'🟢 Prueba gratis (7 días)',cta_browse:'🔵 Ver servicios',cta_partner:'🟠 Ser socio',
+ tr_48:'Entrega en 48 horas',tr_lang:'5 idiomas',tr_pay:'MonCash • NatCash • Tarjeta',
+ cat_tag:'Por categoría',cat_title:'¿Qué necesitas hoy?',
+ cat_sub:'Elige una categoría y ordena en dos toques. Todo se entrega en 48 horas.',
+ web_tag:'Paquetes de sitio web',web_title:'Pon tu negocio en línea',
+ web_sub:'Elige el paquete que se ajusta a tu negocio. Cada sitio es primero móvil y está listo en 48 horas.',
+ pkg_tag:'Paquetes digitales',pkg_title:'Todo, en un solo paquete',
+ pkg_sub:'Desde un solo servicio hasta una identidad de negocio completa en dos idiomas.',
+ pos_tag:'Plataforma POS',pos_title:'Empieza a vender productos digitales hoy',
+ pos_sub:'Abre tu propia tienda digital. Vende todo nuestro catálogo con tu nombre, gestiona tus clientes y gana comisión en cada venta.',
+ pos_cta:'Prueba gratis de 7 días',pos_demo:'▶ Ver demo',
+ pos_note:'El POS funciona en cualquier teléfono, en los 5 idiomas, y sigue funcionando cuando se cae el internet.',
+ who_tag:'Para quién',who_title:'Hecho para quienes venden',
+ how_tag:'Cómo funciona',how_title:'De la idea a la entrega en 4 pasos',
+ why_tag:'Por qué nosotros',why_title:'Por qué los negocios eligen 48HoursReady',
+ f_about:'Ayudamos a los emprendedores a estructurar, lanzar y crecer su negocio más rápido. Una plataforma HaitiBiznis.',
+ f_langs:'Idiomas',f_links:'Enlaces rápidos',f_products:'Productos',f_websites:'Sitios Web',f_pos:'POS',
+ f_partner:'Ser socio',f_support:'Soporte',f_contact:'Contacto',f_wa:'💬 Chatear por WhatsApp',
+ f_plat:'Una plataforma HaitiBiznis.',
+ b_home:'Inicio',b_shop:'Tienda',b_pos:'POS',b_earn:'Ganar',b_acct:'Cuenta',
+ order:'Ordenar',deliv:'Entregado en 48 horas',from:'desde',
+ acct_t:'Tu cuenta',acct_s:'El seguimiento de pedidos y las descargas llegan con el panel de cliente. Mientras tanto lo gestionamos todo por WhatsApp — envíanos tu número de pedido y respondemos con el estado.',
+ acct_track:'💬 Seguir mi pedido',acct_help:'🎧 Hablar con soporte',acct_partner:'💰 Registro de socios',
+ demo_t:'Ver la demo',demo_s:'Un recorrido corto de cómo funciona 48HoursReady.',
+ cat_open:'Ver catálogo',pop:'Más popular',launch:'Para lanzar'
+},
+pt:{
+ nav_shop:'Loja',nav_web:'Sites',nav_pos:'POS',nav_earn:'Seja Parceiro',nav_how:'Como funciona',
+ hero_1:'Tudo o que o seu negócio precisa.',hero_2:'Entregue em 48 horas.',
+ hero_sub:'Logos • Sites • Cartões de visita • Marketing • Vídeos • Documentos empresariais • Soluções com IA',
+ cta_trial:'🟢 Teste grátis (7 dias)',cta_browse:'🔵 Ver serviços',cta_partner:'🟠 Seja parceiro',
+ tr_48:'Entrega em 48 horas',tr_lang:'5 idiomas',tr_pay:'Pix • MonCash • Cartão',
+ cat_tag:'Por categoria',cat_title:'Do que você precisa hoje?',
+ cat_sub:'Escolha uma categoria e peça em dois toques. Tudo é entregue em 48 horas.',
+ web_tag:'Pacotes de site',web_title:'Coloque seu negócio online',
+ web_sub:'Escolha o pacote que combina com o seu negócio. Todo site é pensado para celular e fica pronto em 48 horas.',
+ pkg_tag:'Pacotes digitais',pkg_title:'Tudo, em um único pacote',
+ pkg_sub:'De um único serviço a uma identidade completa de negócio em dois idiomas.',
+ pos_tag:'Plataforma POS',pos_title:'Comece a vender produtos digitais hoje',
+ pos_sub:'Abra a sua própria loja digital. Venda todo o nosso catálogo com o seu nome, gerencie seus clientes e ganhe comissão em cada venda.',
+ pos_cta:'Teste grátis de 7 dias',pos_demo:'▶ Ver demonstração',
+ pos_note:'O POS funciona em qualquer celular, nos 5 idiomas, e continua funcionando quando a internet cai.',
+ who_tag:'Para quem é',who_title:'Feito para quem vende',
+ how_tag:'Como funciona',how_title:'Da ideia à entrega em 4 passos',
+ why_tag:'Por que nós',why_title:'Por que as empresas escolhem a 48HoursReady',
+ f_about:'Ajudamos empreendedores a estruturar, lançar e crescer seus negócios mais rápido. Uma plataforma HaitiBiznis.',
+ f_langs:'Idiomas',f_links:'Links rápidos',f_products:'Produtos',f_websites:'Sites',f_pos:'POS',
+ f_partner:'Seja parceiro',f_support:'Suporte',f_contact:'Contato',f_wa:'💬 Falar no WhatsApp',
+ f_plat:'Uma plataforma HaitiBiznis.',
+ b_home:'Início',b_shop:'Loja',b_pos:'POS',b_earn:'Ganhar',b_acct:'Conta',
+ order:'Pedir',deliv:'Entregue em 48 horas',from:'a partir de',
+ acct_t:'Sua conta',acct_s:'O acompanhamento de pedidos e os downloads chegam com o painel do cliente. Até lá cuidamos de tudo pelo WhatsApp — envie o número do seu pedido e respondemos com o status.',
+ acct_track:'💬 Acompanhar meu pedido',acct_help:'🎧 Falar com o suporte',acct_partner:'💰 Cadastro de parceiro',
+ demo_t:'Ver a demonstração',demo_s:'Uma apresentação curta de como a 48HoursReady funciona.',
+ cat_open:'Ver catálogo',pop:'Mais popular',launch:'Para lançar'
+}};
+
+/* ---------------- catalogue data ----------------
+   Every label is an array in LANGS order: [en,fr,ht,es,pt] — so a new
+   language is one more entry, never a new code path. */
+const L = (a)=>a[LANGS.findIndex(x=>x.c===lang)] ?? a[0];
+
+const CATS = [
+ {cls:'cat-1',emo:'🎨',
+  nm:['Branding','Image de marque','Imaj Mak','Marca','Marca'],
+  ds:['Logo, business card, QR code, flyer, banner.',
+      'Logo, carte de visite, QR code, flyer, bannière.',
+      'Logo, kat biznis, QR code, flyer, banyè.',
+      'Logo, tarjeta, código QR, volante, banner.',
+      'Logo, cartão, QR code, panfleto, banner.'],
+  items:[
+   {e:'🎨',n:['Professional logo','Logo professionnel','Logo Pwofesyonèl','Logo profesional','Logo profissional'],p:500},
+   {e:'💳',n:['Business card','Carte de visite','Kat Biznis','Tarjeta de presentación','Cartão de visita'],p:500},
+   {e:'🔳',n:['Permanent QR code','QR code permanent','QR Code Pèmanan','Código QR permanente','QR code permanente'],p:500},
+   {e:'📄',n:['Flyer / poster','Flyer / affiche','Flyer / Afich','Volante / afiche','Panfleto / cartaz'],p:1000},
+   {e:'🖼',n:['Banner / cover','Bannière / couverture','Banyè / Kouvèti','Banner / portada','Banner / capa'],p:500},
+   {e:'📇',n:['Digital business card','Carte de visite numérique','Kat Biznis Dijital','Tarjeta digital','Cartão digital'],p:1000}
+  ]},
+ {cls:'cat-2',emo:'🌐',
+  nm:['Websites','Sites Web','Sit Entènèt','Sitios Web','Sites'],
+  ds:['Landing page, business website, e-commerce.',
+      'Landing page, site vitrine, e-commerce.',
+      'Landing page, sit biznis, e-commerce.',
+      'Landing page, sitio de negocio, e-commerce.',
+      'Landing page, site institucional, e-commerce.'],
+  items:[
+   {e:'📄',n:['Landing page (3 sections)','Landing page (3 sections)','Landing Page (3 Seksyon)','Landing page (3 secciones)','Landing page (3 seções)'],p:1000},
+   {e:'🌐',n:['Website — 5 sections','Site web — 5 sections','Sit Entènèt — 5 Seksyon','Sitio web — 5 secciones','Site — 5 seções'],p:2000},
+   {e:'🌐',n:['Website — 7 sections','Site web — 7 sections','Sit Entènèt — 7 Seksyon','Sitio web — 7 secciones','Site — 7 seções'],p:3000},
+   {e:'🌐',n:['Website — 9 sections','Site web — 9 sections','Sit Entènèt — 9 Seksyon','Sitio web — 9 secciones','Site — 9 seções'],p:4000},
+   {e:'🛒',n:['Domain + hosting + full setup','Domaine + hébergement + installation','Domèn + Hosting + Setup Konplè','Dominio + hosting + instalación','Domínio + hospedagem + instalação'],p:7500}
+  ]},
+ {cls:'cat-3',emo:'📄',
+  nm:['Business Documents','Documents d\'entreprise','Dokiman Biznis','Documentos de negocio','Documentos empresariais'],
+  ds:['Executive summary, pitch deck, company profile.',
+      'Résumé exécutif, pitch deck, profil d\'entreprise.',
+      'Rezime egzekitif, pitch deck, pwofil konpayi.',
+      'Resumen ejecutivo, pitch deck, perfil de empresa.',
+      'Resumo executivo, pitch deck, perfil da empresa.'],
+  items:[
+   {e:'📝',n:['Executive summary','Résumé exécutif','Rezime Egzekitif','Resumen ejecutivo','Resumo executivo'],p:1000},
+   {e:'📊',n:['Investor pitch deck','Pitch deck investisseurs','Pitch Deck Envestisè','Pitch deck para inversores','Pitch deck para investidores'],p:10000},
+   {e:'📰',n:['Press release','Communiqué de presse','Kominike pou Laprès','Comunicado de prensa','Comunicado de imprensa'],p:10000},
+   {e:'📖',n:['Digital flipbook','Flipbook numérique','Flipbook Dijital','Flipbook digital','Flipbook digital'],p:1000},
+   {e:'📋',n:['Professional CV','CV professionnel','CV Pwofesyonèl','CV profesional','Currículo profissional'],p:500}
+  ]},
+ {cls:'cat-4',emo:'📢',
+  nm:['Marketing','Marketing','Maketing','Marketing','Marketing'],
+  ds:['Social media, promotional videos, AI content.',
+      'Réseaux sociaux, vidéos promotionnelles, contenu IA.',
+      'Rezo sosyal, videyo promosyonèl, kontni AI.',
+      'Redes sociales, videos promocionales, contenido con IA.',
+      'Redes sociais, vídeos promocionais, conteúdo com IA.'],
+  items:[
+   {e:'🎥',n:['Explainer video','Vidéo explicative','Video Eksplikatif','Video explicativo','Vídeo explicativo'],p:1000},
+   {e:'📱',n:['10-second promo video','Publicité vidéo 10 secondes','Piblisite Video 10 Segonn','Video promo de 10 segundos','Vídeo promo de 10 segundos'],p:1000},
+   {e:'📸',n:['Photo editing','Retouche photo','Modifikasyon Foto','Edición de fotos','Edição de fotos'],p:500},
+   {e:'✏️',n:['Graphic design (social posts)','Design graphique (réseaux)','Desen Grafik (rezo sosyal)','Diseño gráfico (redes)','Design gráfico (redes)'],p:500},
+   {e:'💌',n:['Digital invitation card','Carte d\'invitation numérique','Kat Envitasyon Dijital','Tarjeta de invitación digital','Convite digital'],p:500}
+  ]}
+];
+
+/* §3 — the client's published website menu, reproduced exactly. */
+const WEBS = [
+ {gdes:2000,nm:['5 Sections','5 Sections','5 Seksyon','5 Secciones','5 Seções'],
+  f:[['Home','Accueil','Akèy','Inicio','Início'],['About us','À propos','Sou Nou','Sobre nosotros','Sobre nós'],
+     ['Services','Services','Sèvis','Servicios','Serviços'],['Gallery','Galerie','Galeri','Galería','Galeria'],
+     ['Contact','Contact','Kontak','Contacto','Contato']]},
+ {gdes:3000,nm:['7 Sections','7 Sections','7 Seksyon','7 Secciones','7 Seções'],
+  f:[['Home','Accueil','Akèy','Inicio','Início'],['About us','À propos','Sou Nou','Sobre nosotros','Sobre nós'],
+     ['Services','Services','Sèvis','Servicios','Serviços'],['Why choose us','Pourquoi nous choisir','Poukisa Chwazi Nou','Por qué elegirnos','Por que nos escolher'],
+     ['Testimonials','Témoignages','Temoignaj','Testimonios','Depoimentos'],['Gallery','Galerie','Galeri','Galería','Galeria'],
+     ['FAQ','FAQ','FAQ','Preguntas frecuentes','Perguntas frequentes'],['Contact','Contact','Kontak','Contacto','Contato']]},
+ {gdes:4000,nm:['9 Sections','9 Sections','9 Seksyon','9 Secciones','9 Seções'],
+  f:[['Home','Accueil','Akèy','Inicio','Início'],['About us','À propos','Sou Nou','Sobre nosotros','Sobre nós'],
+     ['Services','Services','Sèvis','Servicios','Serviços'],['Why choose us','Pourquoi nous choisir','Poukisa Chwazi Nou','Por qué elegirnos','Por que nos escolher'],
+     ['Testimonials','Témoignages','Temoignaj','Testimonios','Depoimentos'],['Portfolio','Portfolio','Pòtfèy','Portafolio','Portfólio'],
+     ['Gallery','Galerie','Galeri','Galería','Galeria'],['Team','Équipe','Ekip','Equipo','Equipe'],
+     ['News section','Section actualités','Pati Nouvèl','Sección de noticias','Seção de notícias'],
+     ['FAQ + Contact','FAQ + Contact','FAQ + Kontak','FAQ + Contacto','FAQ + Contato']],
+  tag:'best'},
+ {gdes:7500,nm:['Complete Website','Site Web Complet','Sit Konplè','Sitio Web Completo','Site Completo'],
+  hot:true,
+  f:[['Domain name search','Recherche de nom de domaine','Rechèch non domèn','Búsqueda de dominio','Busca de domínio'],
+     ['Domain purchase','Achat du domaine','Acha domèn','Compra del dominio','Compra do domínio'],
+     ['Hosting setup','Installation de l\'hébergement','Enstalasyon Hosting','Instalación del hosting','Instalação da hospedagem'],
+     ['Site connected and live','Site connecté et en ligne','Sit konekte epi pare','Sitio conectado y en línea','Site conectado e no ar'],
+     ['Everything in the 4,000 GDES package','Tout le forfait 4 000 GDES','Tout sa ki nan pakè 4,000 GDES','Todo el paquete de 4,000 GDES','Tudo do pacote de 4.000 GDES'],
+     ['+ advanced options','+ options avancées','+ Plis opsyon avanse','+ opciones avanzadas','+ opções avançadas']]}
+];
+
+/* §4 — the client's published service menu, all five real tiers. */
+const PKGS = [
+ {gdes:500,nm:['Choose 1 Service','Choisir 1 service','Chwazi 1 Sèvis','Elige 1 servicio','Escolha 1 serviço'],
+  note:['Pick any one of these','Choisissez-en un','Chwazi youn nan sa yo','Elige uno de estos','Escolha um destes'],
+  f:[['Professional logo','Logo professionnel','Logo Pwofesyonèl','Logo profesional','Logo profissional'],
+     ['Business card','Carte de visite','Kat Biznis','Tarjeta de presentación','Cartão de visita'],
+     ['Photo editing','Retouche photo','Modifikasyon Foto','Edición de fotos','Edição de fotos'],
+     ['Graphic design','Design graphique','Desen Grafik','Diseño gráfico','Design gráfico'],
+     ['Permanent QR code','QR code permanent','QR Code Pèmanan','Código QR permanente','QR code permanente'],
+     ['Digital invitation card','Carte d\'invitation numérique','Kat Envitasyon Dijital','Tarjeta de invitación digital','Convite digital'],
+     ['Professional CV','CV professionnel','CV Pwofesyonèl','CV profesional','Currículo profissional']]},
+ {gdes:1000,nm:['Choose 1 Service','Choisir 1 service','Chwazi 1 Sèvis','Elige 1 servicio','Escolha 1 serviço'],
+  note:['Pick any one of these','Choisissez-en un','Chwazi youn nan sa yo','Elige uno de estos','Escolha um destes'],
+  f:[['Digital flipbook','Flipbook numérique','Flipbook Dijital','Flipbook digital','Flipbook digital'],
+     ['Flyer / poster','Flyer / affiche','Flyer / Afich','Volante / afiche','Panfleto / cartaz'],
+     ['Digital business card','Carte de visite numérique','Kat Biznis Dijital','Tarjeta digital','Cartão digital'],
+     ['Executive summary','Résumé exécutif','Rezime Egzekitif','Resumen ejecutivo','Resumo executivo'],
+     ['Explainer video','Vidéo explicative','Video Eksplikatif','Video explicativo','Vídeo explicativo'],
+     ['10-second promo video','Publicité vidéo 10 secondes','Piblisite Video 10 Segonn','Video promo de 10 segundos','Vídeo promo de 10 segundos'],
+     ['Landing page (3 sections)','Landing page (3 sections)','Landing Page (3 Seksyon)','Landing page (3 secciones)','Landing page (3 seções)']]},
+ {gdes:5000,nm:['Starter Package','Forfait Démarrage','Pakè Demaraj','Paquete Inicial','Pacote Inicial'],
+  note:['Everything below included','Tout est inclus','Tout sa ki anba yo enkli','Todo lo de abajo incluido','Tudo abaixo incluído'],
+  f:[['Logo','Logo','Logo','Logo','Logo'],
+     ['Business card','Carte de visite','Kat Biznis','Tarjeta de presentación','Cartão de visita'],
+     ['Executive summary','Résumé exécutif','Rezime Egzekitif','Resumen ejecutivo','Resumo executivo'],
+     ['Explainer video','Vidéo explicative','Video Eksplikatif','Video explicativo','Vídeo explicativo'],
+     ['10-second promo video','Vidéo promo 10 secondes','Video Promo 10 Segonn','Video promo de 10 segundos','Vídeo promo de 10 segundos'],
+     ['Permanent QR code','QR code permanent','QR Code Pèmanan','Código QR permanente','QR code permanente'],
+     ['Landing page (5 sections)','Landing page (5 sections)','Landing Page (5 Seksyon)','Landing page (5 secciones)','Landing page (5 seções)']],
+  bonus:['MyPlopPlop Marketplace listing','Inscription MyPlopPlop Marketplace','Enskripsyon MyPlopPlop Marketplace','Registro en MyPlopPlop Marketplace','Cadastro no MyPlopPlop Marketplace']},
+ {gdes:10000,nm:['Business Ready','Business Ready','Pakè Biznis','Business Ready','Business Ready'],
+  note:['Everything below included','Tout est inclus','Tout sa ki anba yo enkli','Todo lo de abajo incluido','Tudo abaixo incluído'],
+  f:[['Logo','Logo','Logo','Logo','Logo'],
+     ['Business card','Carte de visite','Kat Biznis','Tarjeta de presentación','Cartão de visita'],
+     ['Executive summary','Résumé exécutif','Executive Summary','Resumen ejecutivo','Resumo executivo'],
+     ['Investor pitch deck','Pitch deck investisseurs','Pitch Deck Envestisè','Pitch deck para inversores','Pitch deck para investidores'],
+     ['Explainer video','Vidéo explicative','Video Eksplikatif','Video explicativo','Vídeo explicativo'],
+     ['Promo video','Vidéo promo','Video Promo','Video promocional','Vídeo promocional'],
+     ['Press release','Communiqué de presse','Kominike pou Laprès','Comunicado de prensa','Comunicado de imprensa']]},
+ {gdes:15000,nm:['Premium — 2 Languages','Premium — 2 Langues','Premium — 2 Lang','Premium — 2 Idiomas','Premium — 2 Idiomas'],
+  hot:true,
+  note:['The 10,000 GDES package plus','Le forfait 10 000 GDES plus','Tout Pakè 10,000 GDES + sa yo','El paquete de 10,000 GDES más','O pacote de 10.000 GDES mais'],
+  f:[['Translation (EN/FR or FR/EN)','Traduction (EN/FR ou FR/EN)','Tradiksyon (EN/FR oswa FR/EN)','Traducción (EN/FR o FR/EN)','Tradução (EN/FR ou FR/EN)'],
+     ['Website in 2 languages','Site web en 2 langues','Sit Entènèt nan 2 Lang','Sitio web en 2 idiomas','Site em 2 idiomas'],
+     ['Pitch deck in 2 languages','Pitch deck en 2 langues','Pitch Deck nan 2 Lang','Pitch deck en 2 idiomas','Pitch deck em 2 idiomas'],
+     ['Press release in 2 languages','Communiqué en 2 langues','Press Release nan 2 Lang','Comunicado en 2 idiomas','Comunicado em 2 idiomas'],
+     ['Flipbook in 2 languages','Flipbook en 2 langues','Flipbook nan 2 Lang','Flipbook en 2 idiomas','Flipbook em 2 idiomas']]}
+];
+
+const POSF = [
+ ['Sell logos','Vendre des logos','Vann logo','Vender logos','Vender logos'],
+ ['Sell websites','Vendre des sites web','Vann sit entènèt','Vender sitios web','Vender sites'],
+ ['Sell business cards','Vendre des cartes de visite','Vann kat biznis','Vender tarjetas','Vender cartões'],
+ ['Sell videos','Vendre des vidéos','Vann videyo','Vender videos','Vender vídeos'],
+ ['Sell QR codes','Vendre des QR codes','Vann QR code','Vender códigos QR','Vender QR codes'],
+ ['Manage customers','Gérer vos clients','Jere kliyan ou','Gestionar clientes','Gerenciar clientes'],
+ ['Earn commissions','Gagner des commissions','Touche komisyon','Ganar comisiones','Ganhar comissões']
+];
+
+const WHO = [
+ {e:'👨‍🎓',n:['Students','Étudiants','Etidyan','Estudiantes','Estudantes']},
+ {e:'🏪',n:['Multiservice centers','Centres multiservices','Sant Miltisèvis','Centros multiservicio','Centros multisserviço']},
+ {e:'🖨️',n:['Print shops','Imprimeries','Enprimri','Imprentas','Gráficas']},
+ {e:'💻',n:['Freelancers','Freelances','Freelance','Freelancers','Freelancers']},
+ {e:'🏢',n:['Small businesses','Petites entreprises','Ti Biznis','Pequeños negocios','Pequenos negócios']},
+ {e:'📸',n:['Photographers','Photographes','Fotograf','Fotógrafos','Fotógrafos']},
+ {e:'📱',n:['Phone stores','Boutiques de téléphonie','Boutik Telefòn','Tiendas de celulares','Lojas de celular']},
+ {e:'🤝',n:['Associations','Associations','Asosyasyon','Asociaciones','Associações']},
+ {e:'🏫',n:['Universities','Universités','Inivèsite','Universidades','Universidades']}
+];
+
+const STEPS = [
+ {e:'🛍',t:['Choose a product','Choisissez un produit','Chwazi yon pwodwi','Elige un producto','Escolha um produto'],
+  d:['Browse the categories and pick what your business needs.',
+     'Parcourez les catégories et choisissez ce dont votre entreprise a besoin.',
+     'Gade kategori yo epi chwazi sa biznis ou bezwen.',
+     'Explora las categorías y elige lo que tu negocio necesita.',
+     'Veja as categorias e escolha o que o seu negócio precisa.']},
+ {e:'📝',t:['Complete the Smart Brief','Remplissez le Smart Brief','Ranpli Smart Brief la','Completa el Smart Brief','Preencha o Smart Brief'],
+  d:['A few short questions about your business — no long forms.',
+     'Quelques questions courtes sur votre entreprise — pas de longs formulaires.',
+     'Kèk ti kesyon sou biznis ou — pa gen fòm long.',
+     'Unas pocas preguntas sobre tu negocio — sin formularios largos.',
+     'Algumas perguntas curtas sobre o seu negócio — sem formulários longos.']},
+ {e:'🤖',t:['AI + designers get to work','L\'IA et nos designers travaillent','AI + designè yo travay','La IA y los diseñadores trabajan','A IA e os designers trabalham'],
+  d:['Our AI drafts everything, then a real designer finishes it.',
+     'Notre IA rédige tout, puis un vrai designer finalise.',
+     'AI nou an fè premye vèsyon an, epi yon designè fini l.',
+     'Nuestra IA prepara todo y un diseñador real lo termina.',
+     'Nossa IA prepara tudo e um designer real finaliza.']},
+ {e:'📦',t:['Get your files in 48 hours','Recevez vos fichiers en 48h','Resevwa fichye ou nan 48 èdtan','Recibe tus archivos en 48 horas','Receba seus arquivos em 48 horas'],
+  d:['Print-ready files, delivered and ready to use.',
+     'Fichiers prêts à imprimer, livrés et prêts à l\'emploi.',
+     'Fichye pare pou enprime, livre epi pare pou itilize.',
+     'Archivos listos para imprimir, entregados y listos para usar.',
+     'Arquivos prontos para impressão, entregues e prontos para usar.']}
+];
+
+const WHYS = [
+ {e:'⚡',t:['48-Hour Delivery','Livraison en 48h','Livrezon an 48 Èdtan','Entrega en 48 horas','Entrega em 48 horas'],
+  d:['Order today, receive your files the day after tomorrow.',
+     'Commandez aujourd\'hui, recevez vos fichiers après-demain.',
+     'Kòmande jodi a, resevwa fichye ou apre demen.',
+     'Ordena hoy, recibe tus archivos pasado mañana.',
+     'Peça hoje, receba seus arquivos depois de amanhã.']},
+ {e:'🌎',t:['Multi-Language','Multilingue','Plizyè Lang','Multi-idioma','Multi-idioma'],
+  d:['Kreyòl, English, Français, Español and Português.',
+     'Kreyòl, English, Français, Español et Português.',
+     'Kreyòl, English, Français, Español ak Português.',
+     'Kreyòl, English, Français, Español y Português.',
+     'Kreyòl, English, Français, Español e Português.']},
+ {e:'🤖',t:['AI Powered','Propulsé par l\'IA','Pouse pa AI','Impulsado por IA','Com IA'],
+  d:['AI does the first draft so the price stays low and the work stays fast.',
+     'L\'IA fait le premier jet, le prix reste bas et le travail rapide.',
+     'AI fè premye vèsyon an, kidonk pri a rete ba epi travay la rete rapid.',
+     'La IA hace el primer borrador: el precio baja y el trabajo va rápido.',
+     'A IA faz o primeiro rascunho: o preço fica baixo e o trabalho, rápido.']},
+ {e:'🎨',t:['Professional Design','Design professionnel','Desen Pwofesyonèl','Diseño profesional','Design profissional'],
+  d:['A human designer reviews every single file before it reaches you.',
+     'Un designer humain vérifie chaque fichier avant livraison.',
+     'Yon designè verifye chak fichye anvan li rive jwenn ou.',
+     'Un diseñador revisa cada archivo antes de entregártelo.',
+     'Um designer revisa cada arquivo antes de chegar até você.']},
+ {e:'💳',t:['Secure Payments','Paiements sécurisés','Peman Sekirize','Pagos seguros','Pagamentos seguros'],
+  d:['MonCash, NatCash, Visa and Mastercard.',
+     'MonCash, NatCash, Visa et Mastercard.',
+     'MonCash, NatCash, Visa ak Mastercard.',
+     'MonCash, NatCash, Visa y Mastercard.',
+     'Pix, MonCash, Visa e Mastercard.']},
+ {e:'📞',t:['7/7 Support','Support 7j/7','Sipò 7/7','Soporte 7/7','Suporte 7/7'],
+  d:['Reach a real person on WhatsApp any day of the week.',
+     'Un vrai interlocuteur sur WhatsApp tous les jours.',
+     'Pale ak yon moun reyèl sou WhatsApp chak jou.',
+     'Habla con una persona real por WhatsApp cualquier día.',
+     'Fale com uma pessoa real no WhatsApp qualquer dia.']}
+];
+
+/* ---------------- language plumbing ---------------- */
+function pickLang(){
+  try{const s=localStorage.getItem('hr48_lang');
+      if(s&&LANGS.some(x=>x.c===s))return s;}catch(e){}
+  const q=(new URLSearchParams(location.search).get('lang')||'').toLowerCase();
+  if(LANGS.some(x=>x.c===q))return q;
+  const b=(navigator.language||'en').slice(0,2).toLowerCase();
+  return LANGS.some(x=>x.c===b)?b:'en';
+}
+let lang = pickLang();
+const t = k => (T[lang]&&T[lang][k]) || T.en[k] || k;
+const gdes = n => n.toLocaleString('en-US');
+const usd  = n => Math.round(n/USD_RATE);
+
+function setLang(c){
+  if(!LANGS.some(x=>x.c===c))return;
+  lang=c;
+  try{localStorage.setItem('hr48_lang',c);}catch(e){}
+  render();
+}
+function applyI18n(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]!==undefined)el.textContent=T[lang][k];
+  });
+  const b=BRAND[lang]||BRAND.en;
+  ['brandImg','footBrand','posLogo'].forEach(id=>{
+    const el=document.getElementById(id); if(el)el.src=b.img;
+  });
+  ['brandName','footName'].forEach(id=>{
+    const el=document.getElementById(id); if(el)el.textContent=b.name;
+  });
+}
+
+/* ---------------- WhatsApp ordering (3 taps to checkout) ---------------- */
+function waOrder(what){
+  const greet={en:'Hello! I would like to order',fr:'Bonjour ! Je voudrais commander',
+               ht:'Bonjou! Mwen ta renmen kòmande',es:'¡Hola! Quisiera pedir',
+               pt:'Olá! Gostaria de pedir'}[lang];
+  const msg = what ? greet+': '+what : {en:'Hello! I have a question about 48HoursReady.',
+    fr:'Bonjour ! J\'ai une question sur 48HoursReady.',
+    ht:'Bonjou! Mwen gen yon kesyon sou 48HoursReady.',
+    es:'¡Hola! Tengo una pregunta sobre 48HoursReady.',
+    pt:'Olá! Tenho uma pergunta sobre a 48HoursReady.'}[lang];
+  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank','noopener');
+}
+
+/* ---------------- renderers ---------------- */
+function priceBlock(g){
+  return `<div class="pc-price">${gdes(g)}<small>GDES</small></div>
+          <div class="pc-usd">≈ US$ ${usd(g)}</div>`;
+}
+function renderCats(){
+  document.getElementById('catGrid').innerHTML = CATS.map((c,i)=>
+    `<button class="cat ${c.cls}" onclick="openCat(${i})">
+       <span class="emo">${c.emo}</span>
+       <h3>${L(c.nm)}</h3><p>${L(c.ds)}</p>
+       <span class="go">${t('cat_open')} →</span>
+     </button>`).join('');
+}
+function renderWebs(){
+  document.getElementById('webGrid').innerHTML = WEBS.map(w=>{
+    const nm=L(w.nm);
+    return `<div class="pcard${w.hot?' hot':''}">
+      <div class="pc-top">${w.hot?`<span class="pc-tag">${t('launch')}</span>`:''}
+        ${priceBlock(w.gdes)}<div class="pc-name">${nm}</div></div>
+      <div class="pc-body"><ul>${w.f.map(f=>`<li>${L(f)}</li>`).join('')}</ul></div>
+      <div class="pc-foot">
+        <div class="pc-deliv">⏱️ ${t('deliv')}</div>
+        <button class="btn btn-blue btn-full" onclick="waOrder('${esc(nm)} — ${gdes(w.gdes)} GDES')">${t('order')}</button>
+      </div></div>`;}).join('');
+}
+function renderPkgs(){
+  document.getElementById('pkgGrid').innerHTML = PKGS.map(p=>{
+    const nm=L(p.nm);
+    return `<div class="pcard${p.hot?' hot':''}">
+      <div class="pc-top">${p.hot?`<span class="pc-tag">${t('pop')}</span>`:''}
+        ${priceBlock(p.gdes)}<div class="pc-name">${nm}</div>
+        <div class="pc-note">${L(p.note)}</div></div>
+      <div class="pc-body"><ul>${p.f.map(f=>`<li>${L(f)}</li>`).join('')}
+        ${p.bonus?`<li class="bonus">${L(p.bonus)}</li>`:''}</ul></div>
+      <div class="pc-foot">
+        <div class="pc-deliv">⏱️ ${t('deliv')}</div>
+        <button class="btn btn-red btn-full" onclick="waOrder('${esc(nm)} — ${gdes(p.gdes)} GDES')">${t('order')}</button>
+      </div></div>`;}).join('');
+}
+function renderRest(){
+  document.getElementById('posFeats').innerHTML =
+    POSF.map(f=>`<div><i>✔</i>${L(f)}</div>`).join('');
+  document.getElementById('whoGrid').innerHTML =
+    WHO.map(w=>`<div class="who"><div class="emo">${w.e}</div><span>${L(w.n)}</span></div>`).join('');
+  document.getElementById('stepGrid').innerHTML =
+    STEPS.map((s,i)=>`<div class="step"><div class="n">${i+1}</div>
+      <div class="emo">${s.e}</div><h4>${L(s.t)}</h4><p>${L(s.d)}</p></div>`).join('');
+  document.getElementById('whyGrid').innerHTML =
+    WHYS.map(w=>`<div class="why"><span class="emo">${w.e}</span>
+      <div><h4>${L(w.t)}</h4><p>${L(w.d)}</p></div></div>`).join('');
+}
+function renderLangs(){
+  document.getElementById('langBar').innerHTML = LANGS.map(l=>
+    `<button onclick="setLang('${l.c}')" class="${l.c===lang?'on':''}"
+       aria-label="${l.name}">${l.pill}</button>`).join('');
+  document.getElementById('footLangs').innerHTML = LANGS.map(l=>
+    `<button onclick="setLang('${l.c}')" class="${l.c===lang?'on':''}">${l.flag} ${l.name}</button>`).join('');
+}
+function render(){ applyI18n(); renderLangs(); renderCats(); renderWebs(); renderPkgs(); renderRest(); }
+
+/* Single-quoted strings go into inline onclick handlers. */
+const esc = s => String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+
+/* ---------------- sheets ---------------- */
+function showSheet(html){
+  document.getElementById('sheetBody').innerHTML=html;
+  document.getElementById('sheet').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSheet(){
+  document.getElementById('sheet').classList.remove('open');
+  document.body.style.overflow='';
+}
+function openCat(i){
+  const c=CATS[i];
+  showSheet(`<h3>${c.emo} ${L(c.nm)}</h3><p class="lede">${L(c.ds)}</p>` +
+    c.items.map(it=>`<div class="item"><span class="emo">${it.e}</span>
+      <div><b>${L(it.n)}</b><small>${t('from')} ${gdes(it.p)} GDES · ≈ US$ ${usd(it.p)}</small></div>
+      <button class="order" onclick="waOrder('${esc(L(it.n))} — ${gdes(it.p)} GDES')">${t('order')}</button>
+    </div>`).join('') +
+    `<div class="sheet-note">⏱️ ${t('deliv')}</div>`);
+}
+function openAccount(){
+  showSheet(`<h3>👤 ${t('acct_t')}</h3><p class="lede">${t('acct_s')}</p>
+    <div style="display:grid;gap:10px;margin-top:6px">
+      <button class="btn btn-green btn-full" onclick="waOrder('')">${t('acct_track')}</button>
+      <button class="btn btn-ghost btn-full" onclick="waOrder('')">${t('acct_help')}</button>
+      <a class="btn btn-orange btn-full" href="../ambassador.html">${t('acct_partner')}</a>
+    </div>`);
+}
+function openDemo(){
+  showSheet(`<h3>▶ ${t('demo_t')}</h3><p class="lede">${t('demo_s')}</p>
+    <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000">
+      <iframe src="https://www.youtube.com/embed/aAUoNAhikUc" title="48HoursReady"
+        style="position:absolute;inset:0;width:100%;height:100%;border:0"
+        allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+        allowfullscreen></iframe>
+    </div>`);
+}
+
+/* ---------------- bottom-nav highlighting ---------------- */
+const NAVSECT=['top','categories','pos'];
+function markNav(){
+  let cur='top';
+  NAVSECT.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<=140)cur=id;
+  });
+  document.querySelectorAll('#bnav a[data-nav]').forEach(a=>
+    a.classList.toggle('on',a.getAttribute('data-nav')===cur));
+}
+addEventListener('scroll',markNav,{passive:true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
+
+render(); markNav();
+</script>
+</body>
+</html>
