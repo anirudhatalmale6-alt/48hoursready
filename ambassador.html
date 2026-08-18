@@ -351,19 +351,24 @@ td{padding:14px 16px;font-size:.84rem;border-top:1px solid rgba(0,0,0,.04)}
     <div class="form-card">
       <div class="form-error" id="signupError"></div>
       <div class="form-success" id="signupSuccess"></div>
-      <form onsubmit="handleSignup(event)">
+      <form onsubmit="return waSignup(event)">
         <label data-i18n="lbl_name">Nom Complet</label>
         <input type="text" id="regName" required placeholder="Jean-Baptiste Duval">
         <label data-i18n="lbl_email">Email</label>
         <input type="email" id="regEmail" required placeholder="jean@email.com">
         <label data-i18n="lbl_phone">Telephone / WhatsApp</label>
         <input type="tel" id="regPhone" required placeholder="+509 4190 2005">
-        <label data-i18n="lbl_pass">Mot de passe</label>
-        <input type="password" id="regPass" required minlength="6" placeholder="6 caracteres minimum">
+        <!-- No account is created here any more, so no password is collected:
+             asking for one would send people to invent a credential that is
+             stored nowhere. Hidden rather than deleted to keep this diff small. -->
+        <label data-i18n="lbl_pass" style="display:none">Mot de passe</label>
+        <input type="password" id="regPass" style="display:none" placeholder="6 caracteres minimum">
         <label data-i18n="lbl_city">Ville</label>
         <input type="text" id="regCity" placeholder="Port-au-Prince">
         <label data-i18n="lbl_bio">Courte bio (optionnel)</label>
         <textarea id="regBio" placeholder="Parlez-nous de vous..." data-i18n-placeholder="bio_ph"></textarea>
+        <p style="font-size:.88rem;color:#555;margin:4px 0 14px;line-height:1.5" id="waHint" data-i18n="wa_hint">
+          Nous terminons votre inscription sur WhatsApp — vous recevrez votre code partenaire le jour meme.</p>
         <button type="submit" class="btn btn-red" id="signupBtn" data-i18n="btn_signup">S'inscrire comme Ambassadeur</button>
       </form>
       <div class="form-switch">
@@ -385,7 +390,7 @@ td{padding:14px 16px;font-size:.84rem;border-top:1px solid rgba(0,0,0,.04)}
   <div class="form-section">
     <div class="form-card">
       <div class="form-error" id="loginError"></div>
-      <form onsubmit="handleLogin(event)">
+      <form onsubmit="return waSignup(event)">
         <label data-i18n="lbl_email">Email</label>
         <input type="email" id="loginEmail" required placeholder="jean@email.com">
         <label data-i18n="lbl_pass">Mot de passe</label>
@@ -519,7 +524,7 @@ const T = {
     cta_signup:"S'inscrire Maintenant",cta_login:"Se Connecter",
     form_title:"Inscription Ambassadeur",form_sub:"Remplissez le formulaire pour rejoindre le programme.",
     lbl_name:"Nom Complet",lbl_email:"Email",lbl_phone:"Telephone / WhatsApp",lbl_pass:"Mot de passe",lbl_city:"Ville",lbl_bio:"Courte bio (optionnel)",
-    bio_ph:"Parlez-nous de vous...",btn_signup:"S'inscrire comme Ambassadeur",
+    bio_ph:"Parlez-nous de vous...",btn_signup:"S'inscrire comme Ambassadeur",wa_hint:"Nous terminons votre inscription sur WhatsApp — vous recevrez votre code partenaire le jour meme.",
     already_amb:"Deja ambassadeur?",login_link:"Se connecter",no_account:"Pas encore ambassadeur?",signup_link:"S'inscrire",
     login_badge:"Espace Ambassadeur",login_title:"Connexion",btn_login:"Se Connecter",
     dash_welcome:"Bienvenue,",btn_logout:"Deconnexion",
@@ -544,7 +549,7 @@ const T = {
     cta_signup:"Sign Up Now",cta_login:"Log In",
     form_title:"Ambassador Registration",form_sub:"Fill out the form to join the program.",
     lbl_name:"Full Name",lbl_email:"Email",lbl_phone:"Phone / WhatsApp",lbl_pass:"Password",lbl_city:"City",lbl_bio:"Short bio (optional)",
-    bio_ph:"Tell us about yourself...",btn_signup:"Sign Up as Ambassador",
+    bio_ph:"Tell us about yourself...",btn_signup:"Sign Up as Ambassador",wa_hint:"We finish your sign-up on WhatsApp — you get your partner code the same day.",
     already_amb:"Already an ambassador?",login_link:"Log in",no_account:"Not an ambassador yet?",signup_link:"Sign up",
     login_badge:"Ambassador Portal",login_title:"Log In",btn_login:"Log In",
     dash_welcome:"Welcome,",btn_logout:"Log Out",
@@ -569,7 +574,7 @@ const T = {
     cta_signup:"Enskri Kounye a",cta_login:"Konekte",
     form_title:"Enskripsyon Anbasadè",form_sub:"Ranpli fom nan pou rejwenn pwogram nan.",
     lbl_name:"Non Konplè",lbl_email:"Imel",lbl_phone:"Telefon / WhatsApp",lbl_pass:"Modpas",lbl_city:"Vil",lbl_bio:"Ti byografi (opsyonèl)",
-    bio_ph:"Pale nou de ou...",btn_signup:"Enskri kòm Anbasadè",
+    bio_ph:"Pale nou de ou...",btn_signup:"Enskri kòm Anbasadè",wa_hint:"Nou fini enskripsyon w sou WhatsApp — w ap jwenn kòd patnè w menm jou a.",
     already_amb:"Deja anbasadè?",login_link:"Konekte",no_account:"Poko anbasadè?",signup_link:"Enskri",
     login_badge:"Espas Anbasadè",login_title:"Koneksyon",btn_login:"Konekte",
     dash_welcome:"Byenveni,",btn_logout:"Dekonekte",
@@ -594,7 +599,7 @@ const T = {
     cta_signup:"Inscribirse Ahora",cta_login:"Iniciar Sesion",
     form_title:"Registro de Embajador",form_sub:"Completa el formulario para unirte al programa.",
     lbl_name:"Nombre Completo",lbl_email:"Email",lbl_phone:"Telefono / WhatsApp",lbl_pass:"Contrasena",lbl_city:"Ciudad",lbl_bio:"Bio corta (opcional)",
-    bio_ph:"Cuentanos sobre ti...",btn_signup:"Registrarse como Embajador",
+    bio_ph:"Cuentanos sobre ti...",btn_signup:"Registrarse como Embajador",wa_hint:"Terminamos tu registro por WhatsApp — recibes tu código de socio el mismo día.",
     already_amb:"Ya eres embajador?",login_link:"Iniciar sesion",no_account:"Aun no eres embajador?",signup_link:"Registrarse",
     login_badge:"Portal Embajador",login_title:"Iniciar Sesion",btn_login:"Iniciar Sesion",
     dash_welcome:"Bienvenido,",btn_logout:"Cerrar Sesion",
@@ -645,7 +650,39 @@ function tr(key) {
   return (T[currentLang] || T.fr)[key] || key;
 }
 
-async function handleSignup(e) {
+/* ------------------------------------------------------------------
+   2026-08-18 — the ambassador API this page was built against is gone
+   (the host answers x-render-routing: no-server), so every signup failed
+   with a generic "une erreur est survenue" and the lead was lost.
+   Until the new partner page replaces this one, signup goes to WhatsApp,
+   carrying whatever the person already typed so nothing is retyped.
+   ------------------------------------------------------------------ */
+var PARTNER_WA = '50941902005';   /* the number this page's own float uses */
+
+function waSignup(e) {
+  if (e) e.preventDefault();
+  var v = function (id) {
+    var el = document.getElementById(id);
+    return el && el.value ? el.value.trim() : '';
+  };
+  var intro = {
+    fr: 'Bonjour ! Je voudrais devenir partenaire 48HoursReady.',
+    en: 'Hello! I would like to become a 48HoursReady partner.',
+    ht: 'Bonjou! Mwen ta renmen vin yon patnè 48HoursReady.',
+    es: '¡Hola! Quisiera ser socio de 48HoursReady.'
+  }[currentLang] || 'Bonjour ! Je voudrais devenir partenaire 48HoursReady.';
+
+  var lines = [intro];
+  [['Nom', 'regName'], ['Email', 'regEmail'], ['Tel', 'regPhone'],
+   ['Ville', 'regCity']].forEach(function (p) {
+    if (v(p[1])) lines.push(p[0] + ': ' + v(p[1]));
+  });
+  window.open('https://wa.me/' + PARTNER_WA + '?text=' +
+              encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+  return false;
+}
+
+async function handleSignupDisabled(e) {
   e.preventDefault();
   const btn = document.getElementById('signupBtn');
   const errEl = document.getElementById('signupError');

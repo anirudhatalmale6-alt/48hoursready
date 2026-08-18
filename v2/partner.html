@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>48HoursReady — Become a Partner. Earn up to 30%.</title>
-<meta name="description" content="Refer a business and earn 10%. Sign a merchant up to the POS platform and earn 30%. Paid by MonCash or NatCash.">
-<meta property="og:title" content="48HoursReady — Earn up to 30% as a Partner">
-<meta property="og:description" content="10% on every service or website you refer. 30% on every POS subscription you sell. Paid by MonCash or NatCash.">
+<title>48HoursReady — Become a Partner. Two ways to earn.</title>
+<meta name="description" content="Earn 10% of a POS subscription every month for as long as the customer stays. Earn up to 30% on every digital product you sell. Paid by MonCash or NatCash.">
+<meta property="og:title" content="48HoursReady — Two ways to earn as a Partner">
+<meta property="og:description" content="10% of every POS subscription, every month. Up to 30% on every website, logo or digital product you sell.">
 <meta property="og:url" content="https://48hoursready.com/v2/partner.html">
 <meta property="og:image" content="https://48hoursready.com/assets/brand-en.png">
 <meta property="og:type" content="website">
@@ -413,12 +413,28 @@ footer{background:#0A1526;color:#fff;padding:40px 0 26px}
   font-size:.86rem;font-weight:600;line-height:1.5}
 .tier.t-ref .eg{background:var(--blue-l);color:var(--blue-d)}
 .tier.t-pos .eg{background:var(--green-l);color:#136B31}
+/* "10% every month" and "up to 30% on each sale" must read as one unit — the
+   cadence is half the promise and cannot be left to the paragraph below. */
+.tier .pct-up{display:block;font-family:var(--body);font-size:.82rem;
+  font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.tier .pct-sub{display:block;font-family:var(--body);font-size:.86rem;
+  font-weight:700;letter-spacing:0;margin-top:2px}
+.tier.t-ref .pct-sub{color:var(--blue)}
+.tier.t-pos .pct-sub{color:var(--green)}
 
 /* ---------- commission tables ---------- */
 .ctbl{background:#fff;border:1px solid var(--line);border-radius:var(--r);
   box-shadow:var(--sh);overflow:hidden;margin-bottom:18px}
 .ctbl h4{font-size:.95rem;font-weight:800;padding:15px 18px;
   background:var(--bg-2);border-bottom:1px solid var(--line)}
+/* Which of the two commission models this table belongs to — repeated on every
+   table so it is never inferred from a heading the reader scrolled past. */
+.ctbl h4 .cmodel{display:block;margin-top:4px;font-family:var(--body);
+  font-size:.78rem;font-weight:600;color:var(--ink-2)}
+.ctbl td.nm small.rnote{display:block;font-weight:600;font-size:.74rem;
+  color:var(--orange);margin-top:2px}
+.ctbl td.yo b.cad{display:block;font-family:var(--body);font-weight:700;
+  font-size:.72rem;color:var(--ink-2)}
 /* A price table has to stay readable on a 320px phone, so it scrolls on its
    own rather than pushing the page sideways. */
 .ctbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -508,8 +524,8 @@ footer{background:#0A1526;color:#fff;padding:40px 0 26px}
     <span class="eyebrow" style="background:rgba(255,255,255,.16);color:#fff"
           data-i18n="p_tag">Partner Programme</span>
     <h1><span data-i18n="p_h1">Earn on every business you bring in.</span>
-        <em data-i18n="p_h2">Up to 30% commission.</em></h1>
-    <p class="hero-sub" data-i18n="p_sub">Refer a customer, earn 10% of what they pay. Sign a merchant up to the POS platform, earn 30%. Paid by MonCash or NatCash.</p>
+        <em data-i18n="p_h2">Two ways to get paid.</em></h1>
+    <p class="hero-sub" data-i18n="p_sub">Sign a shop up to the POS and earn 10% of their subscription every month, for as long as they stay. Sell a website, a logo or any digital product and earn up to 30% on the sale.</p>
     <div class="hero-cta">
       <button class="btn btn-orange" onclick="waApply()" data-i18n="p_cta">🟠 Become a Partner</button>
       <a href="#calc" class="btn btn-ghost-w" data-i18n="p_cta2">🧮 See what you would earn</a>
@@ -527,15 +543,15 @@ footer{background:#0A1526;color:#fff;padding:40px 0 26px}
     </div>
     <div class="tiers">
       <div class="tier t-ref">
-        <div class="pct">10%</div>
-        <h3 data-i18n="t10_t">On everything you refer</h3>
-        <p data-i18n="t10_d">Somebody you send to us orders a logo, a document pack, marketing or a website. You earn 10% of what they pay.</p>
+        <div class="pct">10%<span class="pct-sub" data-i18n="pct_mo">every month</span></div>
+        <h3 data-i18n="t10_t">10% every month — POS subscriptions</h3>
+        <p data-i18n="t10_d">You sign a shop up to the POS platform. You earn 10% of their subscription every month, or every year on a yearly plan, for as long as that customer keeps paying.</p>
         <div class="eg" id="eg10"></div>
       </div>
       <div class="tier t-pos">
-        <div class="pct">30%</div>
-        <h3 data-i18n="t30_t">On every POS subscription</h3>
-        <p data-i18n="t30_d">You sign a shop or merchant up to the POS platform. You earn 30% of their subscription.</p>
+        <div class="pct"><span class="pct-up" data-i18n="pct_upto">up to</span>30%<span class="pct-sub" data-i18n="pct_sale">on each sale</span></div>
+        <h3 data-i18n="t30_t">Up to 30% per sale — digital products</h3>
+        <p data-i18n="t30_d">Websites, logos, business cards, executive summaries, pitch decks, videos, QR codes and every other digital service. You earn up to 30% each time you sell one.</p>
         <div class="eg" id="eg30"></div>
       </div>
     </div>
@@ -679,24 +695,26 @@ footer{background:#0A1526;color:#fff;padding:40px 0 26px}
    48HoursReady v2 — Partner programme.
    One file, no build step at runtime, no external JS.
 
-   MONEY RULES — the client confirmed these on 18 Aug 2026:
-     · referral commission = 10%
-     · POS subscription sale = 30%
-   Nothing on this page is invented. Every figure below is one of
-   those two rates applied to a price the shop already publishes.
+   MONEY RULES — final decisions from the client, 18 Aug 2026.
+   TWO SEPARATE MODELS, and he asked that they never be blurred together:
+
+     · 10% RECURRING referral commission — on a POS subscription, paid
+       every month (or every year) for as long as that customer stays
+       subscribed.
+     · UP TO 30% sales commission — on digital products and services
+       (websites, logos, business cards, executive summaries, pitch
+       decks, videos, QR codes …), paid on each sale.
+
+   Nothing here is invented: every figure is one of those two rates
+   applied to a price the business already publishes.
    ================================================================ */
 
 const WA = '50946859702';
 const USD_RATE = 132;
 
 /* The two rates live here and nowhere else. */
-const RATE_REFERRAL = 10;   /* % on services + websites */
-const RATE_POS      = 30;   /* % on a POS subscription */
-
-/* Does the POS commission repeat every month the merchant stays subscribed?
-   Not confirmed yet, so the page makes the CONSERVATIVE promise: paid on the
-   subscription. Flip this to true once the client confirms recurring. */
-const POS_RECURRING = false;
+const RATE_POS_REFERRAL = 10;   /* % of a POS subscription, RECURRING */
+const RATE_DIGITAL      = 30;   /* % of a digital product sale, per sale */
 
 const LANGS = [
   {c:'en', pill:'EN', flag:'🇺🇸', name:'English'},
@@ -729,11 +747,33 @@ const PKGS = [
   {gdes:10000, nm:['Business Ready','Business Ready','Pakè Biznis','Business Ready','Business Ready']},
   {gdes:15000, nm:['Premium — 2 Languages','Premium — 2 Langues','Premium — 2 Lang','Premium — 2 Idiomas','Premium — 2 Idiomas']}
 ];
-/* Straight out of the live POS (PLANS in haitibiznis.com/pos). */
+/* Haiti POS pricing — the client's final list, 18 Aug 2026.
+   `per` says what the customer is billed for, which decides whether the
+   partner's 10% repeats. The Founder's plan is ONE payment for life, so its
+   commission is paid once — it is not a recurring line and must not be drawn
+   as one. */
 const POS_PLANS = [
-  {gdes:5000,  nm:['Basic','Basic','Basic','Basic','Basic']},
-  {gdes:10000, nm:['Professional','Professional','Pwofesyonèl','Professional','Professional']},
-  {gdes:0, custom:true, nm:['Enterprise','Enterprise','Enterprise','Enterprise','Enterprise']}
+  {gdes:1000,  per:'mo',
+   nm:['Basic','Basic','Basic','Basic','Basic']},
+  {gdes:2500,  per:'mo',
+   nm:['Business','Business','Business','Business','Business']},
+  {gdes:25000, per:'yr',
+   nm:['Business Annual','Business Annuel','Business Anyèl','Business Anual','Business Anual'],
+   note:['12 months for the price of 10','12 mois pour le prix de 10','12 mwa pou pri 10',
+         '12 meses por el precio de 10','12 meses pelo preço de 10']},
+  {gdes:10000, per:'once', limited:true,
+   nm:["Founder's Lifetime","Fondateur à vie","Fondatè pou lavi","Fundador de por vida","Fundador vitalício"],
+   note:['Limited-time offer','Offre à durée limitée','Òf pou yon tan limite',
+         'Oferta por tiempo limitado','Oferta por tempo limitado']}
+];
+
+/* International pricing stays alongside the GDES menu: USD is for customers
+   abroad, GDES for customers in Haiti. Both are live — neither replaces the
+   other. (Showing the right one automatically by country comes later.) */
+const USD_PKGS = [
+  {usd:79,  nm:['Student','Étudiant','Etidyan','Estudiante','Estudante']},
+  {usd:99,  nm:['Business Ready','Business Ready','Business Ready','Business Ready','Business Ready']},
+  {usd:129, nm:['2 Languages','2 Langues','2 Lang','2 Idiomas','2 Idiomas']}
 ];
 
 const WHO = [
@@ -749,22 +789,22 @@ const T = {
 en:{
  nav_shop:'Shop',nav_web:'Websites',nav_pos:'POS',nav_earn:'Become a Partner',
  p_tag:'Partner Programme',
- p_h1:'Earn on every business you bring in.',p_h2:'Up to 30% commission.',
- p_sub:'Refer a customer and earn 10% of what they pay. Sign a merchant up to the POS platform and earn 30%. Paid by MonCash or NatCash.',
+ p_h1:'Earn on every business you bring in.',p_h2:'Two ways to get paid.',
+ p_sub:'Sign a shop up to the POS and earn 10% of their subscription every month, for as long as they stay. Sell a website, a logo or any digital product and earn up to 30% on the sale.',
  p_cta:'🟠 Become a Partner',p_cta2:'🧮 See what you would earn',
  tier_tag:'Two ways to earn',tier_title:'How much you make',
- tier_sub:'Two commissions, nothing complicated. You earn on what the customer actually pays.',
- t10_t:'On everything you refer',
- t10_d:'Somebody you send to us orders a logo, a document pack, marketing or a website. You earn 10% of what they pay.',
- t30_t:'On every POS subscription',
- t30_d:'You sign a shop or merchant up to the POS platform. You earn 30% of their subscription.',
- eg10:'Example: a 10,000 GDES package pays you 1,000 GDES.',
- eg30:'Example: a Professional subscription at 10,000 GDES pays you 3,000 GDES.',
+ tier_sub:'Two separate commissions. One repeats every month. The other is paid on each sale.',
+ t10_t:'10% every month — POS subscriptions',
+ t10_d:'You sign a shop up to the POS platform. You earn 10% of their subscription every month, or every year on a yearly plan, for as long as that customer keeps paying.',
+ t30_t:'Up to 30% per sale — digital products',
+ t30_d:'Websites, logos, business cards, executive summaries, pitch decks, videos, QR codes and every other digital service. You earn up to 30% each time you sell one.',
+ eg10:'Example: a Business plan at 2,500 GDES pays you 250 GDES every month, month after month.',
+ eg30:'Example: a 10,000 GDES package pays you up to 3,000 GDES on that sale.',
  tbl_tag:'Every price, every commission',tbl_title:'What you earn on each package',
- tbl_sub:'These are the same prices customers see on the shop. Nothing is hidden.',
- tb_web:'Website packages — you earn 10%',
- tb_svc:'Service packages — you earn 10%',
- tb_pos:'POS subscriptions — you earn 30%',
+ tbl_sub:'These are the same prices customers pay. Nothing is hidden.',
+ tb_web:'Website packages',
+ tb_svc:'Service packages',
+ tb_pos:'POS subscriptions (Haiti)',
  th_pkg:'Package',th_price:'Customer pays',th_you:'You earn',
  pos_custom:'Custom price',pos_custom_you:'Talk to us',
  pos_permo:'per month',
@@ -790,27 +830,37 @@ en:{
  f_langs:'Languages',f_links:'Quick Links',f_products:'Products',f_websites:'Websites',f_pos:'POS',
  f_partner:'Become a Partner',f_contact:'Contact',f_wa:'💬 Chat on WhatsApp',
  f_plat:'A HaitiBiznis platform.',
- b_home:'Home',b_shop:'Services',b_pos:'POS',b_earn:'Earnings',b_acct:'Account'
+ b_home:'Home',b_shop:'Services',b_pos:'POS',b_earn:'Earnings',b_acct:'Account',
+ tb_int:'International packages (USD)',
+ tb_pos_s:'Model 1 — you earn 10%, again every month',
+ tb_dig_s:'Model 2 — you earn up to 30%, on each sale',
+ cad_mo:'every month',
+ cad_yr:'every year',
+ cad_once:'one payment',
+ calc_everymo:'every month, while they stay subscribed',
+ calc_everyyr:'every year, while they stay subscribed',
+ calc_oncepaid:'paid once',
+ pct_upto:'up to',pct_mo:'every month',pct_sale:'on each sale',
 },
 fr:{
  nav_shop:'Boutique',nav_web:'Sites web',nav_pos:'POS',nav_earn:'Devenir partenaire',
  p_tag:'Programme partenaire',
- p_h1:'Gagnez sur chaque entreprise que vous amenez.',p_h2:'Jusqu\'à 30% de commission.',
- p_sub:'Recommandez un client et gagnez 10% de ce qu\'il paie. Inscrivez un commerçant au POS et gagnez 30%. Payé par MonCash ou NatCash.',
+ p_h1:'Gagnez sur chaque entreprise que vous amenez.',p_h2:'Deux façons d\'être payé.',
+ p_sub:'Inscrivez une boutique au POS et gagnez 10% de son abonnement chaque mois, tant qu\'elle reste. Vendez un site, un logo ou tout produit digital et gagnez jusqu\'à 30% sur la vente.',
  p_cta:'🟠 Devenir partenaire',p_cta2:'🧮 Calculez vos gains',
  tier_tag:'Deux façons de gagner',tier_title:'Combien vous gagnez',
- tier_sub:'Deux commissions, rien de compliqué. Vous gagnez sur ce que le client paie réellement.',
- t10_t:'Sur tout ce que vous recommandez',
- t10_d:'Quelqu\'un que vous nous envoyez commande un logo, un pack de documents, du marketing ou un site web. Vous gagnez 10% de ce qu\'il paie.',
- t30_t:'Sur chaque abonnement POS',
- t30_d:'Vous inscrivez une boutique ou un commerçant au POS. Vous gagnez 30% de son abonnement.',
- eg10:'Exemple : un forfait de 10 000 GDES vous rapporte 1 000 GDES.',
- eg30:'Exemple : un abonnement Professional à 10 000 GDES vous rapporte 3 000 GDES.',
+ tier_sub:'Deux commissions séparées. L\'une revient chaque mois. L\'autre est payée à chaque vente.',
+ t10_t:'10% chaque mois — abonnements POS',
+ t10_d:'Vous inscrivez une boutique au POS. Vous gagnez 10% de son abonnement chaque mois, ou chaque année sur un forfait annuel, tant que ce client continue de payer.',
+ t30_t:'Jusqu\'à 30% par vente — produits digitaux',
+ t30_d:'Sites web, logos, cartes de visite, résumés exécutifs, pitch decks, vidéos, codes QR et tous les autres services digitaux. Vous gagnez jusqu\'à 30% à chaque vente.',
+ eg10:'Exemple : un forfait Business à 2 500 GDES vous rapporte 250 GDES chaque mois, mois après mois.',
+ eg30:'Exemple : un forfait de 10 000 GDES vous rapporte jusqu\'à 3 000 GDES sur cette vente.',
  tbl_tag:'Chaque prix, chaque commission',tbl_title:'Ce que vous gagnez sur chaque forfait',
- tbl_sub:'Ce sont les mêmes prix que les clients voient dans la boutique. Rien n\'est caché.',
- tb_web:'Forfaits site web — vous gagnez 10%',
- tb_svc:'Forfaits services — vous gagnez 10%',
- tb_pos:'Abonnements POS — vous gagnez 30%',
+ tbl_sub:'Ce sont les mêmes prix que les clients paient. Rien n\'est caché.',
+ tb_web:'Forfaits site web',
+ tb_svc:'Forfaits services',
+ tb_pos:'Abonnements POS (Haïti)',
  th_pkg:'Forfait',th_price:'Le client paie',th_you:'Vous gagnez',
  pos_custom:'Prix sur mesure',pos_custom_you:'Contactez-nous',
  pos_permo:'par mois',
@@ -836,27 +886,37 @@ fr:{
  f_langs:'Langues',f_links:'Liens rapides',f_products:'Produits',f_websites:'Sites web',f_pos:'POS',
  f_partner:'Devenir partenaire',f_contact:'Contact',f_wa:'💬 Discuter sur WhatsApp',
  f_plat:'Une plateforme HaitiBiznis.',
- b_home:'Accueil',b_shop:'Services',b_pos:'POS',b_earn:'Gains',b_acct:'Compte'
+ b_home:'Accueil',b_shop:'Services',b_pos:'POS',b_earn:'Gains',b_acct:'Compte',
+ tb_int:'Forfaits internationaux (USD)',
+ tb_pos_s:'Modèle 1 — vous gagnez 10%, à nouveau chaque mois',
+ tb_dig_s:'Modèle 2 — vous gagnez jusqu\'à 30%, à chaque vente',
+ cad_mo:'chaque mois',
+ cad_yr:'chaque année',
+ cad_once:'un seul paiement',
+ calc_everymo:'chaque mois, tant qu\'il reste abonné',
+ calc_everyyr:'chaque année, tant qu\'il reste abonné',
+ calc_oncepaid:'payé une fois',
+ pct_upto:'jusqu’à',pct_mo:'chaque mois',pct_sale:'à chaque vente',
 },
 ht:{
  nav_shop:'Boutik',nav_web:'Sit Entènèt',nav_pos:'POS',nav_earn:'Vin Patnè',
  p_tag:'Pwogram Patnè',
- p_h1:'Fè lajan sou chak biznis ou pote.',p_h2:'Jiska 30% komisyon.',
- p_sub:'Voye yon kliyan ban nou, ou touche 10% sou sa li peye. Enskri yon machann nan POS la, ou touche 30%. Nou peye w sou MonCash oswa NatCash.',
+ p_h1:'Fè lajan sou chak biznis ou pote.',p_h2:'De fason pou w touche.',
+ p_sub:'Enskri yon boutik nan POS la, ou touche 10% sou abònman li chak mwa, toutotan li rete. Vann yon sit, yon logo oswa nenpòt pwodwi dijital, ou touche jiska 30% sou vant lan.',
  p_cta:'🟠 Vin Patnè',p_cta2:'🧮 Gade konbyen ou ta fè',
  tier_tag:'De fason pou fè lajan',tier_title:'Konbyen ou touche',
- tier_sub:'De komisyon, anyen konplike. Ou touche sou sa kliyan an peye vre.',
- t10_t:'Sou tout sa ou rekòmande',
- t10_d:'Yon moun ou voye ban nou kòmande yon logo, yon pakè dokiman, maketing oswa yon sit entènèt. Ou touche 10% sou sa li peye.',
- t30_t:'Sou chak abònman POS',
- t30_d:'Ou enskri yon boutik oswa yon machann nan POS la. Ou touche 30% sou abònman li.',
- eg10:'Egzanp: yon pakè 10,000 GDES ba ou 1,000 GDES.',
- eg30:'Egzanp: yon abònman Professional a 10,000 GDES ba ou 3,000 GDES.',
+ tier_sub:'De komisyon separe. Youn tounen chak mwa. Lòt la peye sou chak vant.',
+ t10_t:'10% chak mwa — abònman POS',
+ t10_d:'Ou enskri yon boutik nan POS la. Ou touche 10% sou abònman li chak mwa, oswa chak ane si se yon plan anyèl, toutotan kliyan sa a kontinye peye.',
+ t30_t:'Jiska 30% pa vant — pwodwi dijital',
+ t30_d:'Sit entènèt, logo, kat biznis, rezime egzekitif, pitch deck, videyo, kòd QR ak tout lòt sèvis dijital. Ou touche jiska 30% chak fwa ou vann youn.',
+ eg10:'Egzanp: yon plan Business a 2,500 GDES ba ou 250 GDES chak mwa, mwa apre mwa.',
+ eg30:'Egzanp: yon pakè 10,000 GDES ba ou jiska 3,000 GDES sou vant sa a.',
  tbl_tag:'Chak pri, chak komisyon',tbl_title:'Sa ou touche sou chak pakè',
- tbl_sub:'Se menm pri kliyan yo wè nan boutik la. Nou pa kache anyen.',
- tb_web:'Pakè sit entènèt — ou touche 10%',
- tb_svc:'Pakè sèvis — ou touche 10%',
- tb_pos:'Abònman POS — ou touche 30%',
+ tbl_sub:'Se menm pri kliyan yo peye. Nou pa kache anyen.',
+ tb_web:'Pakè sit entènèt',
+ tb_svc:'Pakè sèvis',
+ tb_pos:'Abònman POS (Ayiti)',
  th_pkg:'Pakè',th_price:'Kliyan an peye',th_you:'Ou touche',
  pos_custom:'Pri sou mezi',pos_custom_you:'Pale ak nou',
  pos_permo:'chak mwa',
@@ -882,27 +942,37 @@ ht:{
  f_langs:'Lang',f_links:'Lyen Rapid',f_products:'Pwodwi',f_websites:'Sit Entènèt',f_pos:'POS',
  f_partner:'Vin Patnè',f_contact:'Kontak',f_wa:'💬 Pale sou WhatsApp',
  f_plat:'Yon plafòm HaitiBiznis.',
- b_home:'Akèy',b_shop:'Sèvis',b_pos:'POS',b_earn:'Revni',b_acct:'Kont'
+ b_home:'Akèy',b_shop:'Sèvis',b_pos:'POS',b_earn:'Revni',b_acct:'Kont',
+ tb_int:'Pakè entènasyonal (USD)',
+ tb_pos_s:'Modèl 1 — ou touche 10%, ankò chak mwa',
+ tb_dig_s:'Modèl 2 — ou touche jiska 30%, sou chak vant',
+ cad_mo:'chak mwa',
+ cad_yr:'chak ane',
+ cad_once:'yon sèl peman',
+ calc_everymo:'chak mwa, toutotan li rete abòne',
+ calc_everyyr:'chak ane, toutotan li rete abòne',
+ calc_oncepaid:'peye yon sèl fwa',
+ pct_upto:'jiska',pct_mo:'chak mwa',pct_sale:'sou chak vant',
 },
 es:{
  nav_shop:'Tienda',nav_web:'Sitios web',nav_pos:'POS',nav_earn:'Ser socio',
  p_tag:'Programa de socios',
- p_h1:'Gana con cada negocio que traigas.',p_h2:'Hasta 30% de comisión.',
- p_sub:'Recomienda a un cliente y gana el 10% de lo que paga. Inscribe a un comerciante en el POS y gana el 30%. Te pagamos por MonCash o NatCash.',
+ p_h1:'Gana con cada negocio que traigas.',p_h2:'Dos formas de cobrar.',
+ p_sub:'Inscribe una tienda en el POS y gana el 10% de su suscripción cada mes, mientras siga. Vende un sitio, un logo o cualquier producto digital y gana hasta el 30% de la venta.',
  p_cta:'🟠 Ser socio',p_cta2:'🧮 Calcula tus ganancias',
  tier_tag:'Dos formas de ganar',tier_title:'Cuánto ganas',
- tier_sub:'Dos comisiones, nada complicado. Ganas sobre lo que el cliente paga de verdad.',
- t10_t:'Sobre todo lo que recomiendas',
- t10_d:'Alguien que nos envías pide un logo, un paquete de documentos, marketing o un sitio web. Ganas el 10% de lo que paga.',
- t30_t:'Sobre cada suscripción POS',
- t30_d:'Inscribes una tienda o un comerciante en el POS. Ganas el 30% de su suscripción.',
- eg10:'Ejemplo: un paquete de 10,000 GDES te da 1,000 GDES.',
- eg30:'Ejemplo: una suscripción Professional de 10,000 GDES te da 3,000 GDES.',
+ tier_sub:'Dos comisiones separadas. Una vuelve cada mes. La otra se paga en cada venta.',
+ t10_t:'10% cada mes — suscripciones POS',
+ t10_d:'Inscribes una tienda en el POS. Ganas el 10% de su suscripción cada mes, o cada año en un plan anual, mientras ese cliente siga pagando.',
+ t30_t:'Hasta 30% por venta — productos digitales',
+ t30_d:'Sitios web, logos, tarjetas de presentación, resúmenes ejecutivos, pitch decks, videos, códigos QR y todos los demás servicios digitales. Ganas hasta el 30% cada vez que vendes uno.',
+ eg10:'Ejemplo: un plan Business de 2,500 GDES te da 250 GDES cada mes, mes tras mes.',
+ eg30:'Ejemplo: un paquete de 10,000 GDES te da hasta 3,000 GDES en esa venta.',
  tbl_tag:'Cada precio, cada comisión',tbl_title:'Lo que ganas en cada paquete',
- tbl_sub:'Son los mismos precios que los clientes ven en la tienda. No se esconde nada.',
- tb_web:'Paquetes de sitio web — ganas 10%',
- tb_svc:'Paquetes de servicios — ganas 10%',
- tb_pos:'Suscripciones POS — ganas 30%',
+ tbl_sub:'Son los mismos precios que pagan los clientes. No se esconde nada.',
+ tb_web:'Paquetes de sitio web',
+ tb_svc:'Paquetes de servicios',
+ tb_pos:'Suscripciones POS (Haití)',
  th_pkg:'Paquete',th_price:'El cliente paga',th_you:'Tú ganas',
  pos_custom:'Precio a medida',pos_custom_you:'Habla con nosotros',
  pos_permo:'por mes',
@@ -928,27 +998,37 @@ es:{
  f_langs:'Idiomas',f_links:'Enlaces rápidos',f_products:'Productos',f_websites:'Sitios web',f_pos:'POS',
  f_partner:'Ser socio',f_contact:'Contacto',f_wa:'💬 Chatear por WhatsApp',
  f_plat:'Una plataforma HaitiBiznis.',
- b_home:'Inicio',b_shop:'Servicios',b_pos:'POS',b_earn:'Ganancias',b_acct:'Cuenta'
+ b_home:'Inicio',b_shop:'Servicios',b_pos:'POS',b_earn:'Ganancias',b_acct:'Cuenta',
+ tb_int:'Paquetes internacionales (USD)',
+ tb_pos_s:'Modelo 1 — ganas 10%, otra vez cada mes',
+ tb_dig_s:'Modelo 2 — ganas hasta 30%, en cada venta',
+ cad_mo:'cada mes',
+ cad_yr:'cada año',
+ cad_once:'un solo pago',
+ calc_everymo:'cada mes, mientras siga suscrito',
+ calc_everyyr:'cada año, mientras siga suscrito',
+ calc_oncepaid:'pagado una vez',
+ pct_upto:'hasta',pct_mo:'cada mes',pct_sale:'en cada venta',
 },
 pt:{
  nav_shop:'Loja',nav_web:'Sites',nav_pos:'POS',nav_earn:'Seja parceiro',
  p_tag:'Programa de parceiros',
- p_h1:'Ganhe com cada negócio que você trouxer.',p_h2:'Até 30% de comissão.',
- p_sub:'Indique um cliente e ganhe 10% do que ele paga. Cadastre um comerciante no POS e ganhe 30%. Pagamos por MonCash ou NatCash.',
+ p_h1:'Ganhe com cada negócio que você trouxer.',p_h2:'Duas formas de receber.',
+ p_sub:'Cadastre uma loja no POS e ganhe 10% da assinatura dela todo mês, enquanto ela continuar. Venda um site, um logo ou qualquer produto digital e ganhe até 30% da venda.',
  p_cta:'🟠 Seja parceiro',p_cta2:'🧮 Veja quanto você ganharia',
  tier_tag:'Duas formas de ganhar',tier_title:'Quanto você ganha',
- tier_sub:'Duas comissões, nada complicado. Você ganha sobre o que o cliente realmente paga.',
- t10_t:'Sobre tudo o que você indica',
- t10_d:'Alguém que você nos envia pede um logo, um pacote de documentos, marketing ou um site. Você ganha 10% do que ele paga.',
- t30_t:'Sobre cada assinatura POS',
- t30_d:'Você cadastra uma loja ou um comerciante no POS. Você ganha 30% da assinatura dele.',
- eg10:'Exemplo: um pacote de 10.000 GDES te dá 1.000 GDES.',
- eg30:'Exemplo: uma assinatura Professional de 10.000 GDES te dá 3.000 GDES.',
+ tier_sub:'Duas comissões separadas. Uma volta todo mês. A outra é paga em cada venda.',
+ t10_t:'10% todo mês — assinaturas POS',
+ t10_d:'Você cadastra uma loja no POS. Você ganha 10% da assinatura dela todo mês, ou todo ano num plano anual, enquanto esse cliente continuar pagando.',
+ t30_t:'Até 30% por venda — produtos digitais',
+ t30_d:'Sites, logos, cartões de visita, resumos executivos, pitch decks, vídeos, códigos QR e todos os outros serviços digitais. Você ganha até 30% cada vez que vende um.',
+ eg10:'Exemplo: um plano Business de 2.500 GDES te dá 250 GDES todo mês, mês após mês.',
+ eg30:'Exemplo: um pacote de 10.000 GDES te dá até 3.000 GDES nessa venda.',
  tbl_tag:'Cada preço, cada comissão',tbl_title:'O que você ganha em cada pacote',
- tbl_sub:'São os mesmos preços que os clientes veem na loja. Nada é escondido.',
- tb_web:'Pacotes de site — você ganha 10%',
- tb_svc:'Pacotes de serviços — você ganha 10%',
- tb_pos:'Assinaturas POS — você ganha 30%',
+ tbl_sub:'São os mesmos preços que os clientes pagam. Nada é escondido.',
+ tb_web:'Pacotes de site',
+ tb_svc:'Pacotes de serviços',
+ tb_pos:'Assinaturas POS (Haiti)',
  th_pkg:'Pacote',th_price:'O cliente paga',th_you:'Você ganha',
  pos_custom:'Preço sob medida',pos_custom_you:'Fale conosco',
  pos_permo:'por mês',
@@ -974,7 +1054,17 @@ pt:{
  f_langs:'Idiomas',f_links:'Links rápidos',f_products:'Produtos',f_websites:'Sites',f_pos:'POS',
  f_partner:'Seja parceiro',f_contact:'Contato',f_wa:'💬 Falar no WhatsApp',
  f_plat:'Uma plataforma HaitiBiznis.',
- b_home:'Início',b_shop:'Serviços',b_pos:'POS',b_earn:'Ganhos',b_acct:'Conta'
+ b_home:'Início',b_shop:'Serviços',b_pos:'POS',b_earn:'Ganhos',b_acct:'Conta',
+ tb_int:'Pacotes internacionais (USD)',
+ tb_pos_s:'Modelo 1 — você ganha 10%, de novo todo mês',
+ tb_dig_s:'Modelo 2 — você ganha até 30%, em cada venda',
+ cad_mo:'todo mês',
+ cad_yr:'todo ano',
+ cad_once:'um pagamento',
+ calc_everymo:'todo mês, enquanto continuar assinando',
+ calc_everyyr:'todo ano, enquanto continuar assinando',
+ calc_oncepaid:'pago uma vez',
+ pct_upto:'até',pct_mo:'todo mês',pct_sale:'em cada venda',
 }
 };
 
@@ -1029,33 +1119,50 @@ function waApply(){
 }
 
 /* ---------------- renderers ---------------- */
-/* 5,000 and 10,000 GDES are BOTH a service package (10%) and a POS plan (30%).
-   The table headings say which is which, but a partner scrolling a phone can
-   still land on the wrong row, so every row states its own rate. */
-function commRow(name,price,rate,suffix){
-  const c=comm(price,rate);
-  return `<tr><td class="nm">${name}</td>
-    <td class="pr">${gdes(price)} GDES${suffix?' <small>'+suffix+'</small>':''}</td>
-    <td class="yo">${gdes(c)} GDES<small>${rate}% · ≈ US$ ${usd(c)}</small></td></tr>`;
+/* Every row states its own rate and its own cadence. The two models pay very
+   different ways — 10% again and again on a subscription, up to 30% once on a
+   sale — and a partner skimming a phone must never have to infer which is
+   which from the heading he scrolled past. */
+function commRow(name,price,rate,cur,cadence,note){
+  /* 30% of $79 is $23.70. Rounding that to $24 would publish a commission
+     30 cents larger than the one actually owed, so USD keeps its cents and
+     only whole amounts drop them. GDES figures come out exact. */
+  const c = cur==='usd' ? Math.round(price*rate)/100 : comm(price,rate);
+  const money = v => cur==='usd'
+      ? 'US$ '+v.toLocaleString('en-US',{minimumFractionDigits:v%1?2:0,
+                                         maximumFractionDigits:2})
+      : gdes(v)+' GDES';
+  const alt   = cur==='usd' ? '' : ' · ≈ US$ '+usd(c);   /* GDES rows carry a USD hint */
+  return `<tr><td class="nm">${name}${note?`<small class="rnote">${note}</small>`:''}</td>
+    <td class="pr">${money(price)}${cadence?` <small>${cadence}</small>`:''}</td>
+    <td class="yo">${money(c)}${cadence?`<b class="cad">${cadence}</b>`:''}
+      <small>${rate}%${alt}</small></td></tr>`;
 }
-function table(titleKey,rows){
-  return `<div class="ctbl"><h4>${t(titleKey)}</h4><div class="ctbl-scroll"><table>
+function table(titleKey,subKey,rows){
+  return `<div class="ctbl"><h4>${t(titleKey)}
+      <span class="cmodel">${t(subKey)}</span></h4><div class="ctbl-scroll"><table>
     <thead><tr><th>${t('th_pkg')}</th><th>${t('th_price')}</th>
       <th style="text-align:right">${t('th_you')}</th></tr></thead>
     <tbody>${rows}</tbody></table></div></div>`;
 }
 function renderTables(){
-  const web = WEBS.map(w=>commRow(L(w.nm), w.gdes, RATE_REFERRAL)).join('');
-  const svc = PKGS.map(p=>commRow(L(p.nm), p.gdes, RATE_REFERRAL)).join('');
+  /* MODEL 1 — 10%, recurring, POS subscriptions only */
   const pos = POS_PLANS.map(p=>{
-    if(p.custom)
-      return `<tr><td class="nm">${L(p.nm)}</td><td class="pr">${t('pos_custom')}</td>
-        <td class="yo">${RATE_POS}%<small>${t('pos_custom_you')}</small></td></tr>`;
-    return commRow(L(p.nm), p.gdes, RATE_POS,
-                   POS_RECURRING ? t('pos_permo') : '');
+    const cadence = {mo:t('cad_mo'), yr:t('cad_yr'), once:t('cad_once')}[p.per];
+    return commRow(L(p.nm), p.gdes, RATE_POS_REFERRAL, 'gdes', cadence,
+                   p.note ? L(p.note) : '');
   }).join('');
+
+  /* MODEL 2 — up to 30%, once per sale, everything the shop sells */
+  const svc = PKGS.map(p=>commRow(L(p.nm), p.gdes, RATE_DIGITAL, 'gdes')).join('');
+  const web = WEBS.map(w=>commRow(L(w.nm), w.gdes, RATE_DIGITAL, 'gdes')).join('');
+  const int = USD_PKGS.map(u=>commRow(L(u.nm), u.usd, RATE_DIGITAL, 'usd')).join('');
+
   document.getElementById('tables').innerHTML =
-    table('tb_web',web) + table('tb_svc',svc) + table('tb_pos',pos);
+      table('tb_pos','tb_pos_s',pos)
+    + table('tb_svc','tb_dig_s',svc)
+    + table('tb_web','tb_dig_s',web)
+    + table('tb_int','tb_dig_s',int);
 }
 function renderTiers(){
   document.getElementById('eg10').textContent = t('eg10');
@@ -1086,10 +1193,14 @@ function renderLangs(){
    can never quote a package or a rate the tables do not show. */
 function calcOptions(){
   const out=[];
-  WEBS.forEach(w=>out.push({label:L(w.nm), price:w.gdes, rate:RATE_REFERRAL}));
-  PKGS.forEach(p=>out.push({label:L(p.nm)+' — '+gdes(p.gdes)+' GDES', price:p.gdes, rate:RATE_REFERRAL}));
-  POS_PLANS.filter(p=>!p.custom).forEach(p=>
-    out.push({label:'POS '+L(p.nm), price:p.gdes, rate:RATE_POS}));
+  /* recurring first — it is the part partners under-estimate */
+  POS_PLANS.forEach(p=>out.push({
+    label:'POS '+L(p.nm)+' — '+gdes(p.gdes)+' GDES',
+    price:p.gdes, rate:RATE_POS_REFERRAL, per:p.per}));
+  PKGS.forEach(p=>out.push({
+    label:L(p.nm)+' — '+gdes(p.gdes)+' GDES', price:p.gdes, rate:RATE_DIGITAL, per:'sale'}));
+  WEBS.forEach(w=>out.push({
+    label:L(w.nm)+' — '+gdes(w.gdes)+' GDES', price:w.gdes, rate:RATE_DIGITAL, per:'sale'}));
   return out;
 }
 let CALC=[];
@@ -1115,8 +1226,12 @@ function runCalc(){
   const q=qty();
   const each=comm(o.price,o.rate), total=each*q;
   document.getElementById('calcBig').textContent = gdes(total)+' GDES';
+  /* A monthly POS plan keeps paying; a sale pays once. Saying "a month" for
+     both would quietly promise recurring money on one-off work. */
+  const tail = {mo:t('calc_everymo'), yr:t('calc_everyyr'),
+                once:t('calc_oncepaid'), sale:t('calc_amonth')}[o.per] || '';
   document.getElementById('calcSm').textContent =
-    `${q} ${t('calc_sales')} × ${gdes(each)} GDES ${t('calc_each')} · ≈ US$ ${usd(total)} ${t('calc_amonth')}`;
+    `${q} × ${gdes(each)} GDES ${t('calc_each')} · ≈ US$ ${usd(total)} · ${tail}`;
 }
 
 function render(){
