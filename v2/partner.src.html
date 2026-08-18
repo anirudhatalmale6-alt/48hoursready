@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>48HoursReady — Become a Partner. Earn up to 30%.</title>
+<meta name="description" content="Refer a business and earn 10%. Sign a merchant up to the POS platform and earn 30%. Paid by MonCash or NatCash.">
+<meta property="og:title" content="48HoursReady — Earn up to 30% as a Partner">
+<meta property="og:description" content="10% on every service or website you refer. 30% on every POS subscription you sell. Paid by MonCash or NatCash.">
+<meta property="og:url" content="https://48hoursready.com/v2/partner.html">
+<meta property="og:image" content="https://48hoursready.com/assets/brand-en.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B4DBA">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+<!--SHARED-STYLE-->
+</style>
+<style>
+/* ============================================================
+   Partner page only. Everything above this block is the exact
+   stylesheet the homepage uses, injected at build time by
+   build_partner.py so the two pages can never drift apart.
+   ============================================================ */
+
+/* ---------- the two earning tiers ---------- */
+.tiers{display:grid;gap:14px}
+@media(min-width:760px){.tiers{grid-template-columns:1fr 1fr}}
+.tier{background:#fff;border:1px solid var(--line);border-radius:var(--r-l);
+  padding:24px 20px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.tier::after{content:'';position:absolute;inset:0 0 auto 0;height:5px}
+.tier.t-ref::after{background:var(--blue)}
+.tier.t-pos::after{background:var(--green)}
+.tier .pct{font-family:var(--display);font-weight:900;line-height:1;
+  font-size:clamp(2.6rem,9vw,3.4rem);letter-spacing:-.04em}
+.tier.t-ref .pct{color:var(--blue)}
+.tier.t-pos .pct{color:var(--green)}
+.tier h3{font-size:1.12rem;font-weight:800;margin:10px 0 8px}
+.tier p{color:var(--ink-2);font-size:.94rem;line-height:1.6}
+.tier .eg{margin-top:14px;padding:12px 14px;border-radius:var(--r-s);
+  font-size:.86rem;font-weight:600;line-height:1.5}
+.tier.t-ref .eg{background:var(--blue-l);color:var(--blue-d)}
+.tier.t-pos .eg{background:var(--green-l);color:#136B31}
+
+/* ---------- commission tables ---------- */
+.ctbl{background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--sh);overflow:hidden;margin-bottom:18px}
+.ctbl h4{font-size:.95rem;font-weight:800;padding:15px 18px;
+  background:var(--bg-2);border-bottom:1px solid var(--line)}
+/* A price table has to stay readable on a 320px phone, so it scrolls on its
+   own rather than pushing the page sideways. */
+.ctbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ctbl table{width:100%;border-collapse:collapse;min-width:340px}
+.ctbl th,.ctbl td{padding:13px 16px;text-align:left;font-size:.9rem;
+  border-bottom:1px solid var(--line);white-space:nowrap}
+.ctbl th{font-family:var(--display);font-weight:700;font-size:.74rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.ctbl tr:last-child td{border-bottom:0}
+.ctbl td.nm{white-space:normal;font-weight:600;min-width:150px}
+.ctbl td.pr{color:var(--ink-2)}
+.ctbl td.yo{font-family:var(--display);font-weight:800;color:var(--green);text-align:right}
+.ctbl td.yo small{display:block;font-family:var(--body);font-weight:600;
+  font-size:.72rem;color:var(--ink-3)}
+/* On a phone a 3-column table pushes "you earn" off the right edge — the one
+   number the partner opened the page for. Below 560px each row becomes a card:
+   package and price stacked on the left, the commission big on the right. */
+@media(max-width:559px){
+  .ctbl-scroll{overflow-x:visible}
+  .ctbl table{min-width:0}
+  .ctbl thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .ctbl table,.ctbl tbody,.ctbl tr,.ctbl td{display:block;width:auto}
+  .ctbl tr{display:grid;grid-template-columns:1fr auto;gap:2px 14px;
+    align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .ctbl tr:last-child{border-bottom:0}
+  .ctbl td{padding:0;border:0;white-space:normal}
+  .ctbl td.nm{grid-column:1;grid-row:1;font-size:.95rem}
+  .ctbl td.pr{grid-column:1;grid-row:2;font-size:.85rem}
+  .ctbl td.yo{grid-column:2;grid-row:1/span 2;text-align:right;font-size:1.1rem}
+}
+
+/* ---------- earnings calculator ---------- */
+.calc{background:linear-gradient(160deg,#06327D,var(--blue));color:#fff;
+  border-radius:var(--r-l);padding:26px 20px;box-shadow:var(--sh-h)}
+.calc label{display:block;font-size:.76rem;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 7px}
+.calc select,.calc input{width:100%;min-height:52px;padding:13px 15px;
+  border-radius:14px;border:2px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.1);color:#fff;font:inherit;font-weight:600}
+.calc select option{color:var(--ink);background:#fff}
+.calc .row{display:grid;gap:14px;margin-bottom:16px}
+@media(min-width:620px){.calc .row{grid-template-columns:2fr 1fr}}
+.calc-out{background:rgba(255,255,255,.13);border-radius:var(--r);
+  padding:18px;text-align:center;margin-top:4px}
+.calc-out .big{font-family:var(--display);font-weight:900;
+  font-size:clamp(2rem,8vw,2.9rem);line-height:1.05;color:#7BE8A4}
+.calc-out .sm{font-size:.85rem;color:rgba(255,255,255,.8);margin-top:6px}
+
+/* ---------- payout + steps ---------- */
+.pay-row{display:grid;gap:12px}
+@media(min-width:700px){.pay-row{grid-template-columns:repeat(3,1fr)}}
+.pay{background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:20px;box-shadow:var(--sh);text-align:center}
+.pay .emo{font-size:2rem;display:block;margin-bottom:9px}
+.pay h4{font-size:1rem;font-weight:800;margin-bottom:6px}
+.pay p{color:var(--ink-2);font-size:.88rem;line-height:1.55}
+
+/* ---------- honest note about what is not built yet ---------- */
+.soon-note{background:var(--orange-l);border:1px solid rgba(247,147,30,.4);
+  border-radius:var(--r);padding:16px 18px;font-size:.89rem;line-height:1.6;
+  color:#8A5200;display:flex;gap:11px;align-items:flex-start}
+.soon-note b{display:block;margin-bottom:3px;color:#6B4000}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR + LANGUAGE MENU ============ -->
+<header class="top" id="top">
+  <div class="top-in">
+    <a href="index.html" class="brand">
+      <img src="../assets/brand-en.png" alt="48HoursReady" id="brandImg">
+      <b id="brandName">48HoursReady</b>
+    </a>
+    <nav class="top-links">
+      <a href="index.html#categories" data-i18n="nav_shop">Shop</a>
+      <a href="index.html#websites" data-i18n="nav_web">Websites</a>
+      <a href="index.html#pos" data-i18n="nav_pos">POS</a>
+      <a href="partner.html" data-i18n="nav_earn">Become a Partner</a>
+    </nav>
+    <div class="lang" id="langBar"></div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow" style="background:rgba(255,255,255,.16);color:#fff"
+          data-i18n="p_tag">Partner Programme</span>
+    <h1><span data-i18n="p_h1">Earn on every business you bring in.</span>
+        <em data-i18n="p_h2">Up to 30% commission.</em></h1>
+    <p class="hero-sub" data-i18n="p_sub">Refer a customer, earn 10% of what they pay. Sign a merchant up to the POS platform, earn 30%. Paid by MonCash or NatCash.</p>
+    <div class="hero-cta">
+      <button class="btn btn-orange" onclick="waApply()" data-i18n="p_cta">🟠 Become a Partner</button>
+      <a href="#calc" class="btn btn-ghost-w" data-i18n="p_cta2">🧮 See what you would earn</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE TWO WAYS TO EARN ============ -->
+<section>
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="tier_tag">Two ways to earn</span>
+      <h2 class="h2" data-i18n="tier_title">How much you make</h2>
+      <p class="lede" data-i18n="tier_sub">Two commissions, nothing complicated. You earn on what the customer actually pays.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier t-ref">
+        <div class="pct">10%</div>
+        <h3 data-i18n="t10_t">On everything you refer</h3>
+        <p data-i18n="t10_d">Somebody you send to us orders a logo, a document pack, marketing or a website. You earn 10% of what they pay.</p>
+        <div class="eg" id="eg10"></div>
+      </div>
+      <div class="tier t-pos">
+        <div class="pct">30%</div>
+        <h3 data-i18n="t30_t">On every POS subscription</h3>
+        <p data-i18n="t30_d">You sign a shop or merchant up to the POS platform. You earn 30% of their subscription.</p>
+        <div class="eg" id="eg30"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FULL COMMISSION TABLES ============ -->
+<section class="sec-alt">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="tbl_tag">Every price, every commission</span>
+      <h2 class="h2" data-i18n="tbl_title">What you earn on each package</h2>
+      <p class="lede" data-i18n="tbl_sub">These are the same prices customers see on the shop. Nothing is hidden.</p>
+    </div>
+    <div id="tables"></div>
+  </div>
+</section>
+
+<!-- ============ EARNINGS CALCULATOR ============ -->
+<section id="calc">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="calc_tag">Calculator</span>
+      <h2 class="h2" data-i18n="calc_title">Work out your month</h2>
+      <p class="lede" data-i18n="calc_sub">Pick what you would sell and how many. The number updates as you change it.</p>
+    </div>
+    <div class="calc">
+      <div class="row">
+        <div>
+          <label data-i18n="calc_pick">What you sell</label>
+          <select id="calcItem" onchange="runCalc()"></select>
+        </div>
+        <div>
+          <label data-i18n="calc_qty">How many a month</label>
+          <input id="calcQty" type="number" min="1" max="99" value="5" inputmode="numeric"
+                 oninput="runCalc()" onblur="clampQty()">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="big" id="calcBig">—</div>
+        <div class="sm" id="calcSm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW YOU GET PAID ============ -->
+<section class="sec-alt">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="pay_tag">Getting paid</span>
+      <h2 class="h2" data-i18n="pay_title">How the money reaches you</h2>
+    </div>
+    <div class="pay-row" id="payRow"></div>
+    <div class="soon-note" style="margin-top:18px">
+      <span style="font-size:1.3rem;line-height:1">ℹ️</span>
+      <div><b data-i18n="soon_t">Your partner dashboard is on the way.</b>
+        <span data-i18n="soon_d">Right now we register you, give you your partner code and confirm every sale with you on WhatsApp. The dashboard where you watch your referrals and request a payout yourself is the next thing being built.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section>
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="how_tag">How it works</span>
+      <h2 class="h2" data-i18n="how_title">Four steps to your first commission</h2>
+    </div>
+    <div class="grid g4" id="stepGrid"></div>
+  </div>
+</section>
+
+<!-- ============ WHO ============ -->
+<section class="sec-alt">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:22px">
+      <span class="eyebrow" data-i18n="who_tag">Who this suits</span>
+      <h2 class="h2" data-i18n="who_title">Anybody who already talks to business owners</h2>
+    </div>
+    <div class="grid g4" id="whoGrid"></div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section>
+  <div class="wrap center">
+    <h2 class="h2" data-i18n="end_t">Ready to start earning?</h2>
+    <p class="lede" style="margin-bottom:22px" data-i18n="end_s">Send us one message. We set you up with your partner code the same day.</p>
+    <button class="btn btn-orange" onclick="waApply()" data-i18n="p_cta">🟠 Become a Partner</button>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">
+          <img src="../assets/brand-en.png" alt="" id="footBrand">
+          <b id="footName">48HoursReady</b>
+        </div>
+        <p class="f-about" data-i18n="f_about">Helping entrepreneurs structure, launch and grow their businesses faster. A HaitiBiznis platform.</p>
+        <h4 data-i18n="f_langs">Languages</h4>
+        <div class="f-langs" id="footLangs"></div>
+      </div>
+      <div>
+        <h4 data-i18n="f_links">Quick Links</h4>
+        <a href="index.html#packages" data-i18n="f_products">Products</a>
+        <a href="index.html#websites" data-i18n="f_websites">Websites</a>
+        <a href="index.html#pos" data-i18n="f_pos">POS</a>
+        <a href="partner.html" data-i18n="f_partner">Become a Partner</a>
+      </div>
+      <div>
+        <h4 data-i18n="f_contact">Contact</h4>
+        <p class="f-contact">
+          🌐 48HoursReady.com<br>
+          📞 +509 46 85 9702<br>
+          ✉ info@48hoursready.com
+        </p>
+        <a href="#" onclick="waApply();return false" style="margin-top:10px;color:#7BE8A4;font-weight:700" data-i18n="f_wa">💬 Chat on WhatsApp</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      © 2026 48HoursReady. <span data-i18n="f_plat">A HaitiBiznis platform.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MOBILE BOTTOM NAVIGATION ============ -->
+<nav class="bnav" id="bnav">
+  <a href="index.html"><span class="ic">🏠</span><span data-i18n="b_home">Home</span></a>
+  <a href="index.html#categories"><span class="ic">🛍</span><span data-i18n="b_shop">Services</span></a>
+  <a href="index.html#pos"><span class="ic">💻</span><span data-i18n="b_pos">POS</span></a>
+  <a href="partner.html" class="on"><span class="ic">💰</span><span data-i18n="b_earn">Earnings</span></a>
+  <button onclick="waApply()"><span class="ic">👤</span><span data-i18n="b_acct">Account</span></button>
+</nav>
+
+<script>
+/* ================================================================
+   48HoursReady v2 — Partner programme.
+   One file, no build step at runtime, no external JS.
+
+   MONEY RULES — the client confirmed these on 18 Aug 2026:
+     · referral commission = 10%
+     · POS subscription sale = 30%
+   Nothing on this page is invented. Every figure below is one of
+   those two rates applied to a price the shop already publishes.
+   ================================================================ */
+
+const WA = '50946859702';
+const USD_RATE = 132;
+
+/* The two rates live here and nowhere else. */
+const RATE_REFERRAL = 10;   /* % on services + websites */
+const RATE_POS      = 30;   /* % on a POS subscription */
+
+/* Does the POS commission repeat every month the merchant stays subscribed?
+   Not confirmed yet, so the page makes the CONSERVATIVE promise: paid on the
+   subscription. Flip this to true once the client confirms recurring. */
+const POS_RECURRING = false;
+
+const LANGS = [
+  {c:'en', pill:'EN', flag:'🇺🇸', name:'English'},
+  {c:'fr', pill:'FR', flag:'🇫🇷', name:'Français'},
+  {c:'ht', pill:'HT', flag:'🇭🇹', name:'Kreyòl'},
+  {c:'es', pill:'ES', flag:'🇩🇴', name:'Español'},
+  {c:'pt', pill:'PT', flag:'🇧🇷', name:'Português'}
+];
+const BRAND = {
+  en:{img:'../assets/brand-en.png', name:'48 Hours Ready'},
+  fr:{img:'../assets/brand-fr.png', name:'48 Heures Prêt'},
+  ht:{img:'../assets/brand-ht.png', name:'48 Èdtan Pare'},
+  es:{img:'../assets/brand-es.png', name:'48 Horas Listo'},
+  pt:{img:'../assets/brand-pt.png', name:'48 Horas Pronto'}
+};
+
+/* ---------------- catalogue ----------------
+   These prices are the same ones index.html sells. test_partner.py fails the
+   build if the two files ever disagree, so they cannot quietly drift. */
+const WEBS = [
+  {gdes:2000, nm:['5 Sections','5 Sections','5 Seksyon','5 Secciones','5 Seções']},
+  {gdes:3000, nm:['7 Sections','7 Sections','7 Seksyon','7 Secciones','7 Seções']},
+  {gdes:4000, nm:['9 Sections','9 Sections','9 Seksyon','9 Secciones','9 Seções']},
+  {gdes:7500, nm:['Complete Website','Site Web Complet','Sit Konplè','Sitio Web Completo','Site Completo']}
+];
+const PKGS = [
+  {gdes:500,   nm:['Choose 1 Service','Choisir 1 service','Chwazi 1 Sèvis','Elige 1 servicio','Escolha 1 serviço']},
+  {gdes:1000,  nm:['Choose 1 Service','Choisir 1 service','Chwazi 1 Sèvis','Elige 1 servicio','Escolha 1 serviço']},
+  {gdes:5000,  nm:['Starter Package','Forfait Démarrage','Pakè Demaraj','Paquete Inicial','Pacote Inicial']},
+  {gdes:10000, nm:['Business Ready','Business Ready','Pakè Biznis','Business Ready','Business Ready']},
+  {gdes:15000, nm:['Premium — 2 Languages','Premium — 2 Langues','Premium — 2 Lang','Premium — 2 Idiomas','Premium — 2 Idiomas']}
+];
+/* Straight out of the live POS (PLANS in haitibiznis.com/pos). */
+const POS_PLANS = [
+  {gdes:5000,  nm:['Basic','Basic','Basic','Basic','Basic']},
+  {gdes:10000, nm:['Professional','Professional','Pwofesyonèl','Professional','Professional']},
+  {gdes:0, custom:true, nm:['Enterprise','Enterprise','Enterprise','Enterprise','Enterprise']}
+];
+
+const WHO = [
+  {e:'🧑‍💼', n:['Business consultants','Consultants','Konsèy biznis','Consultores','Consultores']},
+  {e:'🏪', n:['Shop owners','Commerçants','Machann','Comerciantes','Lojistas']},
+  {e:'🎓', n:['Students','Étudiants','Etidyan','Estudiantes','Estudantes']},
+  {e:'📱', n:['Social media creators','Créateurs de contenu','Kreyatè kontni','Creadores de contenido','Criadores de conteúdo']},
+  {e:'🤝', n:['Community leaders','Leaders communautaires','Lidè kominotè','Líderes comunitarios','Líderes comunitários']},
+  {e:'🌍', n:['Diaspora','Diaspora','Dyaspora','Diáspora','Diáspora']}
+];
+
+const T = {
+en:{
+ nav_shop:'Shop',nav_web:'Websites',nav_pos:'POS',nav_earn:'Become a Partner',
+ p_tag:'Partner Programme',
+ p_h1:'Earn on every business you bring in.',p_h2:'Up to 30% commission.',
+ p_sub:'Refer a customer and earn 10% of what they pay. Sign a merchant up to the POS platform and earn 30%. Paid by MonCash or NatCash.',
+ p_cta:'🟠 Become a Partner',p_cta2:'🧮 See what you would earn',
+ tier_tag:'Two ways to earn',tier_title:'How much you make',
+ tier_sub:'Two commissions, nothing complicated. You earn on what the customer actually pays.',
+ t10_t:'On everything you refer',
+ t10_d:'Somebody you send to us orders a logo, a document pack, marketing or a website. You earn 10% of what they pay.',
+ t30_t:'On every POS subscription',
+ t30_d:'You sign a shop or merchant up to the POS platform. You earn 30% of their subscription.',
+ eg10:'Example: a 10,000 GDES package pays you 1,000 GDES.',
+ eg30:'Example: a Professional subscription at 10,000 GDES pays you 3,000 GDES.',
+ tbl_tag:'Every price, every commission',tbl_title:'What you earn on each package',
+ tbl_sub:'These are the same prices customers see on the shop. Nothing is hidden.',
+ tb_web:'Website packages — you earn 10%',
+ tb_svc:'Service packages — you earn 10%',
+ tb_pos:'POS subscriptions — you earn 30%',
+ th_pkg:'Package',th_price:'Customer pays',th_you:'You earn',
+ pos_custom:'Custom price',pos_custom_you:'Talk to us',
+ pos_permo:'per month',
+ calc_tag:'Calculator',calc_title:'Work out your month',
+ calc_sub:'Pick what you would sell and how many. The number updates as you change it.',
+ calc_pick:'What you sell',calc_qty:'How many a month',
+ calc_each:'each',calc_amonth:'a month',calc_sales:'sales',
+ pay_tag:'Getting paid',pay_title:'How the money reaches you',
+ pay1_t:'MonCash or NatCash',pay1_d:'Your commission goes straight to your mobile wallet. No bank account needed.',
+ pay2_t:'After the customer pays',pay2_d:'Once your customer has paid and the work is delivered, your commission is confirmed.',
+ pay3_t:'You keep the customer',pay3_d:'Every order that customer places later still counts as yours.',
+ soon_t:'Your partner dashboard is on the way.',
+ soon_d:'Right now we register you, give you your partner code and confirm every sale with you on WhatsApp. The dashboard where you watch your referrals and request a payout yourself is the next thing being built.',
+ how_tag:'How it works',how_title:'Four steps to your first commission',
+ s1_t:'Send one message',s1_d:'Tap the button and tell us you want to be a partner.',
+ s2_t:'Get your partner code',s2_d:'We set you up the same day and give you your own code.',
+ s3_t:'Share it',s3_d:'Give your code to anybody who needs a logo, a website or a POS.',
+ s4_t:'Get paid',s4_d:'They order, they pay, your commission is sent to your wallet.',
+ who_tag:'Who this suits',who_title:'Anybody who already talks to business owners',
+ end_t:'Ready to start earning?',
+ end_s:'Send us one message. We set you up with your partner code the same day.',
+ f_about:'Helping entrepreneurs structure, launch and grow their businesses faster. A HaitiBiznis platform.',
+ f_langs:'Languages',f_links:'Quick Links',f_products:'Products',f_websites:'Websites',f_pos:'POS',
+ f_partner:'Become a Partner',f_contact:'Contact',f_wa:'💬 Chat on WhatsApp',
+ f_plat:'A HaitiBiznis platform.',
+ b_home:'Home',b_shop:'Services',b_pos:'POS',b_earn:'Earnings',b_acct:'Account'
+},
+fr:{
+ nav_shop:'Boutique',nav_web:'Sites web',nav_pos:'POS',nav_earn:'Devenir partenaire',
+ p_tag:'Programme partenaire',
+ p_h1:'Gagnez sur chaque entreprise que vous amenez.',p_h2:'Jusqu\'à 30% de commission.',
+ p_sub:'Recommandez un client et gagnez 10% de ce qu\'il paie. Inscrivez un commerçant au POS et gagnez 30%. Payé par MonCash ou NatCash.',
+ p_cta:'🟠 Devenir partenaire',p_cta2:'🧮 Calculez vos gains',
+ tier_tag:'Deux façons de gagner',tier_title:'Combien vous gagnez',
+ tier_sub:'Deux commissions, rien de compliqué. Vous gagnez sur ce que le client paie réellement.',
+ t10_t:'Sur tout ce que vous recommandez',
+ t10_d:'Quelqu\'un que vous nous envoyez commande un logo, un pack de documents, du marketing ou un site web. Vous gagnez 10% de ce qu\'il paie.',
+ t30_t:'Sur chaque abonnement POS',
+ t30_d:'Vous inscrivez une boutique ou un commerçant au POS. Vous gagnez 30% de son abonnement.',
+ eg10:'Exemple : un forfait de 10 000 GDES vous rapporte 1 000 GDES.',
+ eg30:'Exemple : un abonnement Professional à 10 000 GDES vous rapporte 3 000 GDES.',
+ tbl_tag:'Chaque prix, chaque commission',tbl_title:'Ce que vous gagnez sur chaque forfait',
+ tbl_sub:'Ce sont les mêmes prix que les clients voient dans la boutique. Rien n\'est caché.',
+ tb_web:'Forfaits site web — vous gagnez 10%',
+ tb_svc:'Forfaits services — vous gagnez 10%',
+ tb_pos:'Abonnements POS — vous gagnez 30%',
+ th_pkg:'Forfait',th_price:'Le client paie',th_you:'Vous gagnez',
+ pos_custom:'Prix sur mesure',pos_custom_you:'Contactez-nous',
+ pos_permo:'par mois',
+ calc_tag:'Calculateur',calc_title:'Calculez votre mois',
+ calc_sub:'Choisissez ce que vous vendriez et combien. Le montant se met à jour.',
+ calc_pick:'Ce que vous vendez',calc_qty:'Combien par mois',
+ calc_each:'chacun',calc_amonth:'par mois',calc_sales:'ventes',
+ pay_tag:'Le paiement',pay_title:'Comment l\'argent vous parvient',
+ pay1_t:'MonCash ou NatCash',pay1_d:'Votre commission arrive directement sur votre portefeuille mobile. Pas besoin de compte bancaire.',
+ pay2_t:'Après le paiement du client',pay2_d:'Une fois que votre client a payé et que le travail est livré, votre commission est confirmée.',
+ pay3_t:'Le client reste le vôtre',pay3_d:'Chaque commande que ce client passe ensuite compte toujours pour vous.',
+ soon_t:'Votre tableau de bord partenaire arrive.',
+ soon_d:'Pour l\'instant nous vous inscrivons, vous donnons votre code partenaire et confirmons chaque vente avec vous sur WhatsApp. Le tableau de bord où vous suivez vos filleuls et demandez un paiement vous-même est en cours de construction.',
+ how_tag:'Comment ça marche',how_title:'Quatre étapes vers votre première commission',
+ s1_t:'Envoyez un message',s1_d:'Appuyez sur le bouton et dites-nous que vous voulez être partenaire.',
+ s2_t:'Recevez votre code',s2_d:'Nous vous inscrivons le jour même et vous donnons votre code.',
+ s3_t:'Partagez-le',s3_d:'Donnez votre code à toute personne qui a besoin d\'un logo, d\'un site ou d\'un POS.',
+ s4_t:'Soyez payé',s4_d:'Il commande, il paie, votre commission part sur votre portefeuille.',
+ who_tag:'Pour qui',who_title:'Toute personne qui parle déjà à des entrepreneurs',
+ end_t:'Prêt à gagner ?',
+ end_s:'Envoyez-nous un message. Nous vous donnons votre code partenaire le jour même.',
+ f_about:'Nous aidons les entrepreneurs à structurer, lancer et développer leur entreprise plus vite. Une plateforme HaitiBiznis.',
+ f_langs:'Langues',f_links:'Liens rapides',f_products:'Produits',f_websites:'Sites web',f_pos:'POS',
+ f_partner:'Devenir partenaire',f_contact:'Contact',f_wa:'💬 Discuter sur WhatsApp',
+ f_plat:'Une plateforme HaitiBiznis.',
+ b_home:'Accueil',b_shop:'Services',b_pos:'POS',b_earn:'Gains',b_acct:'Compte'
+},
+ht:{
+ nav_shop:'Boutik',nav_web:'Sit Entènèt',nav_pos:'POS',nav_earn:'Vin Patnè',
+ p_tag:'Pwogram Patnè',
+ p_h1:'Fè lajan sou chak biznis ou pote.',p_h2:'Jiska 30% komisyon.',
+ p_sub:'Voye yon kliyan ban nou, ou touche 10% sou sa li peye. Enskri yon machann nan POS la, ou touche 30%. Nou peye w sou MonCash oswa NatCash.',
+ p_cta:'🟠 Vin Patnè',p_cta2:'🧮 Gade konbyen ou ta fè',
+ tier_tag:'De fason pou fè lajan',tier_title:'Konbyen ou touche',
+ tier_sub:'De komisyon, anyen konplike. Ou touche sou sa kliyan an peye vre.',
+ t10_t:'Sou tout sa ou rekòmande',
+ t10_d:'Yon moun ou voye ban nou kòmande yon logo, yon pakè dokiman, maketing oswa yon sit entènèt. Ou touche 10% sou sa li peye.',
+ t30_t:'Sou chak abònman POS',
+ t30_d:'Ou enskri yon boutik oswa yon machann nan POS la. Ou touche 30% sou abònman li.',
+ eg10:'Egzanp: yon pakè 10,000 GDES ba ou 1,000 GDES.',
+ eg30:'Egzanp: yon abònman Professional a 10,000 GDES ba ou 3,000 GDES.',
+ tbl_tag:'Chak pri, chak komisyon',tbl_title:'Sa ou touche sou chak pakè',
+ tbl_sub:'Se menm pri kliyan yo wè nan boutik la. Nou pa kache anyen.',
+ tb_web:'Pakè sit entènèt — ou touche 10%',
+ tb_svc:'Pakè sèvis — ou touche 10%',
+ tb_pos:'Abònman POS — ou touche 30%',
+ th_pkg:'Pakè',th_price:'Kliyan an peye',th_you:'Ou touche',
+ pos_custom:'Pri sou mezi',pos_custom_you:'Pale ak nou',
+ pos_permo:'chak mwa',
+ calc_tag:'Kalkilatè',calc_title:'Kalkile mwa w',
+ calc_sub:'Chwazi sa ou ta vann ak konbyen. Chif la chanje pandan w ap chanje l.',
+ calc_pick:'Sa w ap vann',calc_qty:'Konbyen chak mwa',
+ calc_each:'chak',calc_amonth:'chak mwa',calc_sales:'vant',
+ pay_tag:'Kijan nou peye w',pay_title:'Kijan lajan an rive jwenn ou',
+ pay1_t:'MonCash oswa NatCash',pay1_d:'Komisyon w ale dirèk nan telefòn ou. Ou pa bezwen kont labank.',
+ pay2_t:'Apre kliyan an peye',pay2_d:'Lè kliyan w lan fin peye epi travay la livre, komisyon w konfime.',
+ pay3_t:'Kliyan an rete pou ou',pay3_d:'Chak kòmand kliyan sa a fè apre a konte pou ou toujou.',
+ soon_t:'Tablodbò patnè w ap vini.',
+ soon_d:'Kounye a nou enskri w, nou ba w kòd patnè w epi nou konfime chak vant avè w sou WhatsApp. Tablodbò kote w ap swiv moun ou voye yo epi mande peman w poukont ou, se sa n ap konstwi kounye a.',
+ how_tag:'Kijan sa mache',how_title:'Kat etap pou premye komisyon w',
+ s1_t:'Voye yon sèl mesaj',s1_d:'Peze bouton an epi di nou ou vle vin patnè.',
+ s2_t:'Pran kòd patnè w',s2_d:'Nou enskri w menm jou a epi nou ba w pwòp kòd pa w.',
+ s3_t:'Pataje l',s3_d:'Bay kòd ou a nenpòt moun ki bezwen yon logo, yon sit oswa yon POS.',
+ s4_t:'Touche lajan w',s4_d:'Li kòmande, li peye, komisyon w ale nan telefòn ou.',
+ who_tag:'Pou ki moun',who_title:'Nenpòt moun ki deja pale ak moun ki gen biznis',
+ end_t:'Ou pare pou kòmanse fè lajan?',
+ end_s:'Voye yon sèl mesaj ban nou. Nou ba w kòd patnè w menm jou a.',
+ f_about:'N ap ede antreprenè yo estriktire, lanse epi devlope biznis yo pi vit. Yon plafòm HaitiBiznis.',
+ f_langs:'Lang',f_links:'Lyen Rapid',f_products:'Pwodwi',f_websites:'Sit Entènèt',f_pos:'POS',
+ f_partner:'Vin Patnè',f_contact:'Kontak',f_wa:'💬 Pale sou WhatsApp',
+ f_plat:'Yon plafòm HaitiBiznis.',
+ b_home:'Akèy',b_shop:'Sèvis',b_pos:'POS',b_earn:'Revni',b_acct:'Kont'
+},
+es:{
+ nav_shop:'Tienda',nav_web:'Sitios web',nav_pos:'POS',nav_earn:'Ser socio',
+ p_tag:'Programa de socios',
+ p_h1:'Gana con cada negocio que traigas.',p_h2:'Hasta 30% de comisión.',
+ p_sub:'Recomienda a un cliente y gana el 10% de lo que paga. Inscribe a un comerciante en el POS y gana el 30%. Te pagamos por MonCash o NatCash.',
+ p_cta:'🟠 Ser socio',p_cta2:'🧮 Calcula tus ganancias',
+ tier_tag:'Dos formas de ganar',tier_title:'Cuánto ganas',
+ tier_sub:'Dos comisiones, nada complicado. Ganas sobre lo que el cliente paga de verdad.',
+ t10_t:'Sobre todo lo que recomiendas',
+ t10_d:'Alguien que nos envías pide un logo, un paquete de documentos, marketing o un sitio web. Ganas el 10% de lo que paga.',
+ t30_t:'Sobre cada suscripción POS',
+ t30_d:'Inscribes una tienda o un comerciante en el POS. Ganas el 30% de su suscripción.',
+ eg10:'Ejemplo: un paquete de 10,000 GDES te da 1,000 GDES.',
+ eg30:'Ejemplo: una suscripción Professional de 10,000 GDES te da 3,000 GDES.',
+ tbl_tag:'Cada precio, cada comisión',tbl_title:'Lo que ganas en cada paquete',
+ tbl_sub:'Son los mismos precios que los clientes ven en la tienda. No se esconde nada.',
+ tb_web:'Paquetes de sitio web — ganas 10%',
+ tb_svc:'Paquetes de servicios — ganas 10%',
+ tb_pos:'Suscripciones POS — ganas 30%',
+ th_pkg:'Paquete',th_price:'El cliente paga',th_you:'Tú ganas',
+ pos_custom:'Precio a medida',pos_custom_you:'Habla con nosotros',
+ pos_permo:'por mes',
+ calc_tag:'Calculadora',calc_title:'Calcula tu mes',
+ calc_sub:'Elige qué venderías y cuántos. El número se actualiza solo.',
+ calc_pick:'Qué vendes',calc_qty:'Cuántos al mes',
+ calc_each:'cada uno',calc_amonth:'al mes',calc_sales:'ventas',
+ pay_tag:'El pago',pay_title:'Cómo te llega el dinero',
+ pay1_t:'MonCash o NatCash',pay1_d:'Tu comisión llega directo a tu billetera móvil. No hace falta cuenta bancaria.',
+ pay2_t:'Después de que el cliente paga',pay2_d:'Cuando tu cliente ha pagado y el trabajo está entregado, tu comisión queda confirmada.',
+ pay3_t:'El cliente sigue siendo tuyo',pay3_d:'Cada pedido que ese cliente haga después sigue contando para ti.',
+ soon_t:'Tu panel de socio está en camino.',
+ soon_d:'Por ahora te registramos, te damos tu código de socio y confirmamos cada venta contigo por WhatsApp. El panel donde sigues tus referidos y pides tu pago tú mismo es lo próximo que se está construyendo.',
+ how_tag:'Cómo funciona',how_title:'Cuatro pasos hasta tu primera comisión',
+ s1_t:'Envía un mensaje',s1_d:'Toca el botón y dinos que quieres ser socio.',
+ s2_t:'Recibe tu código',s2_d:'Te damos de alta el mismo día y te damos tu propio código.',
+ s3_t:'Compártelo',s3_d:'Dale tu código a cualquiera que necesite un logo, un sitio o un POS.',
+ s4_t:'Cobra',s4_d:'Pide, paga, y tu comisión sale hacia tu billetera.',
+ who_tag:'Para quién',who_title:'Cualquiera que ya hable con dueños de negocio',
+ end_t:'¿Listo para empezar a ganar?',
+ end_s:'Envíanos un mensaje. Te damos tu código de socio el mismo día.',
+ f_about:'Ayudamos a los emprendedores a estructurar, lanzar y hacer crecer sus negocios más rápido. Una plataforma HaitiBiznis.',
+ f_langs:'Idiomas',f_links:'Enlaces rápidos',f_products:'Productos',f_websites:'Sitios web',f_pos:'POS',
+ f_partner:'Ser socio',f_contact:'Contacto',f_wa:'💬 Chatear por WhatsApp',
+ f_plat:'Una plataforma HaitiBiznis.',
+ b_home:'Inicio',b_shop:'Servicios',b_pos:'POS',b_earn:'Ganancias',b_acct:'Cuenta'
+},
+pt:{
+ nav_shop:'Loja',nav_web:'Sites',nav_pos:'POS',nav_earn:'Seja parceiro',
+ p_tag:'Programa de parceiros',
+ p_h1:'Ganhe com cada negócio que você trouxer.',p_h2:'Até 30% de comissão.',
+ p_sub:'Indique um cliente e ganhe 10% do que ele paga. Cadastre um comerciante no POS e ganhe 30%. Pagamos por MonCash ou NatCash.',
+ p_cta:'🟠 Seja parceiro',p_cta2:'🧮 Veja quanto você ganharia',
+ tier_tag:'Duas formas de ganhar',tier_title:'Quanto você ganha',
+ tier_sub:'Duas comissões, nada complicado. Você ganha sobre o que o cliente realmente paga.',
+ t10_t:'Sobre tudo o que você indica',
+ t10_d:'Alguém que você nos envia pede um logo, um pacote de documentos, marketing ou um site. Você ganha 10% do que ele paga.',
+ t30_t:'Sobre cada assinatura POS',
+ t30_d:'Você cadastra uma loja ou um comerciante no POS. Você ganha 30% da assinatura dele.',
+ eg10:'Exemplo: um pacote de 10.000 GDES te dá 1.000 GDES.',
+ eg30:'Exemplo: uma assinatura Professional de 10.000 GDES te dá 3.000 GDES.',
+ tbl_tag:'Cada preço, cada comissão',tbl_title:'O que você ganha em cada pacote',
+ tbl_sub:'São os mesmos preços que os clientes veem na loja. Nada é escondido.',
+ tb_web:'Pacotes de site — você ganha 10%',
+ tb_svc:'Pacotes de serviços — você ganha 10%',
+ tb_pos:'Assinaturas POS — você ganha 30%',
+ th_pkg:'Pacote',th_price:'O cliente paga',th_you:'Você ganha',
+ pos_custom:'Preço sob medida',pos_custom_you:'Fale conosco',
+ pos_permo:'por mês',
+ calc_tag:'Calculadora',calc_title:'Calcule o seu mês',
+ calc_sub:'Escolha o que você venderia e quantos. O número se atualiza sozinho.',
+ calc_pick:'O que você vende',calc_qty:'Quantos por mês',
+ calc_each:'cada',calc_amonth:'por mês',calc_sales:'vendas',
+ pay_tag:'O pagamento',pay_title:'Como o dinheiro chega até você',
+ pay1_t:'MonCash ou NatCash',pay1_d:'Sua comissão vai direto para a sua carteira no celular. Não precisa de conta em banco.',
+ pay2_t:'Depois que o cliente paga',pay2_d:'Quando o seu cliente pagou e o trabalho foi entregue, a sua comissão é confirmada.',
+ pay3_t:'O cliente continua sendo seu',pay3_d:'Cada pedido que esse cliente fizer depois continua contando para você.',
+ soon_t:'O seu painel de parceiro está a caminho.',
+ soon_d:'Por enquanto nós cadastramos você, damos o seu código de parceiro e confirmamos cada venda com você no WhatsApp. O painel onde você acompanha suas indicações e pede o pagamento sozinho é a próxima coisa a ser construída.',
+ how_tag:'Como funciona',how_title:'Quatro passos até a sua primeira comissão',
+ s1_t:'Mande uma mensagem',s1_d:'Toque no botão e diga que você quer ser parceiro.',
+ s2_t:'Receba o seu código',s2_d:'Cadastramos você no mesmo dia e damos o seu próprio código.',
+ s3_t:'Compartilhe',s3_d:'Dê o seu código a quem precisar de um logo, de um site ou de um POS.',
+ s4_t:'Receba',s4_d:'Ele pede, ele paga, e a sua comissão vai para a sua carteira.',
+ who_tag:'Para quem',who_title:'Qualquer um que já converse com donos de negócio',
+ end_t:'Pronto para começar a ganhar?',
+ end_s:'Mande uma mensagem. Damos o seu código de parceiro no mesmo dia.',
+ f_about:'Ajudamos empreendedores a estruturar, lançar e crescer seus negócios mais rápido. Uma plataforma HaitiBiznis.',
+ f_langs:'Idiomas',f_links:'Links rápidos',f_products:'Produtos',f_websites:'Sites',f_pos:'POS',
+ f_partner:'Seja parceiro',f_contact:'Contato',f_wa:'💬 Falar no WhatsApp',
+ f_plat:'Uma plataforma HaitiBiznis.',
+ b_home:'Início',b_shop:'Serviços',b_pos:'POS',b_earn:'Ganhos',b_acct:'Conta'
+}
+};
+
+/* ---------------- language ---------------- */
+function pickLang(){
+  try{const s=localStorage.getItem('hr48_lang');
+      if(s&&LANGS.some(x=>x.c===s))return s;}catch(e){}
+  const q=(new URLSearchParams(location.search).get('lang')||'').toLowerCase();
+  if(LANGS.some(x=>x.c===q))return q;
+  const b=(navigator.language||'en').slice(0,2).toLowerCase();
+  return LANGS.some(x=>x.c===b)?b:'en';
+}
+let lang = pickLang();
+const t = k => (T[lang]&&T[lang][k]) || T.en[k] || k;
+const L = a => a[LANGS.findIndex(x=>x.c===lang)] ?? a[0];
+const gdes = n => n.toLocaleString('en-US');
+const usd  = n => Math.round(n/USD_RATE);
+/* Commission is always derived, never typed in by hand. */
+const comm = (price,rate) => Math.round(price*rate/100);
+
+function setLang(c){
+  if(!LANGS.some(x=>x.c===c))return;
+  lang=c;
+  try{localStorage.setItem('hr48_lang',c);}catch(e){}
+  render();
+}
+function applyI18n(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]!==undefined)el.textContent=T[lang][k];
+  });
+  const b=BRAND[lang]||BRAND.en;
+  ['brandImg','footBrand'].forEach(id=>{
+    const el=document.getElementById(id); if(el)el.src=b.img;
+  });
+  ['brandName','footName'].forEach(id=>{
+    const el=document.getElementById(id); if(el)el.textContent=b.name;
+  });
+}
+
+/* ---------------- apply on WhatsApp ----------------
+   There is no signup form on this page on purpose: the old one posted to an
+   API that no longer exists, so it failed silently. WhatsApp works today. */
+function waApply(){
+  const msg={en:'Hello! I would like to become a 48HoursReady partner.',
+             fr:'Bonjour ! Je voudrais devenir partenaire 48HoursReady.',
+             ht:'Bonjou! Mwen ta renmen vin yon patnè 48HoursReady.',
+             es:'¡Hola! Quisiera ser socio de 48HoursReady.',
+             pt:'Olá! Gostaria de ser parceiro da 48HoursReady.'}[lang];
+  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank','noopener');
+}
+
+/* ---------------- renderers ---------------- */
+/* 5,000 and 10,000 GDES are BOTH a service package (10%) and a POS plan (30%).
+   The table headings say which is which, but a partner scrolling a phone can
+   still land on the wrong row, so every row states its own rate. */
+function commRow(name,price,rate,suffix){
+  const c=comm(price,rate);
+  return `<tr><td class="nm">${name}</td>
+    <td class="pr">${gdes(price)} GDES${suffix?' <small>'+suffix+'</small>':''}</td>
+    <td class="yo">${gdes(c)} GDES<small>${rate}% · ≈ US$ ${usd(c)}</small></td></tr>`;
+}
+function table(titleKey,rows){
+  return `<div class="ctbl"><h4>${t(titleKey)}</h4><div class="ctbl-scroll"><table>
+    <thead><tr><th>${t('th_pkg')}</th><th>${t('th_price')}</th>
+      <th style="text-align:right">${t('th_you')}</th></tr></thead>
+    <tbody>${rows}</tbody></table></div></div>`;
+}
+function renderTables(){
+  const web = WEBS.map(w=>commRow(L(w.nm), w.gdes, RATE_REFERRAL)).join('');
+  const svc = PKGS.map(p=>commRow(L(p.nm), p.gdes, RATE_REFERRAL)).join('');
+  const pos = POS_PLANS.map(p=>{
+    if(p.custom)
+      return `<tr><td class="nm">${L(p.nm)}</td><td class="pr">${t('pos_custom')}</td>
+        <td class="yo">${RATE_POS}%<small>${t('pos_custom_you')}</small></td></tr>`;
+    return commRow(L(p.nm), p.gdes, RATE_POS,
+                   POS_RECURRING ? t('pos_permo') : '');
+  }).join('');
+  document.getElementById('tables').innerHTML =
+    table('tb_web',web) + table('tb_svc',svc) + table('tb_pos',pos);
+}
+function renderTiers(){
+  document.getElementById('eg10').textContent = t('eg10');
+  document.getElementById('eg30').textContent = t('eg30');
+}
+function renderRest(){
+  document.getElementById('payRow').innerHTML = [
+    ['💸','pay1_t','pay1_d'],['✅','pay2_t','pay2_d'],['🔁','pay3_t','pay3_d']
+  ].map(([e,a,b])=>`<div class="pay"><span class="emo">${e}</span>
+      <h4>${t(a)}</h4><p>${t(b)}</p></div>`).join('');
+  document.getElementById('stepGrid').innerHTML = [
+    ['💬','s1_t','s1_d'],['🔑','s2_t','s2_d'],['📣','s3_t','s3_d'],['💰','s4_t','s4_d']
+  ].map(([e,a,b],i)=>`<div class="step"><div class="n">${i+1}</div>
+      <div class="emo">${e}</div><h4>${t(a)}</h4><p>${t(b)}</p></div>`).join('');
+  document.getElementById('whoGrid').innerHTML =
+    WHO.map(w=>`<div class="who"><div class="emo">${w.e}</div><span>${L(w.n)}</span></div>`).join('');
+}
+function renderLangs(){
+  document.getElementById('langBar').innerHTML = LANGS.map(l=>
+    `<button onclick="setLang('${l.c}')" class="${l.c===lang?'on':''}"
+       aria-label="${l.name}">${l.pill}</button>`).join('');
+  document.getElementById('footLangs').innerHTML = LANGS.map(l=>
+    `<button onclick="setLang('${l.c}')" class="${l.c===lang?'on':''}">${l.flag} ${l.name}</button>`).join('');
+}
+
+/* ---------------- calculator ----------------
+   Options are built from the same arrays the tables use, so the calculator
+   can never quote a package or a rate the tables do not show. */
+function calcOptions(){
+  const out=[];
+  WEBS.forEach(w=>out.push({label:L(w.nm), price:w.gdes, rate:RATE_REFERRAL}));
+  PKGS.forEach(p=>out.push({label:L(p.nm)+' — '+gdes(p.gdes)+' GDES', price:p.gdes, rate:RATE_REFERRAL}));
+  POS_PLANS.filter(p=>!p.custom).forEach(p=>
+    out.push({label:'POS '+L(p.nm), price:p.gdes, rate:RATE_POS}));
+  return out;
+}
+let CALC=[];
+function renderCalc(){
+  CALC=calcOptions();
+  const sel=document.getElementById('calcItem');
+  const keep=sel.value;
+  sel.innerHTML=CALC.map((o,i)=>`<option value="${i}">${o.label}</option>`).join('');
+  sel.value = (keep && CALC[keep]) ? keep : '3';
+  runCalc();
+}
+const qty = () => {
+  let q=parseInt(document.getElementById('calcQty').value,10);
+  if(!Number.isFinite(q)||q<1)q=1;
+  return q>99?99:q;
+};
+/* Typing is left alone while the field has focus; on blur the box is snapped
+   to the number that was actually used, so it never disagrees with the total. */
+function clampQty(){ document.getElementById('calcQty').value = qty(); runCalc(); }
+function runCalc(){
+  const o=CALC[document.getElementById('calcItem').value];
+  if(!o)return;
+  const q=qty();
+  const each=comm(o.price,o.rate), total=each*q;
+  document.getElementById('calcBig').textContent = gdes(total)+' GDES';
+  document.getElementById('calcSm').textContent =
+    `${q} ${t('calc_sales')} × ${gdes(each)} GDES ${t('calc_each')} · ≈ US$ ${usd(total)} ${t('calc_amonth')}`;
+}
+
+function render(){
+  applyI18n(); renderLangs(); renderTiers(); renderTables(); renderRest(); renderCalc();
+}
+render();
+</script>
+</body>
+</html>
